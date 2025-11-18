@@ -1,84 +1,72 @@
-/* Grundlayout */
-body {
-  font-family: 'Roboto', sans-serif;
-  max-width: 700px;
-  margin: 40px auto;
-  padding: 20px;
-  line-height: 1.6;
-  background-color: #e6f2ff; /* hellblauer Hintergrund */
-  color: #333;
-  text-align: center;
+:root{
+  --bg:#e6f2ff;
+  --panel:#f7fbff;
+  --accent:#3399ff;
+  --accent-dark:#007acc;
+  --muted:#6b7280;
+  --max-width:1100px;
+}
+*{box-sizing:border-box}
+body{
+  font-family:"Roboto",system-ui,Arial,sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:#0b1220;
+}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px;background:#fff;border-bottom:1px solid #e6eefb;
+  box-shadow:0 1px 4px rgba(10,20,40,0.03);
+}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:56px;height:56px;object-fit:contain}
+.brand h1{margin:0;font-size:20px}
+.tag{margin:0;color:var(--muted);font-size:12px}
+.controls{display:flex;gap:8px;align-items:center}
+.controls input{
+  padding:8px 12px;border-radius:8px;border:1px solid #d6e6ff;width:320px;
+  background:#fff;
+}
+.controls select{padding:8px;border-radius:8px;border:1px solid #d6e6ff;background:#fff}
+
+.container{
+  max-width:var(--max-width);margin:20px auto;display:flex;gap:18px;padding:0 16px;
+}
+.sidebar{
+  width:220px;background:var(--panel);padding:12px;border-radius:10px;border:1px solid #e6eefb;
+  height:calc(100vh - 160px);overflow:auto;
+}
+.sidebar h3{margin:6px 0 10px 0}
+#categoryList{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+#categoryList li{padding:8px;border-radius:8px;cursor:pointer}
+#categoryList li:hover{background:#e9f6ff}
+#categoryList li.active{background:var(--accent);color:#fff}
+
+.workspace{flex:1;display:flex;flex-direction:column;gap:12px}
+.panel{background:var(--panel);padding:14px;border-radius:10px;border:1px solid #e6eefb}
+.top-panel .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.top-panel label{font-size:13px;color:var(--muted)}
+.top-panel select{padding:8px;border-radius:8px;border:1px solid #d6e6ff;background:#fff}
+
+.input-panel form{display:flex;flex-direction:column;gap:8px}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-row label{width:140px;color:var(--muted)}
+.input-row input, .input-row select{
+  padding:8px;border-radius:6px;border:1px solid #d6e6ff;background:#fff;width:180px
 }
 
-/* Logo */
-.logo {
-  display: block;
-  margin: 0 auto 20px auto;
-  width: 120px;
-}
+.actions{margin-top:8px;display:flex;gap:8px}
+.actions button{padding:10px 14px;border-radius:8px;border:none;background:var(--accent);color:#fff;cursor:pointer}
+.actions button:hover{background:var(--accent-dark)}
 
-/* Überschriften */
-h1 {
-  margin-bottom: 10px;
+.result-panel #resultBox{
+  min-height:60px;padding:12px;border-radius:8px;background:#fff;border:2px solid var(--accent);
+  display:flex;align-items:center;justify-content:center;font-weight:600;font-size:18px;
 }
+.result-panel pre{white-space:pre-wrap;margin:8px 0;padding:8px;background:#f4f8ff;border-radius:6px}
 
-/* Container für Eingaben */
-.select-container {
-  background-color: #f0f8ff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-  display: inline-block;
-  text-align: center;
-}
-
-/* Dropdowns, Input, Button */
-.select-container select,
-.select-container input,
-.select-container button {
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  width: 150px;
-}
-
-.select-container input {
-  width: 140px;
-}
-
-.select-container button {
-  background-color: #3399ff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  width: 160px;
-  font-weight: bold;
-}
-
-.select-container button:hover {
-  background-color: #007acc;
-}
-
-/* Ergebnisfeld */
-#result {
-  margin-top: 15px;
-  padding: 15px;
-  background-color: #ffffff;
-  border: 2px solid #3399ff;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-/* Sprache */
-.language-switch {
-  margin-top: 20px;
-}
-
-.language-switch select {
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+.footer{text-align:center;padding:12px;color:var(--muted);font-size:13px}
+@media (max-width:900px){
+  .container{flex-direction:column}
+  .sidebar{width:100%;height:auto}
 }
