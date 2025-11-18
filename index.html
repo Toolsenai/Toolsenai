@@ -1,54 +1,30 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>ToolsenAI – Alles-Umrechner & Formeln</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>ToolsenAI – Alles in einem Converter & Rechner</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>ToolsenAI</h1>
+  <header>
+    <div id="logo">🔧 ToolsenAI</div>
+    <h1>ToolsenAI – Alles in einem Converter & Rechner</h1>
+  </header>
 
-  <div id="language">
-    <label>Sprache:</label>
-    <select id="langSelect">
-      <option value="de" selected>Deutsch</option>
-      <option value="en">English</option>
-    </select>
-  </div>
+  <main id="converter-container"></main>
 
-  <div id="mode">
-    <label>Modus:</label>
-    <select id="modeSelect">
-      <option value="converter">Converter</option>
-      <option value="calculator">Calculator</option>
-    </select>
-  </div>
+  <footer>
+    <p>© 2025 ToolsenAI. Alle Rechte vorbehalten.</p>
+  </footer>
 
-  <div id="categoryContainer">
-    <label>Kategorie:</label>
-    <select id="categorySelect">
-      <option value="">-- wählen --</option>
-    </select>
-  </div>
-
-  <div id="formulaContainer">
-    <label>Formel:</label>
-    <select id="formulaSelect">
-      <option value="">-- wählen --</option>
-    </select>
-  </div>
-
-  <div id="inputFields">
-    <!-- Dynamische Eingabefelder erscheinen hier -->
-  </div>
-
-  <div id="result">
-    <p>Ergebnis:</p>
-    <pre id="resultDisplay"></pre>
-  </div>
-
+  <!-- Module laden -->
   <script src="js/modules/physics.js"></script>
   <script src="js/modules/chemistry.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/modules/astronomy.js"></script>
+  <script src="js/modules/engineering.js"></script>
+  <script src="js/modules/math.js"></script>
+
+  <!-- Hauptsteuerung -->
+  <script src="js/main.js"></script>
 </body>
 </html>
