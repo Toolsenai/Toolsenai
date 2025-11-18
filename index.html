@@ -3,32 +3,209 @@
 <head>
   <meta charset="UTF-8">
   <title>ToolsenAI – Alles in einem Converter & Rechner</title>
-  <link rel="stylesheet" href="styles.css">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="ToolsenAI – kostenloser Online-Converter und Rechner für Einheiten, Physik, Chemie, Mathematik und mehr. Einfach Werte eingeben und umrechnen.">
+  <meta name="keywords" content="Converter, Umrechner, Einheiten, Physik, Chemie, Mathematik, Online-Tool, Watt, Volt, Meter, Kilometer, Ampere, Newton, Joule">
+  <meta name="author" content="ToolsenAI">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Styles -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e6f2ff;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+      color: #333;
+    }
+    header { text-align: center; margin-bottom: 25px; }
+    #logo { display: block; margin: 0 auto 10px auto; width: 150px; }
+    h1 { font-size: 1.8rem; margin-bottom: 15px; color: #004c99; }
+    #converter-container { background-color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); }
+    select, input { padding: 8px 10px; margin: 5px 0; border-radius: 6px; border: 1px solid #aaa; font-size: 1rem; width: 100%; box-sizing: border-box; }
+    input[type="number"] { text-align: right; }
+    button { cursor: pointer; background-color: #3399ff; color: white; border: none; padding: 10px 15px; font-size: 1rem; border-radius: 6px; transition: background 0.3s; margin-top: 10px; width: 100%; }
+    button:hover { background-color: #007acc; }
+    #inputDiv div { margin-bottom: 12px; }
+    #resultDiv { margin-top: 20px; padding: 15px; background-color: #d9f0ff; border-radius: 8px; font-weight: bold; font-size: 1.1rem; color: #004c99; }
+    footer { text-align: center; margin-top: 35px; font-size: 0.9rem; color: #555; }
+    @media (max-width: 600px){ body { padding: 10px; } button, select, input { font-size: 0.95rem; } }
+  </style>
 </head>
+
 <body>
   <header>
-  <img src="img/logo.svg" alt="ToolsenAI Logo" id="logo" width="150">
-  <h1>ToolsenAI – Alles in einem Converter & Rechner</h1>
-</header>
+    <!-- Logo -->
+    <img src="img/logo.svg" alt="ToolsenAI Logo" id="logo" width="150">
+    <h1>ToolsenAI – Alles in einem Converter & Rechner</h1>
+    <h2>Einfach Werte eingeben, Einheiten umrechnen, Formeln berechnen</h2>
+  </header>
 
-
-  <main id="converter-container"></main>
+  <main id="converter-container">
+    <!-- Container für Converter -->
+  </main>
 
   <footer>
     <p>© 2025 ToolsenAI. Alle Rechte vorbehalten.</p>
   </footer>
 
-  <!-- Übersetzungen -->
-  <script src="js/translations.js"></script>
+  <!-- JavaScript -->
+  <script>
+    // Beispiel-Daten + Formeln
+    window.DATA = {
+      Physik: {
+        formulas: {
+          "Leistung P = U × I": {
+            vars: ["U","I","P"],
+            units: {U:["V"], I:["A"], P:["W","kW","mW"]},
+            calc: function(values,target){
+              const U=values.U, I=values.I, P=values.P;
+              let res="", formula="";
+              if(target==="P") { res=U*I; formula=`P = ${U} × ${I} = ${res} W`; }
+              else if(target==="U") { res=P/I; formula=`U = ${P} ÷ ${I} = ${res} V`; }
+              else { res=P/U; formula=`I = ${P} ÷ ${U} = ${res} A`; }
+              return {res, formula};
+            }
+          },
+          "Kraft F = m × a": {
+            vars: ["m","a","F"],
+            units: {m:["kg"], a:["m/s²"], F:["N"]},
+            calc: function(values,target){
+              const m=values.m, a=values.a, F=values.F;
+              let res="", formula="";
+              if(target==="F") { res=m*a; formula=`F = ${m} × ${a} = ${res} N`; }
+              else if(target==="m") { res=F/a; formula=`m = ${F} ÷ ${a} = ${res} kg`; }
+              else { res=F/m; formula=`a = ${F} ÷ ${m} = ${res} m/s²`; }
+              return {res, formula};
+            }
+          }
+        }
+      }
+    };
 
-  <!-- Module -->
-  <script src="js/modules/physics.js"></script>
-  <script src="js/modules/chemistry.js"></script>
-  <script src="js/modules/astronomy.js"></script>
-  <script src="js/modules/engineering.js"></script>
-  <script src="js/modules/math.js"></script>
+    // Übersetzungen
+    window.TRANSLATIONS = {
+      de: {targetVariable:"Zielvariable", calculate:"Berechnen", formulas:{"Leistung P = U × I":"Leistung P = U × I","Kraft F = m × a":"Kraft F = m × a"}},
+      en: {targetVariable:"Target variable", calculate:"Calculate", formulas:{"Leistung P = U × I":"Power P = U × I","Kraft F = m × a":"Force F = m × a"}}
+    };
 
-  <!-- Hauptsteuerung -->
-  <script src="js/main.js"></script>
+    (function(){
+      const DATA = window.DATA || {};
+      const TRANSLATIONS = window.TRANSLATIONS || {};
+      let lang = "de";
+
+      const container = document.getElementById("converter-container");
+
+      const categorySelect = document.createElement("select");
+      container.appendChild(categorySelect);
+
+      const langSelect = document.createElement("select");
+      const optDe=document.createElement("option"); optDe.value="de"; optDe.textContent="Deutsch";
+      const optEn=document.createElement("option"); optEn.value="en"; optEn.textContent="English";
+      langSelect.appendChild(optDe); langSelect.appendChild(optEn);
+      container.appendChild(langSelect);
+
+      const formulaSelect = document.createElement("select");
+      container.appendChild(formulaSelect);
+
+      const inputDiv = document.createElement("div");
+      inputDiv.id="inputDiv"; container.appendChild(inputDiv);
+
+      const resultDiv = document.createElement("div");
+      resultDiv.id="resultDiv"; container.appendChild(resultDiv);
+
+      langSelect.addEventListener("change",()=>{ lang=langSelect.value; renderForm(); });
+      categorySelect.addEventListener("change",()=>{ renderForm(); });
+      formulaSelect.addEventListener("change",()=>{ renderForm(); });
+
+      function renderForm(){
+        const T = TRANSLATIONS[lang] || {};
+        categorySelect.innerHTML="";
+        for(const cat in DATA){
+          const opt = document.createElement("option");
+          opt.value=cat; opt.textContent=cat;
+          categorySelect.appendChild(opt);
+        }
+
+        const category = categorySelect.value;
+        const formulas = DATA[category]?.formulas || {};
+        formulaSelect.innerHTML="";
+        for(const f in formulas){
+          const opt = document.createElement("option");
+          opt.value=f; opt.textContent=T.formulas && T.formulas[f] ? T.formulas[f] : f;
+          formulaSelect.appendChild(opt);
+        }
+
+        inputDiv.innerHTML="";
+        resultDiv.innerHTML="";
+        const selectedFormula = formulaSelect.value;
+        if(!selectedFormula) return;
+
+        const vars = formulas[selectedFormula].vars;
+        const units = formulas[selectedFormula].units;
+
+        vars.forEach(v=>{
+          const div = document.createElement("div");
+          const label = document.createElement("label");
+          label.textContent=v + ": "; div.appendChild(label);
+
+          const input = document.createElement("input");
+          input.id="input_"+v; input.type="number"; div.appendChild(input);
+
+          if(units[v]){
+            const uSelect = document.createElement("select");
+            uSelect.id="unit_"+v;
+            units[v].forEach(u=>{
+              const uOpt=document.createElement("option"); uOpt.value=u; uOpt.textContent=u; uSelect.appendChild(uOpt);
+            });
+            div.appendChild(uSelect);
+          }
+          inputDiv.appendChild(div);
+        });
+
+        const targetDiv=document.createElement("div");
+        const targetLabel=document.createElement("label");
+        targetLabel.textContent = T.targetVariable || "Zielvariable" + ": ";
+        targetDiv.appendChild(targetLabel);
+
+        const targetSelect = document.createElement("select");
+        targetSelect.id="targetSelect";
+        vars.forEach(v=>{
+          const opt = document.createElement("option");
+          opt.value=v; opt.textContent=v;
+          targetSelect.appendChild(opt);
+        });
+        targetDiv.appendChild(targetSelect);
+        inputDiv.appendChild(targetDiv);
+
+        const btn=document.createElement("button");
+        btn.textContent = T.calculate || "Berechnen";
+        btn.addEventListener("click", calculate);
+        inputDiv.appendChild(btn);
+      }
+
+      function calculate(){
+        const category = categorySelect.value;
+        const selectedFormula=formulaSelect.value;
+        const formulaObj = DATA[category].formulas[selectedFormula];
+        const vars = formulaObj.vars;
+        const values = {};
+
+        vars.forEach(v=>{
+          const val = document.getElementById("input_"+v)?.value;
+          values[v] = val ? parseFloat(val) : null;
+        });
+
+        const target = document.getElementById("targetSelect").value;
+        const res = formulaObj.calc(values, target);
+        resultDiv.innerHTML=`<strong>Ergebnis:</strong> ${res.res} <br><em>${res.formula}</em>`;
+      }
+
+      renderForm();
+    })();
+  </script>
 </body>
 </html>
