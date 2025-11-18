@@ -1,224 +1,73 @@
-/* ============ GLOBAL DESIGN ============ */
-
-:root {
-  --bg: #e8f4ff;
-  --bg-panel: #ffffff;
-  --primary: #2d8cff;
-  --primary-dark: #1665c1;
-  --text: #1a1a1a;
-  --border: #c8dffd;
-  --radius: 12px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
-}
-
+/* Grundlayout */
 body {
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    line-height: 1.6;
+    background: #e6f2ff; /* hellblauer Hintergrund */
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* ============ HEADER ============ */
-
-.topbar {
-  background: var(--primary);
-  color: white;
-  padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+h1 {
+    text-align: center;
+    color: #0059b3;
+    margin-bottom: 30px;
 }
 
-.topbar .brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.topbar .brand h1 {
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.topbar .brand .tag {
-  font-size: 12px;
-  opacity: .8;
-  margin-top: -4px;
-}
-
-.topbar .logo {
-  width: 42px;
-  height: 42px;
-}
-
-/* Controls */
-.controls {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.controls input,
-.controls select {
-  padding: 7px 10px;
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  outline: none;
-  font-size: 14px;
-}
-
-.controls input:focus,
-.controls select:focus {
-  border-color: var(--primary-dark);
-}
-
-/* ============ MAIN LAYOUT ============ */
-
-.container {
-  display: flex;
-  flex: 1;
-  padding: 20px;
-  gap: 20px;
-}
-
-/* Sidebar */
-.sidebar {
-  width: 240px;
-  background: var(--bg-panel);
-  padding: 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  height: fit-content;
-}
-
-.sidebar h3 {
-  margin-bottom: 10px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.sidebar ul {
-  list-style: none;
-}
-
-.sidebar li {
-  padding: 8px 10px;
-  margin-bottom: 6px;
-  background: #f5faff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.sidebar li:hover {
-  background: #ddecff;
-}
-
-/* Workspace */
-.workspace {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Panels */
-.panel {
-  background: var(--bg-panel);
-  padding: 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-}
-
-.panel h4 {
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-/* Top panel */
-.top-panel .row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: center;
-}
-
-.top-panel select {
-  padding: 7px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-
-/* Input form */
-#inputForm .input-field {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 12px;
-}
-
-#inputForm label {
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-#inputForm input,
-#inputForm select {
-  padding: 8px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
+/* Dropdowns und Eingabefelder */
+select, input[type="number"] {
+    padding: 8px 10px;
+    margin: 5px 0 15px 0;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Buttons */
-.actions {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
+button {
+    background-color: #0059b3;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
 }
 
-.actions button {
-  padding: 9px 16px;
-  border-radius: var(--radius);
-  background: var(--primary);
-  border: none;
-  color: white;
-  cursor: pointer;
-  transition: 0.2s;
+button:hover {
+    background-color: #004080;
 }
 
-.actions button:hover {
-  background: var(--primary-dark);
+/* Ergebnisbereich */
+#result {
+    background-color: #cce0ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap;
 }
 
-/* Result panel */
-.result-panel #resultBox {
-  padding: 10px;
-  background: #f0f7ff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 18px;
-  min-height: 42px;
+/* Labels */
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-#formulaDetail {
-  margin-top: 12px;
+/* Container für Eingabefelder */
+.inputGroup {
+    margin-bottom: 10px;
 }
 
-/* Footer */
-.footer {
-  text-align: center;
-  padding: 12px;
-  background: #e3f1ff;
-  font-size: 13px;
-  margin-top: auto;
+/* Sprach- und Modus-Auswahl */
+#language, #mode, #categoryContainer, #formulaContainer {
+    margin-bottom: 15px;
 }
