@@ -1,72 +1,224 @@
-:root{
-  --bg:#e6f2ff;
-  --panel:#f7fbff;
-  --accent:#3399ff;
-  --accent-dark:#007acc;
-  --muted:#6b7280;
-  --max-width:1100px;
-}
-*{box-sizing:border-box}
-body{
-  font-family:"Roboto",system-ui,Arial,sans-serif;
-  margin:0;
-  background:var(--bg);
-  color:#0b1220;
-}
-.topbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 20px;background:#fff;border-bottom:1px solid #e6eefb;
-  box-shadow:0 1px 4px rgba(10,20,40,0.03);
-}
-.brand{display:flex;gap:12px;align-items:center}
-.logo{width:56px;height:56px;object-fit:contain}
-.brand h1{margin:0;font-size:20px}
-.tag{margin:0;color:var(--muted);font-size:12px}
-.controls{display:flex;gap:8px;align-items:center}
-.controls input{
-  padding:8px 12px;border-radius:8px;border:1px solid #d6e6ff;width:320px;
-  background:#fff;
-}
-.controls select{padding:8px;border-radius:8px;border:1px solid #d6e6ff;background:#fff}
+/* ============ GLOBAL DESIGN ============ */
 
-.container{
-  max-width:var(--max-width);margin:20px auto;display:flex;gap:18px;padding:0 16px;
-}
-.sidebar{
-  width:220px;background:var(--panel);padding:12px;border-radius:10px;border:1px solid #e6eefb;
-  height:calc(100vh - 160px);overflow:auto;
-}
-.sidebar h3{margin:6px 0 10px 0}
-#categoryList{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
-#categoryList li{padding:8px;border-radius:8px;cursor:pointer}
-#categoryList li:hover{background:#e9f6ff}
-#categoryList li.active{background:var(--accent);color:#fff}
-
-.workspace{flex:1;display:flex;flex-direction:column;gap:12px}
-.panel{background:var(--panel);padding:14px;border-radius:10px;border:1px solid #e6eefb}
-.top-panel .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.top-panel label{font-size:13px;color:var(--muted)}
-.top-panel select{padding:8px;border-radius:8px;border:1px solid #d6e6ff;background:#fff}
-
-.input-panel form{display:flex;flex-direction:column;gap:8px}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-row label{width:140px;color:var(--muted)}
-.input-row input, .input-row select{
-  padding:8px;border-radius:6px;border:1px solid #d6e6ff;background:#fff;width:180px
+:root {
+  --bg: #e8f4ff;
+  --bg-panel: #ffffff;
+  --primary: #2d8cff;
+  --primary-dark: #1665c1;
+  --text: #1a1a1a;
+  --border: #c8dffd;
+  --radius: 12px;
 }
 
-.actions{margin-top:8px;display:flex;gap:8px}
-.actions button{padding:10px 14px;border-radius:8px;border:none;background:var(--accent);color:#fff;cursor:pointer}
-.actions button:hover{background:var(--accent-dark)}
-
-.result-panel #resultBox{
-  min-height:60px;padding:12px;border-radius:8px;background:#fff;border:2px solid var(--accent);
-  display:flex;align-items:center;justify-content:center;font-weight:600;font-size:18px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
-.result-panel pre{white-space:pre-wrap;margin:8px 0;padding:8px;background:#f4f8ff;border-radius:6px}
 
-.footer{text-align:center;padding:12px;color:var(--muted);font-size:13px}
-@media (max-width:900px){
-  .container{flex-direction:column}
-  .sidebar{width:100%;height:auto}
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============ HEADER ============ */
+
+.topbar {
+  background: var(--primary);
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.topbar .brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.topbar .brand h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.topbar .brand .tag {
+  font-size: 12px;
+  opacity: .8;
+  margin-top: -4px;
+}
+
+.topbar .logo {
+  width: 42px;
+  height: 42px;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.controls input,
+.controls select {
+  padding: 7px 10px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  outline: none;
+  font-size: 14px;
+}
+
+.controls input:focus,
+.controls select:focus {
+  border-color: var(--primary-dark);
+}
+
+/* ============ MAIN LAYOUT ============ */
+
+.container {
+  display: flex;
+  flex: 1;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: var(--bg-panel);
+  padding: 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  height: fit-content;
+}
+
+.sidebar h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  background: #f5faff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar li:hover {
+  background: #ddecff;
+}
+
+/* Workspace */
+.workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Panels */
+.panel {
+  background: var(--bg-panel);
+  padding: 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.panel h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* Top panel */
+.top-panel .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.top-panel select {
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* Input form */
+#inputForm .input-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+#inputForm label {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+#inputForm input,
+#inputForm select {
+  padding: 8px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+/* Buttons */
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  background: var(--primary);
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.actions button:hover {
+  background: var(--primary-dark);
+}
+
+/* Result panel */
+.result-panel #resultBox {
+  padding: 10px;
+  background: #f0f7ff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 18px;
+  min-height: 42px;
+}
+
+#formulaDetail {
+  margin-top: 12px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 12px;
+  background: #e3f1ff;
+  font-size: 13px;
+  margin-top: auto;
 }
