@@ -23,16 +23,31 @@ footer{text-align:center; margin-top:35px; font-size:0.9rem; color:#555;}
 <body>
 <header>
 <img src="img/logo.svg" alt="ToolsenAI Logo" id="logo">
-<h1>ToolsenAI – Alles in einem Rechner & Converter</h1>
+<h1>ToolsenAI – Alles-in-einem Rechner & Converter</h1>
 <h2>Werte eingeben, Einheiten umrechnen, Formeln berechnen</h2>
 </header>
 
-<main id="converter-container"></main>
+<main id="converter-container">
+  <div>
+    <select id="langSelect">
+      <option value="de">Deutsch</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+  <div>
+    <select id="categorySelect"></select>
+  </div>
+  <div>
+    <select id="formulaSelect"></select>
+  </div>
+  <div id="inputDiv"></div>
+  <div id="resultDiv"></div>
+</main>
 
 <footer>© 2025 ToolsenAI. Alle Rechte vorbehalten.</footer>
 
 <script>
-// --- Daten & Formeln (Hauptformeln für Physik, Chemie, Mathematik, Technik, Astronomie, Einheiten) ---
+// --- Daten & Formeln ---
 const DATA = {
   Physik:{
     "Leistung P = U × I":{vars:["U","I","P"],units:{U:["V"],I:["A"],P:["W","kW","mW"]},calc:function(v,t){let r,f;if(t==="P"){r=v.U*v.I;f=`P=${v.U}×${v.I}=${r} W`;}else if(t==="U"){r=v.P/v.I;f=`U=${v.P}÷${v.I}=${r} V`;}else{r=v.P/v.U;f=`I=${v.P}÷${v.U}=${r} A`;}return {res:r,formula:f};}},
@@ -59,50 +74,75 @@ const TRANSLATIONS = {
 // --- App ---
 (function(){
   let lang="de";
-  const container=document.getElementById("converter-container");
-  const categorySelect=document.createElement("select"); container.appendChild(categorySelect);
-  const langSelect=document.createElement("select"); ["de","en"].forEach(l=>{let o=document.createElement("option");o.value=l;o.textContent=(l==="de"?"Deutsch":"English");langSelect.appendChild(o);}); container.appendChild(langSelect);
-  const formulaSelect=document.createElement("select"); container.appendChild(formulaSelect);
-  const inputDiv=document.createElement("div"); inputDiv.id="inputDiv"; container.appendChild(inputDiv);
-  const resultDiv=document.createElement("div"); resultDiv.id="resultDiv"; container.appendChild(resultDiv);
+  const categorySelect=document.getElementById("categorySelect");
+  const formulaSelect=document.getElementById("formulaSelect");
+  const inputDiv=document.getElementById("inputDiv");
+  const resultDiv=document.getElementById("resultDiv");
+  const langSelect=document.getElementById("langSelect");
 
-  langSelect.addEventListener("change",()=>{lang=langSelect.value; renderForm();});
+  langSelect.addEventListener("change",()=>{lang=langSelect.value; renderCategories();});
   categorySelect.addEventListener("change",()=>{renderForm();});
   formulaSelect.addEventListener("change",()=>{renderForm();});
 
-  function renderForm(){
+  function renderCategories(){
     const T=TRANSLATIONS[lang]||{};
-    categorySelect.innerHTML=""; Object.keys(DATA).forEach(cat=>{let opt=document.createElement("option");opt.value=cat;opt.textContent=T.categories[cat]||cat;categorySelect.appendChild(opt);});
+    categorySelect.innerHTML="";
+    Object.keys(DATA).forEach(cat=>{
+      const opt=document.createElement("option");
+      opt.value=cat;
+      opt.textContent=T.categories[cat]||cat;
+      categorySelect.appendChild(opt);
+    });
+    renderForm();
+  }
+
+  function renderForm(){
+    inputDiv.innerHTML="";
+    resultDiv.innerHTML="";
     const category=categorySelect.value;
     const formulas=DATA[category]||{};
-    const lastFormula=formulaSelect.value;
-    formulaSelect.innerHTML=""; Object.keys(formulas).forEach(f=>{let opt=document.createElement("option");opt.value=f;opt.textContent=f;formulaSelect.appendChild(opt);});
-    formulaSelect.value=lastFormula||Object.keys(formulas)[0];
+    formulaSelect.innerHTML="";
+    Object.keys(formulas).forEach(f=>{
+      const opt=document.createElement("option");
+      opt.value=f; opt.textContent=f; formulaSelect.appendChild(opt);
+    });
+    const selectedFormula=formulaSelect.value;
+    if(!selectedFormula) return;
+    const vars=formulas[selectedFormula].vars;
+    const units=formulas[selectedFormula].units;
 
-    inputDiv.innerHTML=""; resultDiv.innerHTML="";
-    const selectedFormula=formulaSelect.value; if(!selectedFormula) return;
-    const vars=formulas[selectedFormula].vars; const units=formulas[selectedFormula].units;
-    vars.forEach(v=>{const div=document.createElement("div");const label=document.createElement("label");label.textContent=v+": ";div.appendChild(label);
-    const input=document.createElement("input");input.id="input_"+v;input.type="number";div.appendChild(input);
-    if(units[v]){const uSelect=document.createElement("select");uSelect.id="unit_"+v;units[v].forEach(u=>{let o=document.createElement("option");o.value=u;o.textContent=u;uSelect.appendChild(o);});div.appendChild(uSelect);}
-    inputDiv.appendChild(div);});
+    vars.forEach(v=>{
+      const div=document.createElement("div");
+      const label=document.createElement("label"); label.textContent=v+": "; div.appendChild(label);
+      const input=document.createElement("input"); input.id="input_"+v; input.type="number"; div.appendChild(input);
+      if(units[v]){
+        const uSelect=document.createElement("select"); uSelect.id="unit_"+v;
+        units[v].forEach(u=>{const o=document.createElement("option");o.value=u;o.textContent=u;uSelect.appendChild(o);});
+        div.appendChild(uSelect);
+      }
+      inputDiv.appendChild(div);
+    });
 
-    const targetDiv=document.createElement("div");const targetLabel=document.createElement("label");targetLabel.textContent=T.target+": ";targetDiv.appendChild(targetLabel);
-    const targetSelect=document.createElement("select"); targetSelect.id="targetSelect"; vars.forEach(v=>{let o=document.createElement("option");o.value=v;o.textContent=v;targetSelect.appendChild(o);}); targetDiv.appendChild(targetSelect); inputDiv.appendChild(targetDiv);
+    const targetDiv=document.createElement("div");
+    const targetLabel=document.createElement("label"); targetLabel.textContent=TRANSLATIONS[lang].target+": "; targetDiv.appendChild(targetLabel);
+    const targetSelect=document.createElement("select"); targetSelect.id="targetSelect";
+    vars.forEach(v=>{let o=document.createElement("option"); o.value=v; o.textContent=v; targetSelect.appendChild(o);});
+    targetDiv.appendChild(targetSelect);
+    inputDiv.appendChild(targetDiv);
 
-    const btn=document.createElement("button"); btn.textContent=T.calculate||"Berechnen"; btn.addEventListener("click",calculate); inputDiv.appendChild(btn);
+    const btn=document.createElement("button"); btn.textContent=TRANSLATIONS[lang].calculate||"Berechnen"; btn.addEventListener("click",calculate); inputDiv.appendChild(btn);
   }
 
   function calculate(){
     const category=categorySelect.value; const selectedFormula=formulaSelect.value;
     const formulaObj=DATA[category][selectedFormula]; const vars=formulaObj.vars;
-    const values={}; vars.forEach(v=>{const val=document.getElementById("input_"+v)?.value; values[v]=val?parseFloat(val):null;});
+    const values={}; vars.forEach(v=>{const val=parseFloat(document.getElementById("input_"+v)?.value)||0; values[v]=val;});
     const target=document.getElementById("targetSelect").value;
     const res=formulaObj.calc(values,target);
     resultDiv.innerHTML=`<strong>Ergebnis:</strong> ${res.res} <br><em>${res.formula}</em>`;
   }
 
-  renderForm();
+  renderCategories();
 })();
 </script>
 </body>
