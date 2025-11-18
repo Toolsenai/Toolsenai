@@ -1,11 +1,10 @@
-/* Grundlayout */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
     line-height: 1.6;
-    background: #e6f2ff; /* hellblauer Hintergrund */
+    background: #e6f2ff;
     color: #333;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -17,7 +16,6 @@ h1 {
     margin-bottom: 30px;
 }
 
-/* Dropdowns und Eingabefelder */
 select, input[type="number"] {
     padding: 8px 10px;
     margin: 5px 0 15px 0;
@@ -28,7 +26,6 @@ select, input[type="number"] {
     box-sizing: border-box;
 }
 
-/* Buttons */
 button {
     background-color: #0059b3;
     color: #fff;
@@ -45,7 +42,6 @@ button:hover {
     background-color: #004080;
 }
 
-/* Ergebnisbereich */
 #result {
     background-color: #cce0ff;
     padding: 15px;
@@ -55,19 +51,16 @@ button:hover {
     white-space: pre-wrap;
 }
 
-/* Labels */
 label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-/* Container für Eingabefelder */
 .inputGroup {
     margin-bottom: 10px;
 }
 
-/* Sprach- und Modus-Auswahl */
 #language, #mode, #categoryContainer, #formulaContainer {
     margin-bottom: 15px;
 }
