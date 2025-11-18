@@ -1,7 +1,3 @@
-/* js/app.js
-   ToolsenAI – Zentrale Steuerung
-   --------------------------------------------------------------- */
-
 (function(){
   const DATA = window.DATA;
   const unitFactors = window.unitFactors || {};
@@ -18,34 +14,10 @@
   let currentCategory = "";
   let currentFormula = "";
 
-  // Sprache wechseln
-  langSelect.addEventListener("change", e => {
-    currentLang = e.target.value;
-    populateCategories();
-    populateFormulas();
-    clearInputs();
-  });
-
-  // Modus wechseln
-  modeSelect.addEventListener("change", e => {
-    currentMode = e.target.value;
-    populateCategories();
-    populateFormulas();
-    clearInputs();
-  });
-
-  // Kategorie wechseln
-  categorySelect.addEventListener("change", e => {
-    currentCategory = e.target.value;
-    populateFormulas();
-    clearInputs();
-  });
-
-  // Formel wechseln
-  formulaSelect.addEventListener("change", e => {
-    currentFormula = e.target.value;
-    buildInputs();
-  });
+  langSelect.addEventListener("change", e => { currentLang = e.target.value; populateCategories(); populateFormulas(); clearInputs(); });
+  modeSelect.addEventListener("change", e => { currentMode = e.target.value; populateCategories(); populateFormulas(); clearInputs(); });
+  categorySelect.addEventListener("change", e => { currentCategory = e.target.value; populateFormulas(); clearInputs(); });
+  formulaSelect.addEventListener("change", e => { currentFormula = e.target.value; buildInputs(); });
 
   function populateCategories(){
     categorySelect.innerHTML = `<option value="">-- wählen --</option>`;
@@ -85,7 +57,7 @@
       div.className = "inputGroup";
 
       const label = document.createElement("label");
-      label.textContent = v + ":";
+      label.textContent = v+":";
 
       const input = document.createElement("input");
       input.type = "number";
@@ -101,12 +73,20 @@
 
       div.appendChild(label);
       div.appendChild(input);
-      if(unitSelect.options.length > 0) div.appendChild(unitSelect);
+      if(unitSelect.options.length>0) div.appendChild(unitSelect);
+
+      const unitDisplay = document.createElement("span");
+      unitDisplay.id = `unitDisplay-${v}`;
+      unitDisplay.style.marginLeft = "8px";
+      unitDisplay.style.fontWeight = "bold";
+      unitDisplay.textContent = unitSelect.value || "";
+      div.appendChild(unitDisplay);
+
+      unitSelect.addEventListener("change", () => { unitDisplay.textContent = unitSelect.value; });
 
       inputFields.appendChild(div);
     });
 
-    // Target select
     const targetDiv = document.createElement("div");
     targetDiv.className = "inputGroup";
     const label = document.createElement("label");
@@ -123,7 +103,6 @@
     targetDiv.appendChild(targetSelect);
     inputFields.appendChild(targetDiv);
 
-    // Button
     const btn = document.createElement("button");
     btn.textContent = "Berechnen";
     btn.addEventListener("click", runCalculation);
@@ -145,6 +124,5 @@
     resultDisplay.textContent = result.formula;
   }
 
-  // Initial
   populateCategories();
 })();
