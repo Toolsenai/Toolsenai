@@ -1,46 +1,50 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>ToolsenAI – All-in-One Converter</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>ToolsenAI – Online Converter & Tools</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <h1>ToolsenAI</h1>
+  <p>Willkommen! Hier erscheinen bald alle deine Umrechner und Tools.</p>
 
-<h1>ToolsenAI – All-in-One Converter</h1>
+  <h2>Beispiele (bald mit echten Funktionen):</h2>
+  <a href="#">Kilometer → Meilen</a>
+  <a href="#">Kilogramm → Pfund</a>
+  <a href="#">Liter → Gallonen</a>
+  <a href="#">MB → KB</a>
+  <a href="#">Celsius → Fahrenheit</a>
+  <a href="#">Newton → Kilogramm</a>
+  <a href="#">Pascal → Bar</a>
 
-<!-- Sprachwahl -->
-<div class="language-switch">
-  <label for="language">Sprache / Language:</label>
-  <select id="language" onchange="updateUI()">
-    <option value="de">Deutsch</option>
-    <option value="en">English</option>
-  </select>
-</div>
+  <!-- Eingabe & Umrechner -->
+  <div class="select-container">
+    <select id="category" onchange="updateUnits()"></select>
+    <select id="fromUnit"></select>
+    <select id="toUnit"></select>
+    <input type="number" id="value" placeholder="Wert eingeben">
+    <button onclick="convertAll()">Umrechnen</button>
+  </div>
+  <div class="result" id="result"></div>
 
-<!-- Converter UI -->
-<div class="select-container">
-  <select id="category" onchange="updateUnits()"></select>
-  <select id="fromUnit"></select>
-  <select id="toUnit"></select>
-  <input type="number" id="value" placeholder="Wert eingeben">
-  <button onclick="convert()">Umrechnen</button>
-</div>
+  <!-- Sprache -->
+  <div class="language-switch">
+    <select id="language" onchange="updateUI()">
+      <option value="de">Deutsch</option>
+      <option value="en">English</option>
+    </select>
+  </div>
 
-<div class="result" id="result"></div>
-
-<!-- JS Dateien laden -->
-<script src="js/translations.js"></script>
-<script src="js/converter.js"></script>
-<script src="js/physics.js"></script>
-<script src="js/chemistry.js"></script>
-<script src="js/astronomy.js"></script>
-<script src="js/special.js"></script>
-
-<script>
-  // Initial UI Update
-  updateUI();
-</script>
-
+  <!-- JS-Dateien -->
+  <script src="js/translations.js"></script>
+  <script src="js/converter.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/chemistry.js"></script>
+  <script src="js/astronomy.js"></script>
+  <script src="js/special.js"></script>
+  <script>
+    updateUI(); // füllt Kategorien + Einheiten beim Laden
+  </script>
 </body>
 </html>
