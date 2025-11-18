@@ -13,11 +13,25 @@ h1 {
   color: #222;
 }
 
-.select-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
+.select-container select, 
+.select-container input, 
+.select-container button {
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.select-container button {
+  background-color: #3399ff; /* hellblauer Button */
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.select-container button:hover {
+  background-color: #007acc; /* dunkler beim Hover */
 }
 
 select, input, button {
@@ -40,14 +54,14 @@ button:hover {
   background-color: #0056b3;
 }
 
-.result {
-  margin-top: 20px;
+#result {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 1px solid #3399ff;
+  border-radius: 8px;
   font-weight: bold;
-  background: #fff;
-  padding: 15px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  white-space: pre-wrap;
+  text-align: center;
 }
 
 .language-switch {
