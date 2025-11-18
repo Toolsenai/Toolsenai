@@ -1,71 +1,84 @@
+/* Grundlayout */
 body {
   font-family: 'Roboto', sans-serif;
-  
-  max-width: 1000px;
+  max-width: 700px;
   margin: 40px auto;
   padding: 20px;
   line-height: 1.6;
-  background-color: #f9f9f9;
-}
-
-h1 {
+  background-color: #e6f2ff; /* hellblauer Hintergrund */
+  color: #333;
   text-align: center;
-  color: #222;
 }
 
-.select-container select, 
-.select-container input, 
+/* Logo */
+.logo {
+  display: block;
+  margin: 0 auto 20px auto;
+  width: 120px;
+}
+
+/* Überschriften */
+h1 {
+  margin-bottom: 10px;
+}
+
+/* Container für Eingaben */
+.select-container {
+  background-color: #f0f8ff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  display: inline-block;
+  text-align: center;
+}
+
+/* Dropdowns, Input, Button */
+.select-container select,
+.select-container input,
 .select-container button {
   padding: 10px;
   margin: 5px 0;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 16px;
+  width: 150px;
+}
+
+.select-container input {
+  width: 140px;
 }
 
 .select-container button {
-  background-color: #3399ff; /* hellblauer Button */
+  background-color: #3399ff;
   color: white;
   border: none;
   cursor: pointer;
+  width: 160px;
+  font-weight: bold;
 }
 
 .select-container button:hover {
-  background-color: #007acc; /* dunkler beim Hover */
+  background-color: #007acc;
 }
 
-select, input, button {
-  padding: 10px;
-  font-size: 16px;
-  flex: 1;
-  min-width: 120px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
+/* Ergebnisfeld */
 #result {
   margin-top: 15px;
-  padding: 10px;
+  padding: 15px;
   background-color: #ffffff;
-  border: 1px solid #3399ff;
+  border: 2px solid #3399ff;
   border-radius: 8px;
   font-weight: bold;
-  text-align: center;
 }
 
+/* Sprache */
 .language-switch {
-  position: fixed;
-  top: 10px;
-  right: 10px;
+  margin-top: 20px;
+}
+
+.language-switch select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
