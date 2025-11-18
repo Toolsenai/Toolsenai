@@ -1,52 +1,80 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>ToolsenAI – Online Converter & Tools</title>
-
-  <!-- Google Fonts -->
+  <meta charset="utf-8">
+  <title>ToolsenAI – All-in-One Converter & Calculator</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="styles.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Logo -->
-  <img src="images/logo.png" alt="ToolsenAI Logo" class="logo">
+  <header class="topbar">
+    <div class="brand">
+      <img src="images/logo.png" alt="ToolsenAI" class="logo" onerror="this.style.display='none'">
+      <div>
+        <h1>ToolsenAI</h1>
+        <p class="tag">Converter · Calculator · All in one</p>
+      </div>
+    </div>
 
-  <h1>ToolsenAI</h1>
-  <p>Wähle eine Kategorie, gib einen Wert ein und klicke auf „Umrechnen“.</p>
+    <div class="controls">
+      <input id="globalSearch" placeholder="Suche Formel oder Einheit (z. B. 'P U I' oder 'Watt')" />
+      <select id="modeSelect" title="Mode">
+        <option value="converter">Converter (Einheiten)</option>
+        <option value="calculator">Calculator (Formeln)</option>
+      </select>
+      <select id="langSelect">
+        <option value="de">Deutsch</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+  </header>
 
-  <!-- Eingabe & Umrechner -->
-  <div class="select-container">
-    <select id="category" onchange="updateUnits()"></select>
-    <select id="fromUnit"></select>
-    <select id="toUnit"></select>
-    <input type="number" id="value" placeholder="Wert eingeben">
-    <button onclick="convertAll()">Umrechnen</button>
-  </div>
+  <main class="container">
+    <aside class="sidebar">
+      <h3>Kategorien</h3>
+      <ul id="categoryList"></ul>
+    </aside>
 
-  <div class="result" id="result"></div>
+    <section class="workspace">
+      <div class="panel top-panel">
+        <div class="row">
+          <label>Unterkategorie / Formel</label>
+          <select id="subSelect"></select>
 
-  <!-- Sprache -->
-  <div class="language-switch">
-    <select id="language" onchange="updateUI()">
-      <option value="de">Deutsch</option>
-      <option value="en">English</option>
-    </select>
-  </div>
+          <label>Was berechnen?</label>
+          <select id="targetSelect"></select>
 
-  <!-- JS-Dateien -->
-  <script src="js/translations.js"></script>
-  <script src="js/converter.js"></script>
-  <script src="js/physics.js"></script>
-  <script src="js/chemistry.js"></script>
-  <script src="js/astronomy.js"></script>
-  <script src="js/special.js"></script>
-  <script>
-    updateUI(); // füllt Kategorien + Einheiten beim Laden
-  </script>
+          <label>Ergebnis-Einheit</label>
+          <select id="resultUnitSelect"></select>
+        </div>
+      </div>
+
+      <div class="panel input-panel">
+        <h4>Eingaben</h4>
+        <form id="inputForm"></form>
+        <div class="actions">
+          <button id="calculateBtn">Berechnen</button>
+          <button id="swapBtn" title="Tauschen (von ↔ zu)">↔</button>
+        </div>
+      </div>
+
+      <div class="panel result-panel">
+        <h4>Ergebnis</h4>
+        <div id="resultBox">Kein Ergebnis</div>
+        <details id="formulaDetail">
+          <summary>Formel (Lehrbuchstil)</summary>
+          <pre id="formulaText"></pre>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>ToolsenAI — © <span id="year"></span></small>
+  </footer>
+
+  <script src="js/app.js"></script>
 </body>
 </html>
