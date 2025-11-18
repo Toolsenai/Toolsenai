@@ -1,66 +1,63 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    line-height: 1.6;
-    background: #e6f2ff;
-    color: #333;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+  background-color: #e6f2ff;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#logo {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 h1 {
-    text-align: center;
-    color: #0059b3;
-    margin-bottom: 30px;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
 }
 
-select, input[type="number"] {
-    padding: 8px 10px;
-    margin: 5px 0 15px 0;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    width: 100%;
-    box-sizing: border-box;
+select, input, button {
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  font-size: 1rem;
 }
 
 button {
-    background-color: #0059b3;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-top: 10px;
+  cursor: pointer;
+  background-color: #3399ff;
+  color: white;
+  border: none;
+  transition: background 0.3s;
 }
 
 button:hover {
-    background-color: #004080;
+  background-color: #007acc;
 }
 
-#result {
-    background-color: #cce0ff;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 20px;
-    font-family: 'Courier New', Courier, monospace;
-    white-space: pre-wrap;
+#inputDiv div {
+  margin-bottom: 10px;
 }
 
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+#resultDiv {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #d9f0ff;
+  border-radius: 6px;
+  font-weight: bold;
 }
 
-.inputGroup {
-    margin-bottom: 10px;
-}
-
-#language, #mode, #categoryContainer, #formulaContainer {
-    margin-bottom: 15px;
+footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  color: #555;
 }
