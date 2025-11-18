@@ -1,81 +1,54 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <title>ToolsenAI – All-in-One Converter & Calculator</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link href="styles.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>ToolsenAI – Alles-Umrechner & Formeln</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <img src="images/logo.png" alt="ToolsenAI" class="logo" onerror="this.style.display='none'">
-      <div>
-        <h1>ToolsenAI</h1>
-        <p class="tag">Converter · Calculator · All in one</p>
-      </div>
-    </div>
+  <h1>ToolsenAI</h1>
 
-    <div class="controls">
-      <input id="globalSearch" placeholder="Suche Formel oder Einheit (z. B. 'P U I' oder 'Watt')" />
-      <select id="modeSelect" title="Mode">
-        <option value="converter">Converter (Einheiten)</option>
-        <option value="calculator">Calculator (Formeln)</option>
-      </select>
-      <select id="langSelect">
-        <option value="de">Deutsch</option>
-        <option value="en">English</option>
-      </select>
-    </div>
-  </header>
+  <div id="language">
+    <label>Sprache:</label>
+    <select id="langSelect">
+      <option value="de" selected>Deutsch</option>
+      <option value="en">English</option>
+    </select>
+  </div>
 
-  <main class="container">
-    <aside class="sidebar">
-      <h3>Kategorien</h3>
-      <ul id="categoryList"></ul>
-    </aside>
+  <div id="mode">
+    <label>Modus:</label>
+    <select id="modeSelect">
+      <option value="converter">Converter</option>
+      <option value="calculator">Calculator</option>
+    </select>
+  </div>
 
-    <section class="workspace">
-      <div class="panel top-panel">
-        <div class="row">
-          <label>Unterkategorie / Formel</label>
-          <select id="subSelect"></select>
+  <div id="categoryContainer">
+    <label>Kategorie:</label>
+    <select id="categorySelect">
+      <option value="">-- wählen --</option>
+    </select>
+  </div>
 
-          <label>Was berechnen?</label>
-          <select id="targetSelect"></select>
+  <div id="formulaContainer">
+    <label>Formel:</label>
+    <select id="formulaSelect">
+      <option value="">-- wählen --</option>
+    </select>
+  </div>
 
-          <label>Ergebnis-Einheit</label>
-          <select id="resultUnitSelect"></select>
-        </div>
-      </div>
+  <div id="inputFields">
+    <!-- Dynamische Eingabefelder erscheinen hier -->
+  </div>
 
-      <div class="panel input-panel">
-        <h4>Eingaben</h4>
-        <form id="inputForm"></form>
-        <div class="actions">
-          <button id="calculateBtn">Berechnen</button>
-          <button id="swapBtn" title="Tauschen (von ↔ zu)">↔</button>
-        </div>
-      </div>
+  <div id="result">
+    <p>Ergebnis:</p>
+    <pre id="resultDisplay"></pre>
+  </div>
 
-      <div class="panel result-panel">
-        <h4>Ergebnis</h4>
-        <div id="resultBox">Kein Ergebnis</div>
-        <details id="formulaDetail">
-          <summary>Formel (Lehrbuchstil)</summary>
-          <pre id="formulaText"></pre>
-        </details>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <small>ToolsenAI — © <span id="year"></span></small>
-  </footer>
-
-  <!-- Core script (wird in den nächsten Schritten geliefert) -->
+  <script src="js/modules/physics.js"></script>
+  <script src="js/modules/chemistry.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
