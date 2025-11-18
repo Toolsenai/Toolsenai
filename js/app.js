@@ -1,6 +1,5 @@
 (function(){
   const DATA = window.DATA;
-  const unitFactors = window.unitFactors || {};
 
   const langSelect = document.getElementById("langSelect");
   const modeSelect = document.getElementById("modeSelect");
@@ -52,6 +51,7 @@
     clearInputs();
     if(!currentCategory || !currentFormula) return;
     const formulaObj = DATA[currentCategory].formulas[currentFormula];
+
     formulaObj.vars.forEach(v => {
       const div = document.createElement("div");
       div.className = "inputGroup";
