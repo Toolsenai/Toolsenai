@@ -1,4 +1,4 @@
-// Alle Kategorien und Einheiten + Umrechnungsfaktoren
+// Kategorien und Einheiten + Umrechnungsfaktoren
 const categories = {
   "Länge": {
     "Meter": 1,
@@ -31,7 +31,6 @@ const categories = {
     "Megabyte": 8*1024*1024,
     "Gigabyte": 8*1024*1024*1024
   }
-  // Weitere Kategorien wie Geschwindigkeit, Energie, Druck etc. können hier ergänzt werden
 };
 
 // Referenzen
@@ -42,7 +41,7 @@ const valueInput = document.getElementById("value");
 const resultDiv = document.getElementById("result");
 const languageSelect = document.getElementById("language");
 
-// Kategorie füllen
+// Kategorien füllen
 function updateUI() {
   categorySelect.innerHTML = "";
   for (let cat in categories) {
@@ -54,7 +53,7 @@ function updateUI() {
   updateUnits();
 }
 
-// Einheiten füllen
+// Einheiten für die gewählte Kategorie füllen
 function updateUnits() {
   const cat = categorySelect.value;
   const units = Object.keys(categories[cat]);
@@ -73,7 +72,7 @@ function updateUnits() {
   });
 }
 
-// Umrechnen
+// Umrechnung durchführen
 function convertAll() {
   const cat = categorySelect.value;
   const from = fromSelect.value;
@@ -88,6 +87,7 @@ function convertAll() {
   let formula = "";
 
   if (cat === "Temperatur") {
+    // Temperatur-Umrechnung mit lesbarer Formel
     if (from === "Celsius" && to === "Fahrenheit") {
       result = val * 9/5 + 32;
       formula = "F = C × 9/5 + 32";
@@ -111,10 +111,21 @@ function convertAll() {
       formula = `${from} → ${to}`;
     }
   } else {
+    // Andere Kategorien mit lesbarer Division
     const factorFrom = categories[cat][from];
     const factorTo = categories[cat][to];
+
     result = val * factorFrom / factorTo;
-    formula = `${val} ${from} × (${factorFrom}/${factorTo}) = ${result} ${to}`;
+
+    if (factorFrom === factorTo) {
+      formula = `${val} ${from} → ${to}`;
+    } else if (factorFrom > factorTo) {
+      const div = factorFrom / factorTo;
+      formula = `${val} ${from} ÷ ${div} = ${result} ${to}`;
+    } else {
+      const div = factorTo / factorFrom;
+      formula = `${val} ${from} ÷ ${div} = ${result} ${to}`;
+    }
   }
 
   resultDiv.innerHTML = `${result} ${to} <br><small>Formel: ${formula}</small>`;
@@ -122,7 +133,7 @@ function convertAll() {
 
 // Sprache umschalten
 function updateLanguage() {
-  // Für später: DE/EN Interface-Texte anpassen
+  // Später: Interface-Texte DE/EN
 }
 
 // Initialisierung
