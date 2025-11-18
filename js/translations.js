@@ -1,26 +1,20 @@
 window.TRANSLATIONS = {
   de: {
-    language: "Deutsch",
-    targetVariable: "Zielvariable",
-    calculate: "Berechnen",
-    category: "Kategorie wählen",
+    targetVariable:"Zielvariable",
+    calculate:"Berechnen",
+    categories: {"Physik":"Physik"},
     formulas: {
-      "A = l × b (Fläche Rechteck)": "A = l × b (Fläche Rechteck)",
-      "A = π × r²": "A = π × r²",
-      "V = 4/3 π r³": "V = 4/3 π r³",
-      "y = m x + b": "y = m x + b"
+      "Leistung P = U × I":"Leistung P = U × I",
+      "Kraft F = m × a":"Kraft F = m × a"
     }
   },
   en: {
-    language: "English",
-    targetVariable: "Target variable",
-    calculate: "Calculate",
-    category: "Select category",
+    targetVariable:"Target variable",
+    calculate:"Calculate",
+    categories: {"Physik":"Physics"},
     formulas: {
-      "A = l × b (Fläche Rechteck)": "A = l × b (Rectangle area)",
-      "A = π × r²": "A = π × r²",
-      "V = 4/3 π r³": "V = 4/3 π r³ (Sphere volume)",
-      "y = m x + b": "y = m x + b"
+      "Leistung P = U × I":"Power P = U × I",
+      "Kraft F = m × a":"Force F = m × a"
     }
   }
 };
