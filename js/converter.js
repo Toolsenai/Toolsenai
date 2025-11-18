@@ -1,87 +1,132 @@
-// converter.js
-// Grundumrechnungen für ToolsenAI
-
-// Alle Conversion-Funktionen
-const conversions = {
-  length: {
-    label: { de: "Länge", en: "Length" },
-    units: {
-      meter: { de: "Meter", en: "Meter", factor: 1 },
-      kilometer: { de: "Kilometer", en: "Kilometer", factor: 1000 },
-      centimeter: { de: "Zentimeter", en: "Centimeter", factor: 0.01 },
-      millimeter: { de: "Millimeter", en: "Millimeter", factor: 0.001 },
-      mile: { de: "Meile", en: "Mile", factor: 1609.34 },
-      yard: { de: "Yard", en: "Yard", factor: 0.9144 },
-      foot: { de: "Fuß", en: "Foot", factor: 0.3048 },
-      inch: { de: "Zoll", en: "Inch", factor: 0.0254 }
-    }
+// Alle Kategorien und Einheiten + Umrechnungsfaktoren
+const categories = {
+  "Länge": {
+    "Meter": 1,
+    "Kilometer": 1000,
+    "Zentimeter": 0.01,
+    "Millimeter": 0.001,
+    "Meilen": 1609.34,
+    "Fuß": 0.3048
   },
-  weight: {
-    label: { de: "Gewicht", en: "Weight" },
-    units: {
-      kilogram: { de: "Kilogramm", en: "Kilogram", factor: 1 },
-      gram: { de: "Gramm", en: "Gram", factor: 0.001 },
-      milligram: { de: "Milligramm", en: "Milligram", factor: 0.000001 },
-      pound: { de: "Pfund", en: "Pound", factor: 0.453592 },
-      ounce: { de: "Unze", en: "Ounce", factor: 0.0283495 }
-    }
+  "Gewicht": {
+    "Kilogramm": 1,
+    "Gramm": 0.001,
+    "Pfund": 0.453592,
+    "Unze": 0.0283495
   },
-  volume: {
-    label: { de: "Volumen", en: "Volume" },
-    units: {
-      liter: { de: "Liter", en: "Liter", factor: 1 },
-      milliliter: { de: "Milliliter", en: "Milliliter", factor: 0.001 },
-      cubicMeter: { de: "Kubikmeter", en: "Cubic meter", factor: 1000 },
-      gallon: { de: "Gallone", en: "Gallon", factor: 3.78541 },
-      pint: { de: "Pint", en: "Pint", factor: 0.473176 }
-    }
+  "Volumen": {
+    "Liter": 1,
+    "Milliliter": 0.001,
+    "Gallonen": 3.78541
   },
-  temperature: {
-    label: { de: "Temperatur", en: "Temperature" },
-    units: {
-      celsius: { de: "Celsius", en: "Celsius" },
-      fahrenheit: { de: "Fahrenheit", en: "Fahrenheit" },
-      kelvin: { de: "Kelvin", en: "Kelvin" }
-    }
+  "Temperatur": {
+    "Celsius": "C",
+    "Fahrenheit": "F",
+    "Kelvin": "K"
+  },
+  "Datenmenge": {
+    "Bit": 1,
+    "Byte": 8,
+    "Kilobyte": 8*1024,
+    "Megabyte": 8*1024*1024,
+    "Gigabyte": 8*1024*1024*1024
   }
+  // Weitere Kategorien wie Geschwindigkeit, Energie, Druck etc. können hier ergänzt werden
 };
 
-// Umrechnen-Funktion
-function convert() {
-  const cat = document.getElementById("category").value;
-  const from = document.getElementById("fromUnit").value;
-  const to = document.getElementById("toUnit").value;
-  const val = parseFloat(document.getElementById("value").value);
-  const resultDiv = document.getElementById("result");
+// Referenzen
+const categorySelect = document.getElementById("category");
+const fromSelect = document.getElementById("fromUnit");
+const toSelect = document.getElementById("toUnit");
+const valueInput = document.getElementById("value");
+const resultDiv = document.getElementById("result");
+const languageSelect = document.getElementById("language");
 
-  if (!cat || !from || !to || isNaN(val)) {
-    resultDiv.innerText = labels[lang].error;
+// Kategorie füllen
+function updateUI() {
+  categorySelect.innerHTML = "";
+  for (let cat in categories) {
+    const opt = document.createElement("option");
+    opt.value = cat;
+    opt.textContent = cat;
+    categorySelect.appendChild(opt);
+  }
+  updateUnits();
+}
+
+// Einheiten füllen
+function updateUnits() {
+  const cat = categorySelect.value;
+  const units = Object.keys(categories[cat]);
+  fromSelect.innerHTML = "";
+  toSelect.innerHTML = "";
+  units.forEach(u => {
+    const opt1 = document.createElement("option");
+    opt1.value = u;
+    opt1.textContent = u;
+    fromSelect.appendChild(opt1);
+
+    const opt2 = document.createElement("option");
+    opt2.value = u;
+    opt2.textContent = u;
+    toSelect.appendChild(opt2);
+  });
+}
+
+// Umrechnen
+function convertAll() {
+  const cat = categorySelect.value;
+  const from = fromSelect.value;
+  const to = toSelect.value;
+  const val = parseFloat(valueInput.value);
+  if (isNaN(val)) {
+    resultDiv.textContent = languageSelect.value === "de" ? "Bitte einen gültigen Wert eingeben" : "Please enter a valid number";
     return;
   }
 
-  let res, formula;
+  let result;
+  let formula = "";
 
-  if (cat === "temperature") {
-    // Temperatur gesondert behandeln
-    if (from === "celsius") {
-      if (to === "fahrenheit") { res = val * 9/5 + 32; formula = "°F = °C × 9/5 + 32"; }
-      else if (to === "kelvin") { res = val + 273.15; formula = "K = °C + 273.15"; }
-      else { res = val; formula = "°C = °C"; }
-    } else if (from === "fahrenheit") {
-      if (to === "celsius") { res = (val - 32) * 5/9; formula = "°C = (°F - 32) × 5/9"; }
-      else if (to === "kelvin") { res = (val - 32) * 5/9 + 273.15; formula = "K = (°F - 32) × 5/9 + 273.15"; }
-      else { res = val; formula = "°F = °F"; }
-    } else if (from === "kelvin") {
-      if (to === "celsius") { res = val - 273.15; formula = "°C = K - 273.15"; }
-      else if (to === "fahrenheit") { res = (val - 273.15) * 9/5 + 32; formula = "°F = (K - 273.15) × 9/5 + 32"; }
-      else { res = val; formula = "K = K"; }
+  if (cat === "Temperatur") {
+    if (from === "Celsius" && to === "Fahrenheit") {
+      result = val * 9/5 + 32;
+      formula = "F = C × 9/5 + 32";
+    } else if (from === "Fahrenheit" && to === "Celsius") {
+      result = (val - 32) * 5/9;
+      formula = "C = (F - 32) × 5/9";
+    } else if (from === "Celsius" && to === "Kelvin") {
+      result = val + 273.15;
+      formula = "K = C + 273.15";
+    } else if (from === "Kelvin" && to === "Celsius") {
+      result = val - 273.15;
+      formula = "C = K - 273.15";
+    } else if (from === "Fahrenheit" && to === "Kelvin") {
+      result = (val - 32) * 5/9 + 273.15;
+      formula = "K = (F - 32) × 5/9 + 273.15";
+    } else if (from === "Kelvin" && to === "Fahrenheit") {
+      result = (val - 273.15) * 9/5 + 32;
+      formula = "F = (K - 273.15) × 9/5 + 32";
+    } else {
+      result = val;
+      formula = `${from} → ${to}`;
     }
   } else {
-    const fromFactor = conversions[cat].units[from].factor;
-    const toFactor = conversions[cat].units[to].factor;
-    res = val * fromFactor / toFactor;
-    formula = `${val} × ${fromFactor} ÷ ${toFactor} = ${res}`;
+    const factorFrom = categories[cat][from];
+    const factorTo = categories[cat][to];
+    result = val * factorFrom / factorTo;
+    formula = `${val} ${from} × (${factorFrom}/${factorTo}) = ${result} ${to}`;
   }
 
-  resultDiv.innerText = `${res} (${formula})`;
+  resultDiv.innerHTML = `${result} ${to} <br><small>Formel: ${formula}</small>`;
 }
+
+// Sprache umschalten
+function updateLanguage() {
+  // Für später: DE/EN Interface-Texte anpassen
+}
+
+// Initialisierung
+window.onload = () => {
+  updateUI();
+  languageSelect.addEventListener("change", updateLanguage);
+};
