@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  body {
-  font-family: Arial, sans-serif; /* Schriftart */
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-  line-height: 1.6;
-  background-color: #e6f2ff; /* hellblauer Hintergrund */
-}
+  <meta charset="UTF-8">
+  <title>ToolsenAI – Online Converter & Tools</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Logo -->
+  <img src="images/logo.png" alt="ToolsenAI Logo" class="logo">
+
   <h1>ToolsenAI</h1>
   <p>Wähle eine Kategorie, gib einen Wert ein und klicke auf „Umrechnen“.</p>
 
@@ -22,6 +27,7 @@
     <input type="number" id="value" placeholder="Wert eingeben">
     <button onclick="convertAll()">Umrechnen</button>
   </div>
+
   <div class="result" id="result"></div>
 
   <!-- Sprache -->
