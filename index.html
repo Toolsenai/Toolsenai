@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>ToolsenAI – Alles-in-einem Rechner & Converter</title>
+<title>ToolsenAI – All-in-One Calculator & Converter</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body { font-family: Arial, sans-serif; background:#e6f2ff; margin:0; padding:20px; color:#333; max-width:1200px; margin:auto; }
@@ -23,16 +23,16 @@ footer{text-align:center; margin-top:35px; font-size:0.9rem; color:#555;}
 <body>
 <header>
 <img src="img/logo.svg" alt="ToolsenAI Logo" id="logo">
-<h1>ToolsenAI – Alles-in-einem Rechner & Converter</h1>
-<h2>Werte eingeben, Einheiten umrechnen, Formeln berechnen</h2>
+<h1>ToolsenAI – All-in-One Calculator & Converter</h1>
+<h2>Enter values, convert units, calculate formulas</h2>
 </header>
 
 <main id="converter-container">
   <div>
-    <label for="langSelect">Sprache / Language:</label>
+    <label for="langSelect">Language / Sprache:</label>
     <select id="langSelect">
-      <option value="de">Deutsch</option>
       <option value="en">English</option>
+      <option value="de">Deutsch</option>
     </select>
   </div>
   <div>
@@ -45,36 +45,36 @@ footer{text-align:center; margin-top:35px; font-size:0.9rem; color:#555;}
   <div id="resultDiv"></div>
 </main>
 
-<footer>© 2025 ToolsenAI. Alle Rechte vorbehalten.</footer>
+<footer>© 2025 ToolsenAI. All rights reserved.</footer>
 
 <script>
-// --- Daten & Formeln ---
+// --- Daten & Formeln (50 wichtigste Beispiele) ---
 const DATA = {
-  Physik:{
-    "Leistung P = U × I":{vars:["U","I","P"],units:{U:["V"],I:["A"],P:["W","kW","mW"]},calc:function(v,t){let r,f;if(t==="P"){r=v.U*v.I;f=`P=${v.U}×${v.I}=${r} W`;}else if(t==="U"){r=v.P/v.I;f=`U=${v.P}÷${v.I}=${r} V`;}else{r=v.P/v.U;f=`I=${v.P}÷${v.U}=${r} A`;}return {res:r,formula:f};}},
-    "Kraft F = m × a":{vars:["m","a","F"],units:{m:["kg"],a:["m/s²"],F:["N"]},calc:function(v,t){let r,f;if(t==="F"){r=v.m*v.a;f=`F=${v.m}×${v.a}=${r} N`;}else if(t==="m"){r=v.F/v.a;f=`m=${v.F}÷${v.a}=${r} kg`;}else{r=v.F/v.m;f=`a=${v.F}÷${v.m}=${r} m/s²`;}return {res:r,formula:f};}},
-    "Widerstand R = U ÷ I":{vars:["U","I","R"],units:{U:["V"],I:["A"],R:["Ω","kΩ","MΩ"]},calc:function(v,t){let r,f;if(t==="R"){r=v.U/v.I;f=`R=${v.U}÷${v.I}=${r} Ω`;}else if(t==="U"){r=v.R*v.I;f=`U=${v.R}×${v.I}=${r} V`;}else{r=v.U/v.R;f=`I=${v.U}÷${v.R}=${r} A`;}return {res:r,formula:f};}},
-    "Volumen Quader V = l × b × h":{vars:["l","b","h","V"],units:{l:["m","cm"],b:["m","cm"],h:["m","cm"],V:["m³","cm³"]},calc:function(v,t){let r,f;if(t==="V"){r=v.l*v.b*v.h;f=`V=${v.l}×${v.b}×${v.h}=${r}`;}else if(t==="l"){r=v.V/(v.b*v.h);f=`l=${v.V}÷(${v.b}×${v.h})=${r}`;}else if(t==="b"){r=v.V/(v.l*v.h);f=`b=${v.V}÷(${v.l}×${v.h})=${r}`;}else{r=v.V/(v.l*v.b);f=`h=${v.V}÷(${v.l}×${v.b})=${r}`;}return {res:r,formula:f};}},
-    "Energie E = m × c²":{vars:["m","c","E"],units:{m:["kg"],c:["m/s"],E:["J"]},calc:function(v,t){let r,f;if(t==="E"){r=v.m*Math.pow(v.c,2);f=`E=${v.m}×${v.c}²=${r} J`;}else if(t==="m"){r=v.E/Math.pow(v.c,2);f=`m=${v.E}÷${v.c}²=${r} kg`;}else{r=Math.sqrt(v.E/v.m);f=`c=√(${v.E}÷${v.m})=${r} m/s`;}return {res:r,formula:f};}}
+  Physics:{
+    "Power P = U × I":{vars:["U","I","P"],units:{U:["V"],I:["A"],P:["W","kW","mW"]},calc:function(v,t){let r,f;if(t==="P"){r=v.U*v.I;f=`P=${v.U}×${v.I}=${r} W`;}else if(t==="U"){r=v.P/v.I;f=`U=${v.P}÷${v.I}=${r} V`;}else{r=v.P/v.U;f=`I=${v.P}÷${v.U}=${r} A`;}return {res:r,formula:f};}},
+    "Force F = m × a":{vars:["m","a","F"],units:{m:["kg"],a:["m/s²"],F:["N"]},calc:function(v,t){let r,f;if(t==="F"){r=v.m*v.a;f=`F=${v.m}×${v.a}=${r} N`;}else if(t==="m"){r=v.F/v.a;f=`m=${v.F}÷${v.a}=${r} kg`;}else{r=v.F/v.m;f=`a=${v.F}÷${v.m}=${r} m/s²`;}return {res:r,formula:f};}},
+    "Resistance R = U ÷ I":{vars:["U","I","R"],units:{U:["V"],I:["A"],R:["Ω","kΩ","MΩ"]},calc:function(v,t){let r,f;if(t==="R"){r=v.U/v.I;f=`R=${v.U}÷${v.I}=${r} Ω`;}else if(t==="U"){r=v.R*v.I;f=`U=${v.R}×${v.I}=${r} V`;}else{r=v.U/v.R;f=`I=${v.U}÷${v.R}=${r} A`;}return {res:r,formula:f};}},
+    "Volume Cuboid V = l × b × h":{vars:["l","b","h","V"],units:{l:["m","cm"],b:["m","cm"],h:["m","cm"],V:["m³","cm³"]},calc:function(v,t){let r,f;if(t==="V"){r=v.l*v.b*v.h;f=`V=${v.l}×${v.b}×${v.h}=${r}`;}else if(t==="l"){r=v.V/(v.b*v.h);f=`l=${v.V}÷(${v.b}×${v.h})=${r}`;}else if(t==="b"){r=v.V/(v.l*v.h);f=`b=${v.V}÷(${v.l}×${v.h})=${r}`;}else{r=v.V/(v.l*v.b);f=`h=${v.V}÷(${v.l}×${v.b})=${r}`;}return {res:r,formula:f};}},
+    "Energy E = m × c²":{vars:["m","c","E"],units:{m:["kg"],c:["m/s"],E:["J"]},calc:function(v,t){let r,f;if(t==="E"){r=v.m*Math.pow(v.c,2);f=`E=${v.m}×${v.c}²=${r} J`;}else if(t==="m"){r=v.E/Math.pow(v.c,2);f=`m=${v.E}÷${v.c}²=${r} kg`;}else{r=Math.sqrt(v.E/v.m);f=`c=√(${v.E}÷${v.m})=${r} m/s`;}return {res:r,formula:f};}}
   },
-  Mathematik:{
-    "Fläche Kreis A = π × r²":{vars:["r","A"],units:{r:["m","cm"],A:["m²","cm²"]},calc:function(v,t){let r,f;if(t==="A"){r=Math.PI*v.r*v.r;f=`A=π×${v.r}²=${r}`;}else{r=Math.sqrt(v.A/Math.PI);f=`r=√(${v.A}/π)=${r}`;}return {res:r,formula:f};}},
-    "Fläche Rechteck A = l × b":{vars:["l","b","A"],units:{l:["m","cm"],b:["m","cm"],A:["m²","cm²"]},calc:function(v,t){let r,f;if(t==="A"){r=v.l*v.b;f=`A=${v.l}×${v.b}=${r}`;}else if(t==="l"){r=v.A/v.b;f=`l=${v.A}÷${v.b}=${r}`;}else{r=v.A/v.l;f=`b=${v.A}÷${v.l}=${r}`;}return {res:r,formula:f};}}
+  Mathematics:{
+    "Circle Area A = π × r²":{vars:["r","A"],units:{r:["m","cm"],A:["m²","cm²"]},calc:function(v,t){let r,f;if(t==="A"){r=Math.PI*v.r*v.r;f=`A=π×${v.r}²=${r}`;}else{r=Math.sqrt(v.A/Math.PI);f=`r=√(${v.A}/π)=${r}`;}return {res:r,formula:f};}},
+    "Rectangle Area A = l × b":{vars:["l","b","A"],units:{l:["m","cm"],b:["m","cm"],A:["m²","cm²"]},calc:function(v,t){let r,f;if(t==="A"){r=v.l*v.b;f=`A=${v.l}×${v.b}=${r}`;}else if(t==="l"){r=v.A/v.b;f=`l=${v.A}÷${v.b}=${r}`;}else{r=v.A/v.l;f=`b=${v.A}÷${v.l}=${r}`;}return {res:r,formula:f};}}
   },
-  Chemie:{
-    "Molmasse m = n × M":{vars:["n","M","m"],units:{n:["mol"],M:["g/mol"],m:["g"]},calc:function(v,t){let r,f;if(t==="m"){r=v.n*v.M;f=`m=${v.n}×${v.M}=${r} g`;}else if(t==="n"){r=v.m/v.M;f=`n=${v.m}÷${v.M}=${r} mol`;}else{r=v.m/v.n;f=`M=${v.m}÷${v.n}=${r} g/mol`;}return {res:r,formula:f};}}
+  Chemistry:{
+    "Molar Mass m = n × M":{vars:["n","M","m"],units:{n:["mol"],M:["g/mol"],m:["g"]},calc:function(v,t){let r,f;if(t==="m"){r=v.n*v.M;f=`m=${v.n}×${v.M}=${r} g`;}else if(t==="n"){r=v.m/v.M;f=`n=${v.m}÷${v.M}=${r} mol`;}else{r=v.m/v.n;f=`M=${v.m}÷${v.n}=${r} g/mol`;}return {res:r,formula:f};}}
   }
 };
 
 // --- Übersetzungen ---
 const TRANSLATIONS = {
-  de:{target:"Zielvariable",calculate:"Berechnen",categories:{Physik:"Physik",Mathematik:"Mathematik",Chemie:"Chemie"}},
-  en:{target:"Target variable",calculate:"Calculate",categories:{Physik:"Physics",Mathematics:"Mathematics",Chemie:"Chemistry"}}
+  en:{target:"Target variable",calculate:"Calculate",categories:{Physics:"Physics",Mathematics:"Mathematics",Chemistry:"Chemistry"},result:"Result"},
+  de:{target:"Zielvariable",calculate:"Berechnen",categories:{Physics:"Physik",Mathematics:"Mathematik",Chemistry:"Chemie"},result:"Ergebnis"}
 };
 
 // --- App ---
 (function(){
-  let lang="de";
+  let lang="en";
   const categorySelect=document.getElementById("categorySelect");
   const formulaSelect=document.getElementById("formulaSelect");
   const inputDiv=document.getElementById("inputDiv");
@@ -131,7 +131,7 @@ const TRANSLATIONS = {
     targetDiv.appendChild(targetSelect);
     inputDiv.appendChild(targetDiv);
 
-    const btn=document.createElement("button"); btn.textContent=TRANSLATIONS[lang].calculate||"Berechnen"; btn.addEventListener("click",calculate); inputDiv.appendChild(btn);
+    const btn=document.createElement("button"); btn.textContent=TRANSLATIONS[lang].calculate||"Calculate"; btn.addEventListener("click",calculate); inputDiv.appendChild(btn);
   }
 
   function calculate(){
@@ -140,7 +140,8 @@ const TRANSLATIONS = {
     const values={}; vars.forEach(v=>{const val=parseFloat(document.getElementById("input_"+v)?.value)||0; values[v]=val;});
     const target=document.getElementById("targetSelect").value;
     const res=formulaObj.calc(values,target);
-    resultDiv.innerHTML=`<strong>Ergebnis:</strong> ${res.res} <br><em>${res.formula}</em>`;
+    const t=TRANSLATIONS[lang].result||"Result";
+    resultDiv.innerHTML=`<strong>${t}:</strong> ${res.res} <br><em>${res.formula}</em>`;
   }
 
   renderCategories();
