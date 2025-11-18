@@ -1,4 +1,4 @@
-// Kategorien und Einheiten + Umrechnungsfaktoren
+// Kategorien & Umrechnungsfaktoren
 const categories = {
   "Länge": {
     "Meter": 1,
@@ -17,20 +17,36 @@ const categories = {
   "Volumen": {
     "Liter": 1,
     "Milliliter": 0.001,
-    "Gallonen": 3.78541
+    "Gallonen": 3.78541,
+    "Kubikmeter": 1000
   },
   "Temperatur": {
     "Celsius": "C",
     "Fahrenheit": "F",
     "Kelvin": "K"
-  },
-  "Datenmenge": {
-    "Bit": 1,
-    "Byte": 8,
-    "Kilobyte": 8*1024,
-    "Megabyte": 8*1024*1024,
-    "Gigabyte": 8*1024*1024*1024
   }
+  // andere Kategorien können später ergänzt werden
+};
+
+// Kurzzeichen für Anzeige
+const unitSymbols = {
+  "Meter": "m",
+  "Kilometer": "km",
+  "Zentimeter": "cm",
+  "Millimeter": "mm",
+  "Meilen": "mi",
+  "Fuß": "ft",
+  "Kilogramm": "kg",
+  "Gramm": "g",
+  "Pfund": "lb",
+  "Unze": "oz",
+  "Liter": "l",
+  "Milliliter": "ml",
+  "Gallonen": "gal",
+  "Kubikmeter": "m³",
+  "Celsius": "°C",
+  "Fahrenheit": "°F",
+  "Kelvin": "K"
 };
 
 // Referenzen
@@ -53,7 +69,7 @@ function updateUI() {
   updateUnits();
 }
 
-// Einheiten für die gewählte Kategorie füllen
+// Einheiten für Kategorie füllen
 function updateUnits() {
   const cat = categorySelect.value;
   const units = Object.keys(categories[cat]);
@@ -72,7 +88,7 @@ function updateUnits() {
   });
 }
 
-// Umrechnung durchführen
+// Umrechnen
 function convertAll() {
   const cat = categorySelect.value;
   const from = fromSelect.value;
@@ -87,57 +103,40 @@ function convertAll() {
   let formula = "";
 
   if (cat === "Temperatur") {
-    // Temperatur-Umrechnung mit lesbarer Formel
+    // Temperatur-Umrechnungen wie vorher
     if (from === "Celsius" && to === "Fahrenheit") {
       result = val * 9/5 + 32;
-      formula = "F = C × 9/5 + 32";
+      formula = `${val} °C × 9/5 + 32 = ${result} °F`;
     } else if (from === "Fahrenheit" && to === "Celsius") {
       result = (val - 32) * 5/9;
-      formula = "C = (F - 32) × 5/9";
+      formula = `(${val} °F - 32) × 5/9 = ${result} °C`;
     } else if (from === "Celsius" && to === "Kelvin") {
       result = val + 273.15;
-      formula = "K = C + 273.15";
+      formula = `${val} °C + 273.15 = ${result} K`;
     } else if (from === "Kelvin" && to === "Celsius") {
       result = val - 273.15;
-      formula = "C = K - 273.15";
-    } else if (from === "Fahrenheit" && to === "Kelvin") {
-      result = (val - 32) * 5/9 + 273.15;
-      formula = "K = (F - 32) × 5/9 + 273.15";
-    } else if (from === "Kelvin" && to === "Fahrenheit") {
-      result = (val - 273.15) * 9/5 + 32;
-      formula = "F = (K - 273.15) × 9/5 + 32";
+      formula = `${val} K - 273.15 = ${result} °C`;
     } else {
       result = val;
-      formula = `${from} → ${to}`;
+      formula = `${val} ${from} → ${to}`;
     }
   } else {
-    // Andere Kategorien mit lesbarer Division
     const factorFrom = categories[cat][from];
     const factorTo = categories[cat][to];
 
     result = val * factorFrom / factorTo;
 
-    if (factorFrom === factorTo) {
-      formula = `${val} ${from} → ${to}`;
-    } else if (factorFrom > factorTo) {
-      const div = factorFrom / factorTo;
-      formula = `${val} ${from} ÷ ${div} = ${result} ${to}`;
-    } else {
-      const div = factorTo / factorFrom;
-      formula = `${val} ${from} ÷ ${div} = ${result} ${to}`;
-    }
+    // Formel im Lehrbuchstil
+    formula = `${val} ${from} ÷ ${factorTo/factorFrom} = ${result} ${to}`;
   }
 
-  resultDiv.innerHTML = `${result} ${to} <br><small>Formel: ${formula}</small>`;
-}
-
-// Sprache umschalten
-function updateLanguage() {
-  // Später: Interface-Texte DE/EN
+  // Ergebnis mit Kurzzeichen anzeigen
+  const fromSymbol = unitSymbols[from] || from;
+  const toSymbol = unitSymbols[to] || to;
+  resultDiv.innerHTML = `${result} ${toSymbol} <br><small>Formel: ${formula}</small>`;
 }
 
 // Initialisierung
 window.onload = () => {
   updateUI();
-  languageSelect.addEventListener("change", updateLanguage);
 };
