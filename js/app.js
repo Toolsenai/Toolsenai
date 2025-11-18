@@ -1,169 +1,150 @@
-/* ============================================
-   ToolsenAI - Universal Converter & Calculator
-   Version 1 – Grundsystem
-   ============================================ */
+/* js/app.js
+   ToolsenAI – Zentrale Steuerung
+   --------------------------------------------------------------- */
 
-/* --------------------
-   Kategorien / Module
--------------------- */
-const categories = {
-    electricity: {
-        name: "Elektrik",
-        formulas: {
-            "Leistung (P)": {
-                calcOptions: {
-                    P: { need: ["U", "I"], formula: d => d.U * d.I, unit: "W" },
-                    U: { need: ["P", "I"], formula: d => d.P / d.I, unit: "V" },
-                    I: { need: ["P", "U"], formula: d => d.P / d.U, unit: "A" }
-                }
-            },
-            "Widerstand (R)": {
-                calcOptions: {
-                    R: { need: ["U", "I"], formula: d => d.U / d.I, unit: "Ω" },
-                    U: { need: ["R", "I"], formula: d => d.R * d.I, unit: "V" },
-                    I: { need: ["U", "R"], formula: d => d.U / d.R, unit: "A" }
-                }
-            }
-        }
-    },
+(function(){
+  const DATA = window.DATA;
+  const unitFactors = window.unitFactors || {};
 
-    length: {
-        name: "Länge",
-        formulas: {
-            "Längenumrechnung": {
-                calcOptions: {
-                    convert: {
-                        need: ["value", "from", "to"],
-                        formula: d => d.value * lengthFactors[d.from] / lengthFactors[d.to],
-                        unit: ""
-                    }
-                }
-            }
-        }
-    }
-};
+  const langSelect = document.getElementById("langSelect");
+  const modeSelect = document.getElementById("modeSelect");
+  const categorySelect = document.getElementById("categorySelect");
+  const formulaSelect = document.getElementById("formulaSelect");
+  const inputFields = document.getElementById("inputFields");
+  const resultDisplay = document.getElementById("resultDisplay");
 
-/* --------------------------------
-   Einheitenfaktoren – Länge
---------------------------------- */
-const lengthFactors = {
-    km: 1_000,
-    m: 1,
-    dm: 0.1,
-    cm: 0.01,
-    mm: 0.001,
-    µm: 0.000001,
-    nm: 0.000000001
-};
+  let currentLang = "de";
+  let currentMode = "calculator";
+  let currentCategory = "";
+  let currentFormula = "";
 
-/* -----------------------------
-   DOM Elemente
------------------------------- */
-const categorySelect = document.getElementById("categorySelect");
-const formulaSelect = document.getElementById("formulaSelect");
-const targetSelect = document.getElementById("targetSelect");
-const inputForm = document.getElementById("inputForm");
-const resultBox = document.getElementById("resultBox");
-const formulaDetail = document.getElementById("formulaDetail");
+  // Sprache wechseln
+  langSelect.addEventListener("change", e => {
+    currentLang = e.target.value;
+    populateCategories();
+    populateFormulas();
+    clearInputs();
+  });
 
-/* ------------------------------------
-   Kategorien laden
------------------------------------- */
-Object.keys(categories).forEach(key => {
-    const opt = document.createElement("option");
-    opt.value = key;
-    opt.textContent = categories[key].name;
-    categorySelect.appendChild(opt);
-});
+  // Modus wechseln
+  modeSelect.addEventListener("change", e => {
+    currentMode = e.target.value;
+    populateCategories();
+    populateFormulas();
+    clearInputs();
+  });
 
-/* ------------------------------------
-   Formeln laden nach Kategorie
------------------------------------- */
-categorySelect.addEventListener("change", () => {
-    formulaSelect.innerHTML = "<option value=''>Formel wählen</option>";
-    targetSelect.innerHTML = "<option value=''>Zielgröße</option>";
-    inputForm.innerHTML = "";
-    resultBox.textContent = "";
-    formulaDetail.textContent = "";
+  // Kategorie wechseln
+  categorySelect.addEventListener("change", e => {
+    currentCategory = e.target.value;
+    populateFormulas();
+    clearInputs();
+  });
 
-    const cat = categories[categorySelect.value];
-    if (!cat) return;
+  // Formel wechseln
+  formulaSelect.addEventListener("change", e => {
+    currentFormula = e.target.value;
+    buildInputs();
+  });
 
-    Object.keys(cat.formulas).forEach(f => {
+  function populateCategories(){
+    categorySelect.innerHTML = `<option value="">-- wählen --</option>`;
+    Object.keys(DATA).forEach(cat => {
+      if(DATA[cat].type === currentMode){
+        const option = document.createElement("option");
+        option.value = cat;
+        option.textContent = cat;
+        categorySelect.appendChild(option);
+      }
+    });
+  }
+
+  function populateFormulas(){
+    formulaSelect.innerHTML = `<option value="">-- wählen --</option>`;
+    if(!currentCategory || !DATA[currentCategory]) return;
+    const formulas = DATA[currentCategory].formulas;
+    Object.keys(formulas).forEach(f => {
+      const option = document.createElement("option");
+      option.value = f;
+      option.textContent = f;
+      formulaSelect.appendChild(option);
+    });
+  }
+
+  function clearInputs(){
+    inputFields.innerHTML = "";
+    resultDisplay.textContent = "";
+  }
+
+  function buildInputs(){
+    clearInputs();
+    if(!currentCategory || !currentFormula) return;
+    const formulaObj = DATA[currentCategory].formulas[currentFormula];
+    formulaObj.vars.forEach(v => {
+      const div = document.createElement("div");
+      div.className = "inputGroup";
+
+      const label = document.createElement("label");
+      label.textContent = v + ":";
+
+      const input = document.createElement("input");
+      input.type = "number";
+      input.id = `input-${v}`;
+
+      const unitSelect = document.createElement("select");
+      (formulaObj.units[v] || []).forEach(u => {
         const opt = document.createElement("option");
-        opt.value = f;
-        opt.textContent = f;
-        formulaSelect.appendChild(opt);
-    });
-});
+        opt.value = u;
+        opt.textContent = u;
+        unitSelect.appendChild(opt);
+      });
 
-/* ------------------------------------
-   Zielgrößen laden
------------------------------------- */
-formulaSelect.addEventListener("change", () => {
-    targetSelect.innerHTML = "<option value=''>Welche Größe berechnen?</option>";
-    inputForm.innerHTML = "";
-    resultBox.textContent = "";
-    formulaDetail.textContent = "";
+      div.appendChild(label);
+      div.appendChild(input);
+      if(unitSelect.options.length > 0) div.appendChild(unitSelect);
 
-    const cat = categories[categorySelect.value];
-    const formula = cat.formulas[formulaSelect.value];
-    if (!formula) return;
-
-    Object.keys(formula.calcOptions).forEach(target => {
-        const opt = document.createElement("option");
-        opt.value = target;
-        opt.textContent = target;
-        targetSelect.appendChild(opt);
-    });
-});
-
-/* ------------------------------------
-   Eingabefelder je Zielgröße bauen
------------------------------------- */
-targetSelect.addEventListener("change", () => {
-    inputForm.innerHTML = "";
-    resultBox.textContent = "";
-    formulaDetail.textContent = "";
-
-    const cat = categories[categorySelect.value];
-    const formula = cat.formulas[formulaSelect.value];
-    const target = formula.calcOptions[targetSelect.value];
-
-    target.need.forEach(n => {
-        const div = document.createElement("div");
-        div.classList.add("input-field");
-
-        div.innerHTML = `
-            <label>${n}</label>
-            <input type="number" step="any" id="in_${n}">
-        `;
-
-        inputForm.appendChild(div);
-    });
-});
-
-/* ------------------------------------
-   Berechnung
------------------------------------- */
-document.getElementById("calcBtn").addEventListener("click", () => {
-    const cat = categories[categorySelect.value];
-    const formula = cat.formulas[formulaSelect.value];
-    const target = formula.calcOptions[targetSelect.value];
-
-    let data = {};
-    target.need.forEach(n => {
-        data[n] = parseFloat(document.getElementById("in_" + n).value);
+      inputFields.appendChild(div);
     });
 
-    if (Object.values(data).some(v => isNaN(v))) {
-        resultBox.textContent = "Bitte alle Eingaben machen!";
-        return;
-    }
+    // Target select
+    const targetDiv = document.createElement("div");
+    targetDiv.className = "inputGroup";
+    const label = document.createElement("label");
+    label.textContent = "Berechne:";
+    const targetSelect = document.createElement("select");
+    targetSelect.id = "targetSelect";
+    formulaObj.vars.forEach(v => {
+      const opt = document.createElement("option");
+      opt.value = v;
+      opt.textContent = v;
+      targetSelect.appendChild(opt);
+    });
+    targetDiv.appendChild(label);
+    targetDiv.appendChild(targetSelect);
+    inputFields.appendChild(targetDiv);
 
-    const result = target.formula(data);
+    // Button
+    const btn = document.createElement("button");
+    btn.textContent = "Berechnen";
+    btn.addEventListener("click", runCalculation);
+    inputFields.appendChild(btn);
+  }
 
-    resultBox.textContent = `${targetSelect.value} = ${result} ${target.unit}`;
+  function runCalculation(){
+    const formulaObj = DATA[currentCategory].formulas[currentFormula];
+    const values = {};
+    formulaObj.vars.forEach(v => {
+      const input = document.getElementById(`input-${v}`);
+      const val = parseFloat(input.value);
+      values[v] = Number.isNaN(val)?null:val;
+    });
+    const targetSelect = document.getElementById("targetSelect");
+    const target = targetSelect.value;
 
-    formulaDetail.textContent = `Benutzt: ${targetSelect.value} = f(${target.need.join(", ")})`;
-});
+    const result = formulaObj.calc(values,target);
+    resultDisplay.textContent = result.formula;
+  }
+
+  // Initial
+  populateCategories();
+})();
