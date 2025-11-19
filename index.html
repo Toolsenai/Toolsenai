@@ -336,6 +336,8 @@
       <button data-page="home" class="active"><span class="icon">🏠</span>Start</button>
       <button data-page="sparen"><span class="icon">📈</span>Sparen &amp; Zinseszins</button>
       <button data-page="kredit"><span class="icon">💳</span>Kreditrechner</button>
+      <button data-page="immobilie"><span class="icon">🏡</span>Immobilie</button>
+      <button data-page="auto"><span class="icon">🚗</span>Auto &amp; Leasing</button>
       <button data-page="etf"><span class="icon">📊</span>ETF-Sparen</button>
       <button data-page="rente"><span class="icon">👵</span>Rente &amp; Inflation</button>
       <button data-page="budget"><span class="icon">📋</span>Budget</button>
@@ -354,6 +356,8 @@
               <div class="controls" style="margin-top:14px">
                 <button class="main" data-go="sparen">Vermögen aufbauen</button>
                 <button class="ghost" data-go="kredit">Kredit durchrechnen</button>
+                <button class="ghost" data-go="immobilie">Immobilien-Finanzierung</button>
+                <button class="ghost" data-go="auto">Auto &amp; Leasing checken</button>
                 <button class="ghost" data-go="etf">ETF-Sparplan planen</button>
                 <button class="ghost" data-go="rente">Rente &amp; Kaufkraft prüfen</button>
                 <button class="ghost" data-go="budget">Monatsbudget checken</button>
@@ -363,6 +367,8 @@
                 <span class="tag">ETF</span>
                 <span class="tag">Sparplan</span>
                 <span class="tag">Kredit</span>
+                <span class="tag">Immobilie</span>
+                <span class="tag">Auto</span>
                 <span class="tag">Rente</span>
                 <span class="tag">Inflation</span>
                 <span class="tag">Budget</span>
@@ -381,6 +387,8 @@
                 <li>„Wie viel Kapital brauche ich für <strong>2.000 € Rente</strong> im Monat?“</li>
                 <li>„Wie frisst <strong>Inflation</strong> mein Geld auf?“</li>
                 <li>„Wie viel bleibt mir im Monat übrig, nachdem ich Miete &amp; Fixkosten bezahlt habe?“</li>
+                <li>„Was kostet mich eine <strong>Immobilie</strong> mit Zinsbindung &amp; Restschuld?“</li>
+                <li>„Wie teuer ist mein <strong>Auto</strong> im Jahr inklusive Versicherung, Steuer &amp; Sprit?“</li>
               </ul>
               <div class="pill-info">
                 ℹ️ Alle Ergebnisse sind Näherungen – Banken &amp; Staat rechnen manchmal leicht anders.
@@ -505,6 +513,159 @@
         </div>
 
         <div class="ad-slot" id="ad-kredit"></div>
+      </section>
+
+      <!-- IMMOBILIE -->
+      <section id="page-immobilie" class="page">
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h2>Immobilienkredit / Baufinanzierung</h2>
+              <div class="small">
+                Schätze Rate, Zinskosten und Restschuld für eine Haus- oder Wohnungsfinanzierung.
+              </div>
+              <div class="controls">
+                <div class="field">
+                  <label for="immo_price">Kaufpreis Immobilie (€)</label>
+                  <input id="immo_price" type="number" step="0.01" placeholder="z. B. 400.000">
+                </div>
+                <div class="field">
+                  <label for="immo_equity">Eigenkapital (€, optional)</label>
+                  <input id="immo_equity" type="number" step="0.01" placeholder="z. B. 80.000">
+                </div>
+                <div class="field">
+                  <label for="immo_rate">Sollzins p.a. (%)</label>
+                  <input id="immo_rate" type="number" step="0.01" placeholder="z. B. 3,5">
+                </div>
+                <div class="field">
+                  <label for="immo_tilgung">anfängliche Tilgung p.a. (%)</label>
+                  <input id="immo_tilgung" type="number" step="0.1" placeholder="z. B. 2">
+                </div>
+                <div class="field">
+                  <label for="immo_years">Zinsbindung (Jahre)</label>
+                  <input id="immo_years" type="number" step="1" placeholder="z. B. 15">
+                </div>
+                <div class="field">
+                  <label for="immo_costs">Kaufnebenkosten (€, optional)</label>
+                  <input id="immo_costs" type="number" step="0.01" placeholder="Notar, Grunderwerb...">
+                </div>
+                <div class="field">
+                  <label for="immo_agent">Maklerkosten (€, optional)</label>
+                  <input id="immo_agent" type="number" step="0.01" placeholder="z. B. 15.000">
+                </div>
+                <button class="main" id="immo_btn">Immobilienkredit berechnen</button>
+              </div>
+              <div class="result" id="immo_result">—</div>
+              <div class="hint">
+                Die Rechnung ist vereinfacht: konstante Rate, keine Sondertilgungen, keine Steuer-Effekte.
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>Hinweise zur Baufinanzierung (vereinfacht)</h3>
+              <ul class="small">
+                <li>Faustregel: Rate (inkl. Nebenkosten-Kredite) möglichst &lt; 30–35&nbsp;% deines Netto-Haushaltseinkommens.</li>
+                <li>Eigenkapital senkt die Kreditsumme und oft auch den Zinssatz.</li>
+                <li>Nach Ende der Zinsbindung brauchst du meist eine Anschlussfinanzierung für die Restschuld.</li>
+                <li>Nebenkosten: Grunderwerbssteuer, Notar, Grundbuch, ggf. Makler, Renovierung.</li>
+              </ul>
+              <div class="pill-info">
+                💡 Diese Seite ersetzt keine professionelle Finanzierungsberatung bei Bank oder Vermittler.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ad-slot" id="ad-immobilie"></div>
+      </section>
+
+      <!-- AUTO & LEASING -->
+      <section id="page-auto" class="page">
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h2>Autokosten-Rechner</h2>
+              <div class="small">
+                Was kostet dich dein Auto pro Jahr – inkl. Versicherung, Steuer, Wartung und Sprit?
+              </div>
+              <div class="controls">
+                <div class="field">
+                  <label for="auto_price">Kaufpreis Auto (€, optional)</label>
+                  <input id="auto_price" type="number" step="0.01" placeholder="z. B. 25.000">
+                </div>
+                <div class="field">
+                  <label for="auto_years">Nutzungsdauer (Jahre, optional)</label>
+                  <input id="auto_years" type="number" step="1" placeholder="z. B. 8">
+                </div>
+                <div class="field">
+                  <label for="auto_ins">Versicherung / Jahr (€)</label>
+                  <input id="auto_ins" type="number" step="0.01" placeholder="z. B. 800">
+                </div>
+                <div class="field">
+                  <label for="auto_tax">Kfz-Steuer / Jahr (€)</label>
+                  <input id="auto_tax" type="number" step="0.01" placeholder="z. B. 150">
+                </div>
+                <div class="field">
+                  <label for="auto_service">Wartung / Jahr (€)</label>
+                  <input id="auto_service" type="number" step="0.01" placeholder="z. B. 400">
+                </div>
+                <div class="field">
+                  <label for="auto_fuel">Sprit / Monat (€)</label>
+                  <input id="auto_fuel" type="number" step="0.01" placeholder="z. B. 180">
+                </div>
+                <div class="field">
+                  <label for="auto_other">Sonstige Kosten / Monat (€, optional)</label>
+                  <input id="auto_other" type="number" step="0.01" placeholder="Parken, Waschen...">
+                </div>
+                <button class="main" id="auto_btn">Autokosten berechnen</button>
+              </div>
+              <div class="result" id="auto_result">—</div>
+            </div>
+
+            <div class="card">
+              <h2>Leasing-Rechner</h2>
+              <div class="small">
+                Überschlage die Gesamtkosten deines Leasing-Vertrags.
+              </div>
+              <div class="controls">
+                <div class="field">
+                  <label for="lease_rate">Leasingrate / Monat (€)</label>
+                  <input id="lease_rate" type="number" step="0.01" placeholder="z. B. 350">
+                </div>
+                <div class="field">
+                  <label for="lease_months">Laufzeit (Monate)</label>
+                  <input id="lease_months" type="number" step="1" placeholder="z. B. 48">
+                </div>
+                <div class="field">
+                  <label for="lease_down">Anzahlung (€, optional)</label>
+                  <input id="lease_down" type="number" step="0.01" placeholder="z. B. 2.000">
+                </div>
+                <div class="field">
+                  <label for="lease_rest">Restwert / Schlussrate (€, optional)</label>
+                  <input id="lease_rest" type="number" step="0.01" placeholder="z. B. 10.000">
+                </div>
+                <button class="main" id="lease_btn">Leasingkosten berechnen</button>
+              </div>
+              <div class="result" id="lease_result">—</div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>Auto &amp; Leasing – einfache Hinweise</h3>
+              <ul class="small">
+                <li>Vergiss laufende Kosten nicht: Versicherung, Steuer, Wartung, Reifen, Sprit, Parken.</li>
+                <li>Beim Leasing unbedingt auf Kilometerbegrenzung, Mehrkilometerkosten und Schäden achten.</li>
+                <li>Kauf vs. Leasing hängt stark von Nutzung, Angebot und persönlicher Situation ab.</li>
+              </ul>
+              <div class="pill-info">
+                📌 Dieser Rechner zeigt nur eine grobe Kostenübersicht – kein Ersatz für Vertragsprüfung.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ad-slot" id="ad-auto"></div>
       </section>
 
       <!-- ETF-SPAREN -->
@@ -785,6 +946,105 @@
         out.innerHTML =
           "Rate pro Monat: "+formatMoney(rateMonat)+
           "<span class=\"small-line\">Gesamtzahlung: "+formatMoney(gesamt)+" · Zinsen: "+formatMoney(zinsen)+"</span>";
+      });
+
+      // Immobilie
+      document.getElementById("immo_btn").addEventListener("click",function(){
+        const price  = parseFloat(document.getElementById("immo_price").value);
+        const equity = parseFloat(document.getElementById("immo_equity").value)||0;
+        const rate   = parseFloat(document.getElementById("immo_rate").value)/100;
+        const tilg   = parseFloat(document.getElementById("immo_tilgung").value)/100;
+        const years  = parseFloat(document.getElementById("immo_years").value);
+        const costs  = parseFloat(document.getElementById("immo_costs").value)||0;
+        const agent  = parseFloat(document.getElementById("immo_agent").value)||0;
+        const out    = document.getElementById("immo_result");
+
+        if(!isFinite(price)||!isFinite(rate)||!isFinite(tilg)||!isFinite(years)){
+          out.textContent = "Bitte Kaufpreis, Zins, Tilgung und Zinsbindung eingeben.";
+          out.classList.add("error");
+          return;
+        }
+        out.classList.remove("error");
+
+        const neben      = costs + agent;
+        let darlehen     = price + neben - equity;
+        if(darlehen < 0) darlehen = 0;
+
+        const i = rate/12;
+        const t = tilg/12;
+        const n = years*12;
+
+        let rateMonat;
+        if(i === 0){
+          // reine Tilgung ohne Zins (theoretisch)
+          rateMonat = n>0 ? darlehen/n : 0;
+        }else{
+          // vereinfachte Annuität: Zins + Tilgung auf Jahresbasis
+          rateMonat = darlehen * (i + t);
+        }
+
+        // Restschuldberechnung mit klassischer Annuitätenformel
+        let rest = darlehen;
+        if(i > 0){
+          const faktor = Math.pow(1+i,n);
+          const A = rateMonat;
+          rest = darlehen*faktor - A*((faktor-1)/i);
+        }else{
+          rest = darlehen - rateMonat*n;
+        }
+        if(rest < 0) rest = 0;
+
+        const zahlungen = rateMonat*n;
+        const zinsen    = zahlungen - (darlehen - rest);
+
+        out.innerHTML =
+          "Finanzierungsbetrag (Darlehen): "+formatMoney(darlehen)+
+          "<span class=\"small-line\">Monatliche Rate (ca.): "+formatMoney(rateMonat)+"</span>"+
+          "<span class=\"small-line\">Zahlungen in der Zinsbindung: "+formatMoney(zahlungen)+" · davon Zinsen (ca.): "+formatMoney(zinsen)+"</span>"+
+          "<span class=\"small-line\">voraussichtliche Restschuld nach Zinsbindung: "+formatMoney(rest)+"</span>";
+      });
+
+      // Autokosten
+      document.getElementById("auto_btn").addEventListener("click",function(){
+        const price   = parseFloat(document.getElementById("auto_price").value)||0;
+        const years   = parseFloat(document.getElementById("auto_years").value)||0;
+        const ins     = parseFloat(document.getElementById("auto_ins").value)||0;
+        const tax     = parseFloat(document.getElementById("auto_tax").value)||0;
+        const service = parseFloat(document.getElementById("auto_service").value)||0;
+        const fuel    = parseFloat(document.getElementById("auto_fuel").value)||0;
+        const other   = parseFloat(document.getElementById("auto_other").value)||0;
+        const out     = document.getElementById("auto_result");
+
+        out.classList.remove("error");
+
+        const laufendJahr = ins + tax + service + (fuel + other)*12;
+        let abschreibung = 0;
+        if(price > 0 && years > 0){
+          abschreibung = price / years;
+        }
+        const gesamtJahr = laufendJahr + abschreibung;
+
+        out.innerHTML =
+          "geschätzte Jahreskosten: "+formatMoney(gesamtJahr)+
+          "<span class=\"small-line\">laufende Kosten pro Jahr: "+formatMoney(laufendJahr)+" · Abschreibung (Kaufpreis ÷ Jahre): "+formatMoney(abschreibung)+"</span>";
+      });
+
+      // Leasing
+      document.getElementById("lease_btn").addEventListener("click",function(){
+        const rate  = parseFloat(document.getElementById("lease_rate").value)||0;
+        const mon   = parseFloat(document.getElementById("lease_months").value)||0;
+        const down  = parseFloat(document.getElementById("lease_down").value)||0;
+        const rest  = parseFloat(document.getElementById("lease_rest").value)||0;
+        const out   = document.getElementById("lease_result");
+
+        out.classList.remove("error");
+
+        const gesamt = down + rate*mon + rest;
+        const effMon = mon > 0 ? gesamt/mon : 0;
+
+        out.innerHTML =
+          "Gesamtkosten über die Laufzeit: "+formatMoney(gesamt)+
+          "<span class=\"small-line\">effektive Durchschnittskosten pro Monat: "+formatMoney(effMon)+"</span>";
       });
 
       // ETF-Sparen
