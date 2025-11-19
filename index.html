@@ -3,22 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Universal Umrechner & Formel-Löser</title>
-  <meta name="description" content="Einfacher Universal-Umrechner & Formel-Löser auf Deutsch und Englisch. Länge, Masse, Daten, Physik, Chemie, Elektrik, Geometrie und mehr.">
-  <meta name="keywords" content="Umrechner, Converter, Formeln, Mathematik, Physik, Chemie, Elektrik, Länge, Masse, Daten, Geometrie">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#0d76ff">
+  <title>Money Assistant – Finanzrechner & Sparplan (DE & EN)</title>
+  <meta name="description" content="Money Assistant: kostenlose Finanzrechner für Zinseszins, Sparplan, Kredit, Inflation und Rente. Deutsch & Englisch. Ideal für Schule, Beruf und private Geldplanung.">
+  <meta name="keywords" content="Zinseszinsrechner, Sparplan Rechner, Kreditrechner, Rentenrechner, Inflationsrechner, Finanzrechner, Money Assistant, Geld, Finanzen, ETF, Sparen">
+  <link rel="canonical" href="https://deine-domain.example/">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0f766e">
+
   <style>
     :root{
-      --bg:#f5f7fb;
+      --bg:#f4f6fb;
       --card:#ffffff;
-      --muted:#5f6470;
-      --accent:#0d76ff;
-      --accent-soft:#e2edff;
+      --accent:#0f766e;
+      --accent-soft:#e0f2f1;
+      --muted:#6b7280;
       --danger:#e11d48;
-      --radius:14px;
+      --radius:16px;
     }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;}
     html,body{
       margin:0;
       padding:0;
@@ -34,26 +36,26 @@
     }
     header{
       display:flex;
-      align-items:center;
-      gap:14px;
       flex-wrap:wrap;
+      gap:14px;
+      align-items:center;
     }
     .logo{
-      width:60px;
-      height:60px;
-      border-radius:18px;
-      background:linear-gradient(135deg,#0d76ff,#22c1c3);
+      width:64px;
+      height:64px;
+      border-radius:20px;
+      background:linear-gradient(135deg,#0f766e,#10b981);
       display:flex;
       align-items:center;
       justify-content:center;
       color:#fff;
+      font-size:30px;
       font-weight:800;
-      font-size:28px;
-      box-shadow:0 8px 20px rgba(15,23,42,0.25);
+      box-shadow:0 10px 24px rgba(15,118,110,0.4);
     }
     h1{
       margin:0;
-      font-size:22px;
+      font-size:24px;
     }
     .lead{
       margin-top:4px;
@@ -66,35 +68,35 @@
       gap:6px;
     }
     .lang-btn{
+      border-radius:999px;
       border:1px solid #d1d5db;
       background:#fff;
-      padding:6px 10px;
-      border-radius:999px;
+      padding:6px 12px;
       font-size:12px;
       cursor:pointer;
     }
     .lang-btn.active{
       background:var(--accent);
-      color:#fff;
       border-color:var(--accent);
+      color:#fff;
     }
 
     nav{
       margin-top:16px;
       background:#ffffff;
       border-radius:var(--radius);
-      padding:10px;
+      padding:8px;
       display:flex;
       gap:8px;
       justify-content:center;
       flex-wrap:wrap;
-      box-shadow:0 4px 12px rgba(15,23,42,0.08);
+      box-shadow:0 4px 12px rgba(15,23,42,0.12);
     }
     nav button{
-      border:none;
-      background:transparent;
       padding:8px 14px;
       border-radius:999px;
+      border:none;
+      background:transparent;
       font-size:14px;
       cursor:pointer;
       color:#374151;
@@ -103,29 +105,33 @@
     nav button.active{
       background:var(--accent);
       color:#fff;
-      box-shadow:0 4px 10px rgba(37,99,235,0.4);
+      box-shadow:0 4px 12px rgba(16,185,129,0.5);
     }
     nav button:hover:not(.active){
       background:var(--accent-soft);
     }
+
+    .page{display:none;}
+    .page.active{display:block;}
 
     .card{
       background:var(--card);
       border-radius:var(--radius);
       padding:16px;
       margin-top:16px;
-      box-shadow:0 6px 18px rgba(15,23,42,0.08);
+      box-shadow:0 6px 18px rgba(15,23,42,0.1);
     }
     .card h2{margin-top:0;font-size:18px;}
     .card h3{margin-top:0;font-size:16px;}
     .small{font-size:13px;color:var(--muted);}
     .result{
-      font-size:20px;
+      font-size:18px;
       font-weight:700;
       color:var(--accent);
-      margin-top:8px;
+      margin-top:6px;
       word-break:break-word;
     }
+
     .controls{
       display:flex;
       flex-wrap:wrap;
@@ -133,34 +139,31 @@
       margin-top:10px;
     }
     input,select,button{
-      font-size:15px;
-      padding:9px 10px;
+      font-size:14px;
+      padding:8px 10px;
       border-radius:10px;
       border:1px solid #d1d5db;
       outline:none;
     }
     input:focus,select:focus{
       border-color:var(--accent);
-      box-shadow:0 0 0 3px rgba(13,118,255,0.2);
+      box-shadow:0 0 0 3px rgba(15,118,110,0.35);
     }
     button.main{
       background:var(--accent);
-      color:#fff;
       border:none;
+      color:#fff;
       font-weight:600;
       cursor:pointer;
     }
-    button.main:hover{filter:brightness(1.05);}
+    button.main:hover{filter:brightness(1.07);}
     button.secondary{
       background:#e5e7eb;
       border:none;
       cursor:pointer;
     }
     button.secondary:hover{background:#d1d5db;}
-    .big{
-      font-size:18px;
-      padding:11px 14px;
-    }
+
     .tag-row{
       display:flex;
       flex-wrap:wrap;
@@ -168,933 +171,469 @@
       margin-top:10px;
     }
     .tag{
-      font-size:12px;
-      padding:4px 10px;
+      font-size:11px;
+      padding:4px 9px;
       border-radius:999px;
       background:#e5e7eb;
       color:#374151;
     }
-    .page{display:none;}
-    .page.active{display:block;}
 
-    .formula-list{
-      max-height:60vh;
-      overflow:auto;
-      padding-right:4px;
-    }
-    .formula-item{
+    .ad-placeholder{
+      margin-top:10px;
       border-radius:12px;
-      border:1px solid #e5e7eb;
+      border:2px dashed #cbd5f5;
       padding:10px;
-      margin-bottom:8px;
+      text-align:center;
+      font-size:12px;
+      color:var(--muted);
       background:#f9fafb;
     }
-    .formula-item strong{font-size:14px;}
-    .formula-item .formula-desc{
+
+    footer{
+      margin-top:22px;
       font-size:12px;
       color:var(--muted);
-      margin-top:2px;
-    }
-    .formula-input-row{
-      display:flex;
-      gap:6px;
-      margin-top:6px;
-      align-items:center;
-    }
-    .formula-input-row label{
-      width:40%;
-      font-size:12px;
-      color:var(--muted);
-    }
-    .formula-input-row input{
-      flex:1;
-      padding:6px 8px;
-      font-size:14px;
-    }
-    .formula-output{
-      font-size:13px;
-      margin-top:6px;
-      color:#111827;
-    }
-    .search-box{
-      width:100%;
-      margin-top:8px;
+      text-align:center;
     }
 
-    @media(max-width:900px){
+    @media(max-width:800px){
       .container{padding:12px;}
-    }
-    @media(max-width:600px){
-      header{flex-direction:column;align-items:flex-start;}
-      .lang-switch{margin-left:0;margin-top:8px;}
+      header{align-items:flex-start;}
+      .lang-switch{margin-left:0;margin-top:6px;}
       nav{flex-direction:column;align-items:stretch;}
       nav button{text-align:center;}
     }
   </style>
+
+  <!-- Strukturierte Daten für SEO -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"Money Assistant – Finanzrechner",
+    "url":"https://deine-domain.example/",
+    "applicationCategory":"FinanceApplication",
+    "description":"Kostenlose Finanzrechner für Zinseszins, Sparplan, Kredit, Inflation und Rente. Deutsch & Englisch."
+  }
+  </script>
+
   <script>
-    // --- Sprachdaten ---
+    // ----- Sprachtexte -----
     const I18N = {
       de:{
-        metaTitle:"Universal Umrechner & Formel-Löser",
-        metaDesc:"Einfacher Universal-Umrechner & Formel-Löser auf Deutsch und Englisch. Länge, Masse, Daten, Physik, Chemie, Elektrik und Geometrie.",
-        headerTitle:"Universal Umrechner & Formel-Löser",
-        headerLead:"Einfach zu bedienen, viele Einheiten & Formeln. Für Schule, Ausbildung, Beruf – von 14 bis 99 Jahren.",
+        metaTitle:"Money Assistant – Finanzrechner & Sparplan (DE & EN)",
+        metaDesc:"Money Assistant: kostenlose Finanzrechner für Zinseszins, Sparplan, Kredit, Inflation und Rente. Deutsch & Englisch.",
+        headerTitle:"Money Assistant – Finanzrechner",
+        headerLead:"Zinseszins, Sparplan, Kredit, Inflation & Rente. Einfach erklärt, kostenlos, auf Deutsch und Englisch.",
         navHome:"Startseite",
-        navConv:"Umrechner",
-        navFormulas:"Formeln",
-        navGeo:"Geometrie",
-        navPhys:"Physik",
-        homeWhat:"Was möchtest du tun?",
-        homeInfo:"Wähle eine Funktion. Du kannst nichts kaputt machen 🙂",
-        btnConv:"Einheiten umrechnen",
-        btnFormulas:"Formel lösen",
-        btnGeo:"Flächen / Volumen",
-        btnPhys:"Schnellrechner Physik",
-        convTitle:"Einheiten-Umrechner",
-        convIntro:"1. Kategorie, 2. Einheiten, 3. Wert – fertig.",
-        convSwap:"Einheiten tauschen",
-        convBtn:"Umrechnen",
-        convQuick:"Schnell-Auswahl",
-        convErrNumber:"Bitte eine Zahl eingeben.",
-        convErrGeneric:"Umrechnung nicht möglich.",
-        formulasTitle:"Formel-Bibliothek",
-        formulasIntro:"Suche nach Namen oder wähle eine Kategorie. Dann Werte eingeben und „Berechnen“ drücken.",
-        formulasSearchPh:"z. B. „Ohm“, „Fläche“, „Geschwindigkeit“…",
-        formulasAllCats:"Alle Kategorien",
-        geoTitle:"Geometrie-Rechner",
-        geoIntro:"Wähle die Form und gib die Seiten / Radien ein.",
-        geoBtn:"Berechnen",
-        physTitle:"Physik – Schnellrechner",
-        physIntro:"Einige der wichtigsten Formeln als Mini-Rechner.",
-        physForceTitle:"Kraft F = m · a",
-        physSpeedTitle:"Geschwindigkeit v = s / t",
-        physErrNumber:"Bitte Zahlen eingeben.",
-        physErrSt:"Bitte s und t > 0 eingeben.",
-        footerText:"Universal Umrechner & Formel-Löser – speichere diese Datei als index.html und lade sie auf dein Hosting oder GitHub Pages hoch.",
-        geoShapes:[
-          {value:"rect",label:"Rechteck – Fläche & Umfang"},
-          {value:"box",label:"Quader – Volumen & Oberfläche"},
-          {value:"cube",label:"Würfel – Volumen & Oberfläche"},
-          {value:"tri",label:"Dreieck – Fläche"},
-          {value:"circle",label:"Kreis – Fläche & Umfang"},
-          {value:"cyl",label:"Zylinder – Volumen"},
-          {value:"sphere",label:"Kugel – Volumen & Oberfläche"},
-          {value:"cone",label:"Kegel – Volumen"}
-        ]
+        navSavings:"Sparen & Zinseszins",
+        navLoans:"Kredit & Schulden",
+        navRetire:"Inflation & Rente",
+        navBudget:"Budget & Alltag",
+        homeTitle:"Was möchtest du mit deinem Geld machen?",
+        homeLead:"Wähle einen Bereich. Du kannst nichts kaputt machen – alle Rechner laufen lokal im Browser.",
+        homeBtnSavings:"Vermögen aufbauen",
+        homeBtnLoans:"Kredit planen",
+        homeBtnRetire:"Rente & Kaufkraft",
+        homeBtnBudget:"Alltag & Budget",
+        convHint:"Tipp: Du kannst diese Seite später mit Werbung monetarisieren – oben nur Inhalte, unten Werbeplätze.",
+        savingsMainTitle:"Zinseszins-Rechner",
+        savingsMainLead:"Berechne, wie sich eine einmalige Anlage über die Jahre entwickelt.",
+        savingsStart:"Startkapital",
+        savingsRate:"Jährliche Rendite (%)",
+        savingsYears:"Jahre",
+        savingsBtn:"Berechnen",
+        savingsResultLabel:"Endkapital und Zinsen:",
+        savingsPlanTitle:"Sparplan-Rechner (monatlich)",
+        savingsPlanLead:"Monatlich sparen und sehen, wie viel daraus wird.",
+        savingsPlanMonthly:"Monatliche Einzahlung",
+        savingsPlanStart:"Startkapital (optional)",
+        savingsPlanYears:"Sparjahre",
+        savingsPlanRate:"Jährliche Rendite (%)",
+        savingsPlanBtn:"Sparplan berechnen",
+        savingsPlanResultLabel:"Ergebnis Sparplan:",
+        loansTitle:"Kreditrechner",
+        loansLead:"Berechne Monatsrate, Gesamtkosten und Zinsen eines Annuitätendarlehens.",
+        loansAmount:"Kreditsumme",
+        loansRate:"Effektiver Jahreszins (%)",
+        loansYears:"Laufzeit (Jahre)",
+        loansBtn:"Kredit berechnen",
+        loansResultLabel:"Kredit-Ergebnis:",
+        retireInflTitle:"Inflationsrechner",
+        retireInflLead:"Wie viel ist dein Geld in der Zukunft noch wert?",
+        retireInflToday:"Betrag heute",
+        retireInflRate:"Inflation pro Jahr (%)",
+        retireInflYears:"Jahre in der Zukunft",
+        retireInflBtn:"Inflation berechnen",
+        retireInflResultLabel:"Kaufkraft in der Zukunft:",
+        retireGapTitle:"Rentenlücke grob schätzen",
+        retireGapLead:"Wie viel Kapital brauchst du ungefähr für deine Wunsch-Rente?",
+        retireWish:"Wunsch-Rente netto pro Monat",
+        retireYears:"Geplante Rentenjahre",
+        retireRate:"Entnahme-Quote pro Jahr (%)",
+        retireHave:"Bisher angespartes Vermögen",
+        retireGapBtn:"Rentenbedarf berechnen",
+        retireGapResultLabel:"Ergebnis Rente:",
+        budgetTitle:"Budget-Rechner (monatlich)",
+        budgetLead:"Verteile dein Einkommen auf Kategorien und sehe Prozente.",
+        budgetIncome:"Netto-Einkommen / Monat",
+        budgetRent:"Miete / Wohnen",
+        budgetFood:"Lebensmittel",
+        budgetMobility:"Mobilität",
+        budgetFun:"Freizeit / Hobbys",
+        budgetOther:"Sonstiges",
+        budgetBtn:"Budget auswerten",
+        budgetResultLabel:"Budget-Auswertung:",
+        errorNumber:"Bitte gültige Zahlen eingeben.",
+        footerText:"Money Assistant – speichere diese Datei als index.html und lade sie auf dein Hosting oder GitHub Pages hoch. Später kannst du hier Werbung einbinden."
       },
       en:{
-        metaTitle:"Universal Converter & Formula Solver",
-        metaDesc:"Simple universal unit converter & formula solver in English and German. Length, mass, data, physics, chemistry, electricity and geometry.",
-        headerTitle:"Universal Converter & Formula Solver",
-        headerLead:"Easy to use, many units & formulas. For school, training and work – from 14 to 99 years.",
+        metaTitle:"Money Assistant – Finance Calculators & Savings Planner (EN & DE)",
+        metaDesc:"Money Assistant: free finance calculators for compound interest, savings plan, loans, inflation and retirement. English & German.",
+        headerTitle:"Money Assistant – Finance Calculators",
+        headerLead:"Compound interest, savings, loans, inflation & retirement. Easy, free, in English and German.",
         navHome:"Home",
-        navConv:"Converter",
-        navFormulas:"Formulas",
-        navGeo:"Geometry",
-        navPhys:"Physics",
-        homeWhat:"What do you want to do?",
-        homeInfo:"Choose a tool. You can’t break anything 🙂",
-        btnConv:"Convert units",
-        btnFormulas:"Solve formula",
-        btnGeo:"Areas / volumes",
-        btnPhys:"Physics quick tools",
-        convTitle:"Unit converter",
-        convIntro:"1. Category, 2. Units, 3. Value – done.",
-        convSwap:"Swap units",
-        convBtn:"Convert",
-        convQuick:"Quick presets",
-        convErrNumber:"Please enter a number.",
-        convErrGeneric:"Conversion not possible.",
-        formulasTitle:"Formula library",
-        formulasIntro:"Search by name or choose a category. Then enter values and press “Calculate”.",
-        formulasSearchPh:"e.g. \"Ohm\", \"area\", \"speed\"...",
-        formulasAllCats:"All categories",
-        geoTitle:"Geometry calculator",
-        geoIntro:"Choose a shape and enter sides / radii.",
-        geoBtn:"Calculate",
-        physTitle:"Physics – quick tools",
-        physIntro:"Some important formulas as mini calculators.",
-        physForceTitle:"Force F = m · a",
-        physSpeedTitle:"Speed v = s / t",
-        physErrNumber:"Please enter numbers.",
-        physErrSt:"Please enter s and t > 0.",
-        footerText:"Universal Converter & Formula Solver – save this file as index.html and upload it to your hosting or GitHub Pages.",
-        geoShapes:[
-          {value:"rect",label:"Rectangle – area & perimeter"},
-          {value:"box",label:"Box – volume & surface"},
-          {value:"cube",label:"Cube – volume & surface"},
-          {value:"tri",label:"Triangle – area"},
-          {value:"circle",label:"Circle – area & circumference"},
-          {value:"cyl",label:"Cylinder – volume"},
-          {value:"sphere",label:"Sphere – volume & surface"},
-          {value:"cone",label:"Cone – volume"}
-        ]
+        navSavings:"Saving & Interest",
+        navLoans:"Loans & Debt",
+        navRetire:"Inflation & Retirement",
+        navBudget:"Budget & Everyday",
+        homeTitle:"What do you want to do with your money?",
+        homeLead:"Choose a section. All calculators run locally in your browser – nothing is sent to a server.",
+        homeBtnSavings:"Build wealth",
+        homeBtnLoans:"Plan a loan",
+        homeBtnRetire:"Retirement & inflation",
+        homeBtnBudget:"Everyday budget",
+        convHint:"Tip: You can monetize this site later with ads – keep the tools on top and ad slots below.",
+        savingsMainTitle:"Compound interest calculator",
+        savingsMainLead:"See how a one-time investment grows over the years.",
+        savingsStart:"Initial amount",
+        savingsRate:"Yearly return (%)",
+        savingsYears:"Years",
+        savingsBtn:"Calculate",
+        savingsResultLabel:"Final amount & interest:",
+        savingsPlanTitle:"Monthly savings plan",
+        savingsPlanLead:"Save every month and see the result.",
+        savingsPlanMonthly:"Monthly deposit",
+        savingsPlanStart:"Initial capital (optional)",
+        savingsPlanYears:"Years of saving",
+        savingsPlanRate:"Yearly return (%)",
+        savingsPlanBtn:"Calculate savings plan",
+        savingsPlanResultLabel:"Savings plan result:",
+        loansTitle:"Loan calculator",
+        loansLead:"Calculate monthly payment, total cost and interest of an annuity loan.",
+        loansAmount:"Loan amount",
+        loansRate:"Effective yearly interest (%)",
+        loansYears:"Term (years)",
+        loansBtn:"Calculate loan",
+        loansResultLabel:"Loan result:",
+        retireInflTitle:"Inflation calculator",
+        retireInflLead:"How much will your money be worth in the future?",
+        retireInflToday:"Amount today",
+        retireInflRate:"Inflation per year (%)",
+        retireInflYears:"Years in the future",
+        retireInflBtn:"Calculate inflation",
+        retireInflResultLabel:"Future buying power:",
+        retireGapTitle:"Rough retirement gap",
+        retireGapLead:"How much capital do you roughly need for your desired pension?",
+        retireWish:"Desired net pension per month",
+        retireYears:"Planned retirement years",
+        retireRate:"Withdrawal rate per year (%)",
+        retireHave:"Capital already saved",
+        retireGapBtn:"Calculate retirement need",
+        retireGapResultLabel:"Retirement result:",
+        budgetTitle:"Monthly budget calculator",
+        budgetLead:"Split your income into categories and see percentages.",
+        budgetIncome:"Net income / month",
+        budgetRent:"Rent / housing",
+        budgetFood:"Food",
+        budgetMobility:"Mobility",
+        budgetFun:"Fun / hobbies",
+        budgetOther:"Other",
+        budgetBtn:"Analyse budget",
+        budgetResultLabel:"Budget overview:",
+        errorNumber:"Please enter valid numbers.",
+        footerText:"Money Assistant – save this file as index.html and upload it to your hosting or GitHub Pages. You can add ads later."
       }
     };
 
     let currentLang = "de";
 
-    // --- Einheiten ---
-    const UNIT_CATEGORIES = [
-      {
-        id:"length",
-        base:"m",
-        label:{de:"Länge",en:"Length"},
-        units:[
-          {id:"pm",factor:1e-12,label:{de:"Picometer (pm)",en:"picometer (pm)"}},
-          {id:"nm",factor:1e-9,label:{de:"Nanometer (nm)",en:"nanometer (nm)"}},
-          {id:"um",factor:1e-6,label:{de:"Mikrometer (µm)",en:"micrometer (µm)"}},
-          {id:"mm",factor:1e-3,label:{de:"Millimeter (mm)",en:"millimeter (mm)"}},
-          {id:"cm",factor:1e-2,label:{de:"Zentimeter (cm)",en:"centimeter (cm)"}},
-          {id:"m",factor:1,label:{de:"Meter (m)",en:"meter (m)"}},
-          {id:"km",factor:1000,label:{de:"Kilometer (km)",en:"kilometer (km)"}},
-          {id:"in",factor:0.0254,label:{de:"Zoll (inch)",en:"inch (in)"}},
-          {id:"ft",factor:0.3048,label:{de:"Fuß (ft)",en:"foot (ft)"}},
-          {id:"yd",factor:0.9144,label:{de:"Yard (yd)",en:"yard (yd)"}},
-          {id:"mi",factor:1609.344,label:{de:"Meile (mi)",en:"mile (mi)"}}
-        ]
-      },
-      {
-        id:"area",
-        base:"m²",
-        label:{de:"Fläche",en:"Area"},
-        units:[
-          {id:"m2",factor:1,label:{de:"Quadratmeter (m²)",en:"square meter (m²)"}},
-          {id:"cm2",factor:1e-4,label:{de:"Quadratzentimeter (cm²)",en:"square centimeter (cm²)"}},
-          {id:"km2",factor:1e6,label:{de:"Quadratkilometer (km²)",en:"square kilometer (km²)"}},
-          {id:"ft2",factor:0.092903,label:{de:"Quadratfuß (ft²)",en:"square foot (ft²)"}},
-          {id:"in2",factor:0.00064516,label:{de:"Quadratzoll (in²)",en:"square inch (in²)"}},
-          {id:"ha",factor:10000,label:{de:"Hektar (ha)",en:"hectare (ha)"}},
-          {id:"acre",factor:4046.8564224,label:{de:"Acre",en:"acre"}}
-        ]
-      },
-      {
-        id:"volume",
-        base:"m³",
-        label:{de:"Volumen",en:"Volume"},
-        units:[
-          {id:"m3",factor:1,label:{de:"Kubikmeter (m³)",en:"cubic meter (m³)"}},
-          {id:"l",factor:0.001,label:{de:"Liter (L)",en:"liter (L)"}},
-          {id:"ml",factor:1e-6,label:{de:"Milliliter (mL)",en:"milliliter (mL)"}},
-          {id:"cm3",factor:1e-6,label:{de:"Kubikzentimeter (cm³)",en:"cubic centimeter (cm³)"}},
-          {id:"ft3",factor:0.028316846592,label:{de:"Kubikfuß (ft³)",en:"cubic foot (ft³)"}},
-          {id:"gal",factor:0.003785411784,label:{de:"Gallone (US)",en:"gallon (US)"}}
-        ]
-      },
-      {
-        id:"mass",
-        base:"kg",
-        label:{de:"Masse",en:"Mass"},
-        units:[
-          {id:"mg",factor:1e-6,label:{de:"Milligramm (mg)",en:"milligram (mg)"}},
-          {id:"g",factor:0.001,label:{de:"Gramm (g)",en:"gram (g)"}},
-          {id:"kg",factor:1,label:{de:"Kilogramm (kg)",en:"kilogram (kg)"}},
-          {id:"t",factor:1000,label:{de:"Tonne (t)",en:"tonne (t)"}},
-          {id:"oz",factor:0.028349523125,label:{de:"Unze (oz)",en:"ounce (oz)"}},
-          {id:"lb",factor:0.45359237,label:{de:"Pfund (lb)",en:"pound (lb)"}}
-        ]
-      },
-      {
-        id:"data",
-        base:"B",
-        label:{de:"Daten",en:"Data"},
-        units:[
-          {id:"bit",factor:1/8,label:{de:"Bit",en:"bit"}},
-          {id:"B",factor:1,label:{de:"Byte",en:"byte"}},
-          {id:"KB",factor:1e3,label:{de:"Kilobyte (KB)",en:"kilobyte (KB)"}},
-          {id:"MB",factor:1e6,label:{de:"Megabyte (MB)",en:"megabyte (MB)"}},
-          {id:"GB",factor:1e9,label:{de:"Gigabyte (GB)",en:"gigabyte (GB)"}},
-          {id:"TB",factor:1e12,label:{de:"Terabyte (TB)",en:"terabyte (TB)"}}
-        ]
-      },
-      {
-        id:"time",
-        base:"s",
-        label:{de:"Zeit",en:"Time"},
-        units:[
-          {id:"s",factor:1,label:{de:"Sekunde (s)",en:"second (s)"}},
-          {id:"min",factor:60,label:{de:"Minute (min)",en:"minute (min)"}},
-          {id:"h",factor:3600,label:{de:"Stunde (h)",en:"hour (h)"}},
-          {id:"d",factor:86400,label:{de:"Tag",en:"day"}},
-          {id:"w",factor:604800,label:{de:"Woche",en:"week"}}
-        ]
-      },
-      {
-        id:"temperature",
-        base:"K",
-        label:{de:"Temperatur",en:"Temperature"},
-        units:[
-          {id:"C",label:{de:"Grad Celsius (°C)",en:"degrees Celsius (°C)"}},
-          {id:"F",label:{de:"Grad Fahrenheit (°F)",en:"degrees Fahrenheit (°F)"}},
-          {id:"K",label:{de:"Kelvin (K)",en:"Kelvin (K)"}}
-        ]
-      },
-      {
-        id:"speed",
-        base:"m/s",
-        label:{de:"Geschwindigkeit",en:"Speed"},
-        units:[
-          {id:"ms",factor:1,label:{de:"m/s",en:"m/s"}},
-          {id:"kmh",factor:1000/3600,label:{de:"km/h",en:"km/h"}},
-          {id:"mph",factor:1609.344/3600,label:{de:"mph",en:"mph"}}
-        ]
-      },
-      {
-        id:"pressure",
-        base:"Pa",
-        label:{de:"Druck",en:"Pressure"},
-        units:[
-          {id:"Pa",factor:1,label:{de:"Pascal (Pa)",en:"pascal (Pa)"}},
-          {id:"kPa",factor:1000,label:{de:"Kilopascal (kPa)",en:"kilopascal (kPa)"}},
-          {id:"bar",factor:100000,label:{de:"Bar",en:"bar"}},
-          {id:"atm",factor:101325,label:{de:"Atmosphäre (atm)",en:"atmosphere (atm)"}},
-          {id:"psi",factor:6894.757293168,label:{de:"psi",en:"psi"}}
-        ]
-      }
-    ];
-
-    function getCategory(id){return UNIT_CATEGORIES.find(c=>c.id===id);}
-    function convertUnits(catId,fromId,toId,value){
-      const cat = getCategory(catId);
-      if(!cat) return NaN;
-      if(catId==="temperature"){
-        return convertTemperature(fromId,toId,value);
-      }
-      const from = cat.units.find(u=>u.id===fromId);
-      const to   = cat.units.find(u=>u.id===toId);
-      if(!from || !to || typeof from.factor!=="number" || typeof to.factor!=="number") return NaN;
-      const base = Number(value)*from.factor;
-      return base/to.factor;
-    }
-    function convertTemperature(from,to,value){
-      const v = Number(value);
-      let K;
-      if(from==="C") K = v + 273.15;
-      else if(from==="F") K = (v-32)*5/9 + 273.15;
-      else K = v;
-      if(to==="C") return K-273.15;
-      if(to==="F") return (K-273.15)*9/5 + 32;
-      return K;
+    function setText(id,key){
+      const el = document.getElementById(id);
+      if(el) el.textContent = I18N[currentLang][key];
     }
 
-    // --- Formel-Kategorien ---
-    const FORMULA_CATEGORIES = {
-      math:{de:"Mathe",en:"Math"},
-      geometry:{de:"Geometrie",en:"Geometry"},
-      physics:{de:"Physik",en:"Physics"},
-      electric:{de:"Elektrik",en:"Electricity"},
-      chemistry:{de:"Chemie",en:"Chemistry"}
-    };
-
-    // --- Formeln (keine Platzhalter) ---
-    const FORMULAS = [
-      // Mathe
-      {
-        id:"quad",
-        category:"math",
-        title:{de:"Quadratische Gleichung",en:"Quadratic equation"},
-        desc:{de:"Löst a·x² + b·x + c = 0 (reell)",en:"Solves a·x² + b·x + c = 0 (real roots)"},
-        inputs:[
-          {key:"a",label:{de:"a",en:"a"}},
-          {key:"b",label:{de:"b",en:"b"}},
-          {key:"c",label:{de:"c",en:"c"}}
-        ],
-        compute:({a,b,c})=>{
-          a=Number(a);b=Number(b);c=Number(c);
-          const d=b*b-4*a*c;
-          if(isNaN(d)) return {err:{de:"Ungültige Eingabe",en:"Invalid input"}};
-          if(d<0) return {err:{de:"Nur reelle Lösungen",en:"Only real roots"}};
-          const x1=(-b+Math.sqrt(d))/(2*a);
-          const x2=(-b-Math.sqrt(d))/(2*a);
-          return {value:`x₁=${x1.toPrecision(8)}, x₂=${x2.toPrecision(8)}`};
-        }
-      },
-      {
-        id:"pythagoras",
-        category:"math",
-        title:{de:"Satz des Pythagoras",en:"Pythagorean theorem"},
-        desc:{de:"c² = a² + b²",en:"c² = a² + b²"},
-        inputs:[
-          {key:"a",label:{de:"a",en:"a"}},
-          {key:"b",label:{de:"b",en:"b"}}
-        ],
-        compute:({a,b})=>({value:Math.sqrt(Number(a)*Number(a)+Number(b)*Number(b))})
-      },
-      {
-        id:"percent",
-        category:"math",
-        title:{de:"Prozentrechnung",en:"Percentage"},
-        desc:{de:"p% von W",en:"p% of W"},
-        inputs:[
-          {key:"p",label:{de:"p (%)",en:"p (%)"}},
-          {key:"W",label:{de:"Grundwert W",en:"base value W"}}
-        ],
-        compute:({p,W})=>({value:Number(W)*Number(p)/100})
-      },
-
-      // Geometrie
-      {
-        id:"area_rect",
-        category:"geometry",
-        title:{de:"Fläche Rechteck",en:"Rectangle area"},
-        desc:{de:"A = a · b",en:"A = a · b"},
-        inputs:[
-          {key:"a",label:{de:"Seite a (m)",en:"side a (m)"}},
-          {key:"b",label:{de:"Seite b (m)",en:"side b (m)"}}
-        ],
-        compute:({a,b})=>({value:Number(a)*Number(b),unit:"m²"})
-      },
-      {
-        id:"box_volume",
-        category:"geometry",
-        title:{de:"Volumen Quader",en:"Box volume"},
-        desc:{de:"V = l · b · h",en:"V = l · w · h"},
-        inputs:[
-          {key:"l",label:{de:"Länge l (m)",en:"length l (m)"}},
-          {key:"w",label:{de:"Breite b (m)",en:"width w (m)"}},
-          {key:"h",label:{de:"Höhe h (m)",en:"height h (m)"}}
-        ],
-        compute:({l,w,h})=>({value:Number(l)*Number(w)*Number(h),unit:"m³"})
-      },
-      {
-        id:"cube",
-        category:"geometry",
-        title:{de:"Würfel: Volumen & Oberfläche",en:"Cube: volume & surface"},
-        desc:{de:"V = a³, A = 6a²",en:"V = a³, A = 6a²"},
-        inputs:[
-          {key:"a",label:{de:"Kantenlänge a (m)",en:"edge length a (m)"}}
-        ],
-        compute:({a})=>{
-          const A = 6*Number(a)*Number(a);
-          const V = Number(a)*Number(a)*Number(a);
-          return {value:`V=${V} m³, A=${A} m²`};
-        }
-      },
-      {
-        id:"circle_area",
-        category:"geometry",
-        title:{de:"Kreis: Fläche & Umfang",en:"Circle: area & circumference"},
-        desc:{de:"A = πr², U = 2πr",en:"A = πr², C = 2πr"},
-        inputs:[
-          {key:"r",label:{de:"Radius r (m)",en:"radius r (m)"}}
-        ],
-        compute:({r})=>{
-          const A = Math.PI*Number(r)*Number(r);
-          const U = 2*Math.PI*Number(r);
-          return {value:`A=${A} m², U=${U} m`};
-        }
-      },
-      {
-        id:"cyl_volume",
-        category:"geometry",
-        title:{de:"Volumen Zylinder",en:"Cylinder volume"},
-        desc:{de:"V = πr²h",en:"V = πr²h"},
-        inputs:[
-          {key:"r",label:{de:"Radius r (m)",en:"radius r (m)"}},
-          {key:"h",label:{de:"Höhe h (m)",en:"height h (m)"}}
-        ],
-        compute:({r,h})=>({value:Math.PI*Number(r)*Number(r)*Number(h),unit:"m³"})
-      },
-      {
-        id:"sphere_volume",
-        category:"geometry",
-        title:{de:"Kugel: Volumen & Oberfläche",en:"Sphere: volume & surface"},
-        desc:{de:"V = 4/3πr³, A = 4πr²",en:"V = 4/3πr³, A = 4πr²"},
-        inputs:[
-          {key:"r",label:{de:"Radius r (m)",en:"radius r (m)"}}
-        ],
-        compute:({r})=>{
-          const rr = Number(r);
-          const V = (4/3)*Math.PI*rr*rr*rr;
-          const A = 4*Math.PI*rr*rr;
-          return {value:`V=${V} m³, A=${A} m²`};
-        }
-      },
-
-      // Physik
-      {
-        id:"force",
-        category:"physics",
-        title:{de:"Kraft",en:"Force"},
-        desc:{de:"F = m · a",en:"F = m · a"},
-        inputs:[
-          {key:"m",label:{de:"Masse m (kg)",en:"mass m (kg)"}},
-          {key:"a",label:{de:"Beschleunigung a (m/s²)",en:"acceleration a (m/s²)"}}
-        ],
-        compute:({m,a})=>({value:Number(m)*Number(a),unit:"N"})
-      },
-      {
-        id:"momentum",
-        category:"physics",
-        title:{de:"Impuls",en:"Momentum"},
-        desc:{de:"p = m · v",en:"p = m · v"},
-        inputs:[
-          {key:"m",label:{de:"Masse m (kg)",en:"mass m (kg)"}},
-          {key:"v",label:{de:"Geschwindigkeit v (m/s)",en:"velocity v (m/s)"}}
-        ],
-        compute:({m,v})=>({value:Number(m)*Number(v),unit:"kg·m/s"})
-      },
-      {
-        id:"kinetic",
-        category:"physics",
-        title:{de:"Kinetische Energie",en:"Kinetic energy"},
-        desc:{de:"E = 1/2 m v²",en:"E = 1/2 m v²"},
-        inputs:[
-          {key:"m",label:{de:"Masse m (kg)",en:"mass m (kg)"}},
-          {key:"v",label:{de:"Geschwindigkeit v (m/s)",en:"velocity v (m/s)"}}
-        ],
-        compute:({m,v})=>({value:0.5*Number(m)*Number(v)*Number(v),unit:"J"})
-      },
-      {
-        id:"potential",
-        category:"physics",
-        title:{de:"Potentielle Energie",en:"Potential energy"},
-        desc:{de:"E = m g h",en:"E = m g h"},
-        inputs:[
-          {key:"m",label:{de:"Masse m (kg)",en:"mass m (kg)"}},
-          {key:"g",label:{de:"g (m/s²), z. B. 9.81",en:"g (m/s²), e.g. 9.81"}},
-          {key:"h",label:{de:"Höhe h (m)",en:"height h (m)"}}
-        ],
-        compute:({m,g,h})=>({value:Number(m)*Number(g)*Number(h),unit:"J"})
-      },
-      {
-        id:"speed",
-        category:"physics",
-        title:{de:"Geschwindigkeit",en:"Speed"},
-        desc:{de:"v = s / t",en:"v = s / t"},
-        inputs:[
-          {key:"s",label:{de:"Strecke s (m)",en:"distance s (m)"}},
-          {key:"t",label:{de:"Zeit t (s)",en:"time t (s)"}}
-        ],
-        compute:({s,t})=>({value:Number(s)/Number(t),unit:"m/s"})
-      },
-
-      // Elektrik
-      {
-        id:"ohm",
-        category:"electric",
-        title:{de:"Ohmsches Gesetz",en:"Ohm’s law"},
-        desc:{de:"U = R · I",en:"U = R · I"},
-        inputs:[
-          {key:"U",label:{de:"Spannung U (V)",en:"voltage U (V)"}},
-          {key:"R",label:{de:"Widerstand R (Ω)",en:"resistance R (Ω)"}},
-          {key:"I",label:{de:"Strom I (A)",en:"current I (A)"}}
-        ],
-        compute:({U,R,I})=>{
-          U=Number(U);R=Number(R);I=Number(I);
-          if(U && R) return {value:U/R,unit:"A"};
-          if(U && I) return {value:U/I,unit:"Ω"};
-          if(R && I) return {value:R*I,unit:"V"};
-          return {err:{de:"Bitte zwei Größen eingeben.",en:"Please enter two quantities."}};
-        }
-      },
-      {
-        id:"power_el",
-        category:"electric",
-        title:{de:"Elektrische Leistung",en:"Electric power"},
-        desc:{de:"P = U · I",en:"P = U · I"},
-        inputs:[
-          {key:"U",label:{de:"Spannung U (V)",en:"voltage U (V)"}},
-          {key:"I",label:{de:"Strom I (A)",en:"current I (A)"}}
-        ],
-        compute:({U,I})=>({value:Number(U)*Number(I),unit:"W"})
-      },
-      {
-        id:"energy_el",
-        category:"electric",
-        title:{de:"Elektrische Arbeit",en:"Electrical energy"},
-        desc:{de:"W = P · t",en:"W = P · t"},
-        inputs:[
-          {key:"P",label:{de:"Leistung P (W)",en:"power P (W)"}},
-          {key:"t",label:{de:"Zeit t (s)",en:"time t (s)"}}
-        ],
-        compute:({P,t})=>({value:Number(P)*Number(t),unit:"J"})
-      },
-      {
-        id:"transformer",
-        category:"electric",
-        title:{de:"Trafo-Wicklungsverhältnis",en:"Transformer turns ratio"},
-        desc:{de:"U₁/U₂ = N₁/N₂",en:"U₁/U₂ = N₁/N₂"},
-        inputs:[
-          {key:"U1",label:{de:"Primärspannung U₁ (V)",en:"primary voltage U₁ (V)"}},
-          {key:"U2",label:{de:"Sekundärspannung U₂ (V)",en:"secondary voltage U₂ (V)"}},
-          {key:"N1",label:{de:"Primärwindungen N₁",en:"primary turns N₁"}},
-          {key:"N2",label:{de:"Sekundärwindungen N₂",en:"secondary turns N₂"}}
-        ],
-        compute:({U1,U2,N1,N2})=>{
-          U1=Number(U1);U2=Number(U2);N1=Number(N1);N2=Number(N2);
-          if(U1 && U2) return {value:U1/U2,unit:"U₁/U₂ = N₁/N₂"};
-          if(N1 && N2) return {value:N1/N2,unit:"U₁/U₂ = N₁/N₂"};
-          return {err:{de:"Bitte zwei Werte eingeben.",en:"Please enter two values."}};
-        }
-      },
-
-      // Chemie
-      {
-        id:"density_chem",
-        category:"chemistry",
-        title:{de:"Dichte (Chemie)",en:"Density (chemistry)"},
-        desc:{de:"ρ = m / V",en:"ρ = m / V"},
-        inputs:[
-          {key:"m",label:{de:"Masse m (g)",en:"mass m (g)"}},
-          {key:"V",label:{de:"Volumen V (mL)",en:"volume V (mL)"}}
-        ],
-        compute:({m,V})=>({value:Number(m)/Number(V),unit:"g/mL"})
-      },
-      {
-        id:"mol_mass",
-        category:"chemistry",
-        title:{de:"Stoffmenge / Masse",en:"Amount of substance / mass"},
-        desc:{de:"m = n · M",en:"m = n · M"},
-        inputs:[
-          {key:"n",label:{de:"n (mol)",en:"n (mol)"}},
-          {key:"M",label:{de:"M (g/mol)",en:"M (g/mol)"}}
-        ],
-        compute:({n,M})=>({value:Number(n)*Number(M),unit:"g"})
-      }
-    ];
-
-    function showPage(id){
+    function showPage(name){
       document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-      const page = document.getElementById("page-"+id);
+      const page = document.getElementById("page-"+name);
       if(page) page.classList.add("active");
       document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-      const btn=document.querySelector('nav button[data-page="'+id+'"]');
+      const btn = document.querySelector('nav button[data-page="'+name+'"]');
       if(btn) btn.classList.add("active");
     }
 
-    function buildConverterSelects(){
-      const catSel = document.getElementById("convCategory");
-      const fromSel = document.getElementById("convFrom");
-      const toSel   = document.getElementById("convTo");
-      const prevCat = catSel.value || "length";
-      const prevFrom = fromSel.value;
-      const prevTo   = toSel.value;
-
-      catSel.innerHTML = "";
-      UNIT_CATEGORIES.forEach(c=>{
-        const opt = document.createElement("option");
-        opt.value = c.id;
-        opt.textContent = c.label[currentLang];
-        catSel.appendChild(opt);
-      });
-      catSel.value = prevCat;
-
-      function fillUnits(){
-        const cat = getCategory(catSel.value);
-        fromSel.innerHTML = "";
-        toSel.innerHTML   = "";
-        cat.units.forEach(u=>{
-          const o1 = document.createElement("option");
-          o1.value = u.id;
-          o1.textContent = u.label[currentLang];
-          const o2 = o1.cloneNode(true);
-          fromSel.appendChild(o1);
-          toSel.appendChild(o2);
-        });
-        if(prevFrom) fromSel.value = prevFrom;
-        if(prevTo) toSel.value = prevTo;
-      }
-      catSel.onchange = fillUnits;
-      fillUnits();
-    }
-
-    function buildFormulaCategorySelect(){
-      const sel = document.getElementById("formulaCategory");
-      const t = I18N[currentLang];
-      sel.innerHTML = "";
-      const allOpt = document.createElement("option");
-      allOpt.value = "all";
-      allOpt.textContent = t.formulasAllCats;
-      sel.appendChild(allOpt);
-
-      const used = new Set(FORMULAS.map(f=>f.category));
-      used.forEach(cid=>{
-        const opt = document.createElement("option");
-        opt.value = cid;
-        opt.textContent = FORMULA_CATEGORIES[cid][currentLang];
-        sel.appendChild(opt);
-      });
-    }
-
-    function renderFormulas(){
-      const list = document.getElementById("formulaList");
-      const searchText = (document.getElementById("formulaSearch").value || "").toLowerCase();
-      const catFilter = document.getElementById("formulaCategory").value;
-      list.innerHTML = "";
-
-      FORMULAS.filter(f=>{
-        const text = (f.title[currentLang] + " " + f.desc[currentLang]).toLowerCase();
-        const matchesText = text.includes(searchText);
-        const matchesCat = catFilter==="all" || !catFilter || f.category===catFilter;
-        return matchesText && matchesCat;
-      }).forEach(f=>{
-        const item = document.createElement("div");
-        item.className = "formula-item";
-
-        const head = document.createElement("div");
-        head.innerHTML = "<strong>"+f.title[currentLang]+"</strong> " +
-          "<span style='font-size:11px;color:#6b7280'>("+FORMULA_CATEGORIES[f.category][currentLang]+")</span>" +
-          "<div class='formula-desc'>"+f.desc[currentLang]+"</div>";
-        item.appendChild(head);
-
-        const form = document.createElement("form");
-        form.addEventListener("submit",e=>e.preventDefault());
-
-        f.inputs.forEach(inp=>{
-          const row = document.createElement("div");
-          row.className = "formula-input-row";
-          const label = document.createElement("label");
-          label.textContent = inp.label[currentLang];
-          const input = document.createElement("input");
-          input.name = inp.key;
-          row.appendChild(label);
-          row.appendChild(input);
-          form.appendChild(row);
-        });
-
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "main";
-        btn.style.marginTop = "6px";
-        btn.textContent = currentLang==="de" ? "Berechnen" : "Calculate";
-        const out = document.createElement("div");
-        out.className = "formula-output";
-
-        btn.addEventListener("click",()=>{
-          const fd = new FormData(form);
-          const args = {};
-          for(const [k,v] of fd.entries()) args[k]=v;
-          try{
-            const res = f.compute(args);
-            if(res && res.err){
-              out.style.color = "var(--danger)";
-              if(typeof res.err === "string") out.textContent = res.err;
-              else out.textContent = res.err[currentLang] || "";
-            }else{
-              const txt = (res.value!==undefined?res.value:"") + (res.unit?" "+res.unit:"");
-              out.style.color = "#111827";
-              out.textContent = txt;
-            }
-          }catch(e){
-            out.style.color = "var(--danger)";
-            out.textContent = currentLang==="de" ? "Fehler bei Berechnung" : "Error during calculation";
-          }
-        });
-
-        form.appendChild(btn);
-        item.appendChild(form);
-        item.appendChild(out);
-        list.appendChild(item);
-      });
-    }
-
-    function buildGeometryShapeSelect(){
-      const sel = document.getElementById("geoShape");
-      const t = I18N[currentLang];
-      sel.innerHTML = "";
-      t.geoShapes.forEach(s=>{
-        const opt = document.createElement("option");
-        opt.value = s.value;
-        opt.textContent = s.label;
-        sel.appendChild(opt);
-      });
+    function formatMoney(value){
+      if(!isFinite(value)) return "–";
+      const v = Math.round(value*100)/100;
+      return v.toLocaleString(currentLang==="de"?"de-DE":"en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
     }
 
     function applyLanguage(lang){
       currentLang = lang;
       document.documentElement.lang = lang;
+
       const t = I18N[lang];
       document.title = t.metaTitle;
       const metaDesc = document.querySelector('meta[name="description"]');
       if(metaDesc) metaDesc.content = t.metaDesc;
 
-      document.getElementById("headerTitle").textContent = t.headerTitle;
-      document.getElementById("headerLead").textContent = t.headerLead;
-      document.getElementById("navHome").textContent = t.navHome;
-      document.getElementById("navConv").textContent = t.navConv;
-      document.getElementById("navFormulas").textContent = t.navFormulas;
-      document.getElementById("navGeo").textContent = t.navGeo;
-      document.getElementById("navPhys").textContent = t.navPhys;
-      document.getElementById("homeWhat").textContent = t.homeWhat;
-      document.getElementById("homeInfo").textContent = t.homeInfo;
-      document.getElementById("btnConv").textContent = t.btnConv;
-      document.getElementById("btnFormulas").textContent = t.btnFormulas;
-      document.getElementById("btnGeo").textContent = t.btnGeo;
-      document.getElementById("btnPhys").textContent = t.btnPhys;
-      document.getElementById("convTitle").textContent = t.convTitle;
-      document.getElementById("convIntro").textContent = t.convIntro;
-      document.getElementById("convSwap").textContent = t.convSwap;
-      document.getElementById("convBtn").textContent = t.convBtn;
-      document.getElementById("convQuick").textContent = t.convQuick;
-      document.getElementById("formulasTitle").textContent = t.formulasTitle;
-      document.getElementById("formulasIntro").textContent = t.formulasIntro;
-      document.getElementById("formulaSearch").placeholder = t.formulasSearchPh;
-      document.getElementById("geoTitle").textContent = t.geoTitle;
-      document.getElementById("geoIntro").textContent = t.geoIntro;
-      document.getElementById("geoBtn").textContent = t.geoBtn;
-      document.getElementById("physTitle").textContent = t.physTitle;
-      document.getElementById("physIntro").textContent = t.physIntro;
-      document.getElementById("physForceTitle").textContent = t.physForceTitle;
-      document.getElementById("physSpeedTitle").textContent = t.physSpeedTitle;
-      document.getElementById("footerText").textContent = t.footerText;
+      setText("headerTitle","headerTitle");
+      setText("headerLead","headerLead");
+      setText("navHome","navHome");
+      setText("navSavings","navSavings");
+      setText("navLoans","navLoans");
+      setText("navRetire","navRetire");
+      setText("navBudget","navBudget");
+      setText("homeTitle","homeTitle");
+      setText("homeLead","homeLead");
+      setText("homeBtnSavings","homeBtnSavings");
+      setText("homeBtnLoans","homeBtnLoans");
+      setText("homeBtnRetire","homeBtnRetire");
+      setText("homeBtnBudget","homeBtnBudget");
+      setText("convHint","convHint");
+
+      setText("savingsMainTitle","savingsMainTitle");
+      setText("savingsMainLead","savingsMainLead");
+      setText("labelSavingsStart","savingsStart");
+      setText("labelSavingsRate","savingsRate");
+      setText("labelSavingsYears","savingsYears");
+      setText("savingsBtn","savingsBtn");
+      setText("savingsResultLabel","savingsResultLabel");
+
+      setText("savingsPlanTitle","savingsPlanTitle");
+      setText("savingsPlanLead","savingsPlanLead");
+      setText("labelPlanMonthly","savingsPlanMonthly");
+      setText("labelPlanStart","savingsPlanStart");
+      setText("labelPlanYears","savingsPlanYears");
+      setText("labelPlanRate","savingsPlanRate");
+      setText("savingsPlanBtn","savingsPlanBtn");
+      setText("savingsPlanResultLabel","savingsPlanResultLabel");
+
+      setText("loansTitle","loansTitle");
+      setText("loansLead","loansLead");
+      setText("labelLoanAmount","loansAmount");
+      setText("labelLoanRate","loansRate");
+      setText("labelLoanYears","loansYears");
+      setText("loansBtn","loansBtn");
+      setText("loansResultLabel","loansResultLabel");
+
+      setText("retireInflTitle","retireInflTitle");
+      setText("retireInflLead","retireInflLead");
+      setText("labelInflToday","retireInflToday");
+      setText("labelInflRate","retireInflRate");
+      setText("labelInflYears","retireInflYears");
+      setText("retireInflBtn","retireInflBtn");
+      setText("retireInflResultLabel","retireInflResultLabel");
+
+      setText("retireGapTitle","retireGapTitle");
+      setText("retireGapLead","retireGapLead");
+      setText("labelRetireWish","retireWish");
+      setText("labelRetireYears","retireYears");
+      setText("labelRetireRate","retireRate");
+      setText("labelRetireHave","retireHave");
+      setText("retireGapBtn","retireGapBtn");
+      setText("retireGapResultLabel","retireGapResultLabel");
+
+      setText("budgetTitle","budgetTitle");
+      setText("budgetLead","budgetLead");
+      setText("labelBudgetIncome","budgetIncome");
+      setText("labelBudgetRent","budgetRent");
+      setText("labelBudgetFood","budgetFood");
+      setText("labelBudgetMobility","budgetMobility");
+      setText("labelBudgetFun","budgetFun");
+      setText("labelBudgetOther","budgetOther");
+      setText("budgetBtn","budgetBtn");
+      setText("budgetResultLabel","budgetResultLabel");
+
+      setText("footerText","footerText");
 
       document.querySelectorAll(".lang-btn").forEach(b=>b.classList.remove("active"));
       document.getElementById(lang==="de"?"langDE":"langEN").classList.add("active");
-
-      buildConverterSelects();
-      buildFormulaCategorySelect();
-      renderFormulas();
-      buildGeometryShapeSelect();
     }
 
     document.addEventListener("DOMContentLoaded",function(){
-      // Sprache + Navigation
+      // Sprache initial setzen
       applyLanguage("de");
+
       document.getElementById("langDE").addEventListener("click",()=>applyLanguage("de"));
       document.getElementById("langEN").addEventListener("click",()=>applyLanguage("en"));
 
+      // Navigation
       document.querySelectorAll("nav button").forEach(btn=>{
         btn.addEventListener("click",()=>showPage(btn.dataset.page));
       });
       showPage("home");
 
-      // Umrechner Logik
-      const convBtn = document.getElementById("convBtn");
-      const convSwap = document.getElementById("convSwap");
-      const catSel = document.getElementById("convCategory");
-      const fromSel = document.getElementById("convFrom");
-      const toSel = document.getElementById("convTo");
-      const valueIn = document.getElementById("convValue");
-      const convRes = document.getElementById("convResult");
+      // Home Buttons
+      document.getElementById("homeBtnSavings").addEventListener("click",()=>showPage("savings"));
+      document.getElementById("homeBtnLoans").addEventListener("click",()=>showPage("loans"));
+      document.getElementById("homeBtnRetire").addEventListener("click",()=>showPage("retire"));
+      document.getElementById("homeBtnBudget").addEventListener("click",()=>showPage("budget"));
 
-      convBtn.addEventListener("click",()=>{
+      // ----- Zinseszins Rechner -----
+      document.getElementById("savingsBtn").addEventListener("click",()=>{
         const t = I18N[currentLang];
-        const v = Number(valueIn.value);
-        if(isNaN(v)){
-          convRes.textContent = t.convErrNumber;
-          convRes.style.color = "var(--danger)";
+        const start = parseFloat(document.getElementById("savingsStart").value);
+        const rate  = parseFloat(document.getElementById("savingsRate").value)/100;
+        const years = parseFloat(document.getElementById("savingsYears").value);
+        const out   = document.getElementById("savingsResult");
+        if(!isFinite(start)||!isFinite(rate)||!isFinite(years)){
+          out.textContent = t.errorNumber;
+          out.style.color = "var(--danger)";
           return;
         }
-        const out = convertUnits(catSel.value,fromSel.value,toSel.value,v);
-        if(isNaN(out)){
-          convRes.textContent = t.convErrGeneric;
-          convRes.style.color = "var(--danger)";
+        const finalAmount = start*Math.pow(1+rate,years);
+        const interest = finalAmount-start;
+        out.style.color = "var(--accent)";
+        out.textContent = formatMoney(finalAmount)+" ("+(currentLang==="de"?"Zinsen: ":"interest: ")+formatMoney(interest)+")";
+      });
+
+      // ----- Sparplan Rechner -----
+      document.getElementById("savingsPlanBtn").addEventListener("click",()=>{
+        const t = I18N[currentLang];
+        const monthly = parseFloat(document.getElementById("planMonthly").value);
+        const start   = parseFloat(document.getElementById("planStart").value)||0;
+        const rate    = parseFloat(document.getElementById("planRate").value)/100;
+        const years   = parseFloat(document.getElementById("planYears").value);
+        const out     = document.getElementById("savingsPlanResult");
+        if(!isFinite(monthly)||!isFinite(rate)||!isFinite(years)){
+          out.textContent = t.errorNumber;
+          out.style.color = "var(--danger)";
+          return;
+        }
+        const n = years*12;
+        const i = rate/12;
+        let futureMonthly;
+        if(i===0){
+          futureMonthly = monthly*n;
         }else{
-          convRes.style.color = "var(--accent)";
-          const unitText = toSel.options[toSel.selectedIndex].text.replace(/\s*\(.+\)/,"");
-          convRes.textContent = out + " " + unitText;
+          futureMonthly = monthly*((Math.pow(1+i,n)-1)/i);
         }
+        const finalAmount = start*Math.pow(1+rate,years)+futureMonthly;
+        const totalInvested = start + monthly*n;
+        const interest = finalAmount-totalInvested;
+        out.style.color = "var(--accent)";
+        const investedLabel = currentLang==="de"?"eingezahlt: ":"paid in: ";
+        const interestLabel = currentLang==="de"?"Zinsen: ":"interest: ";
+        out.textContent = formatMoney(finalAmount)+" ("+investedLabel+formatMoney(totalInvested)+", "+interestLabel+formatMoney(interest)+")";
       });
 
-      convSwap.addEventListener("click",()=>{
-        const tmp = fromSel.value;
-        fromSel.value = toSel.value;
-        toSel.value = tmp;
-      });
-
-      document.querySelectorAll("[data-preset]").forEach(btn=>{
-        btn.addEventListener("click",()=>{
-          const [cat,from,to,val] = btn.dataset.preset.split("|");
-          catSel.value = cat;
-          buildConverterSelects();
-          catSel.value = cat;
-          const catObj = getCategory(cat);
-          const fromSel2 = document.getElementById("convFrom");
-          const toSel2   = document.getElementById("convTo");
-          fromSel2.value = from;
-          toSel2.value   = to;
-          valueIn.value  = val;
-        });
-      });
-
-      // Formeln
-      document.getElementById("formulaSearch").addEventListener("input",renderFormulas);
-      document.getElementById("formulaCategory").addEventListener("change",renderFormulas);
-
-      // Geometrie
-      document.getElementById("geoCalc").addEventListener("click",()=>{
-        const shape = document.getElementById("geoShape").value;
-        const a = Number(document.getElementById("geo_a").value);
-        const b = Number(document.getElementById("geo_b").value);
-        const h = Number(document.getElementById("geo_h").value);
-        const r = Number(document.getElementById("geo_r").value);
-        const out = document.getElementById("geoResult");
-        let text = "";
-
-        if(shape==="rect"){
-          if(!isNaN(a)&&!isNaN(b)){
-            const A = a*b;
-            const U = 2*(a+b);
-            text = "A = "+A+" m², U = "+U+" m";
-          }
-        }else if(shape==="box"){
-          if(!isNaN(a)&&!isNaN(b)&&!isNaN(h)){
-            const V = a*b*h;
-            const A = 2*(a*b + a*h + b*h);
-            text = "V = "+V+" m³, A = "+A+" m²";
-          }
-        }else if(shape==="cube"){
-          if(!isNaN(a)){
-            const V = a*a*a;
-            const A = 6*a*a;
-            text = "V = "+V+" m³, A = "+A+" m²";
-          }
-        }else if(shape==="tri"){
-          if(!isNaN(a)&&!isNaN(h)){
-            const A = 0.5*a*h;
-            text = "A = "+A+" m²";
-          }
-        }else if(shape==="circle"){
-          if(!isNaN(r)){
-            const A = Math.PI*r*r;
-            const U = 2*Math.PI*r;
-            text = "A = "+A.toFixed(4)+" m², U = "+U.toFixed(4)+" m";
-          }
-        }else if(shape==="cyl"){
-          if(!isNaN(r)&&!isNaN(h)){
-            const V = Math.PI*r*r*h;
-            text = "V = "+V.toFixed(6)+" m³";
-          }
-        }else if(shape==="sphere"){
-          if(!isNaN(r)){
-            const V = (4/3)*Math.PI*r*r*r;
-            const A = 4*Math.PI*r*r;
-            text = "V = "+V.toFixed(6)+" m³, A = "+A.toFixed(4)+" m²";
-          }
-        }else if(shape==="cone"){
-          if(!isNaN(r)&&!isNaN(h)){
-            const V = (Math.PI*r*r*h)/3;
-            text = "V = "+V.toFixed(6)+" m³";
-          }
+      // ----- Kreditrechner -----
+      document.getElementById("loansBtn").addEventListener("click",()=>{
+        const t = I18N[currentLang];
+        const amount = parseFloat(document.getElementById("loanAmount").value);
+        const rate   = parseFloat(document.getElementById("loanRate").value)/100;
+        const years  = parseFloat(document.getElementById("loanYears").value);
+        const out    = document.getElementById("loansResult");
+        if(!isFinite(amount)||!isFinite(rate)||!isFinite(years)){
+          out.textContent = t.errorNumber;
+          out.style.color = "var(--danger)";
+          return;
         }
-        if(!text){
-          out.textContent = currentLang==="de" ? "Bitte passende Werte eingeben." : "Please enter valid values.";
+        const n = years*12;
+        const i = rate/12;
+        let payment;
+        if(i===0){
+          payment = amount/n;
         }else{
-          out.textContent = text;
+          const factor = Math.pow(1+i,n);
+          payment = amount * (i*factor)/(factor-1);
         }
+        const totalPaid = payment*n;
+        const interest = totalPaid-amount;
+        out.style.color = "var(--accent)";
+        const mLabel = currentLang==="de"?"Rate/Monat: ":"monthly payment: ";
+        const totLabel = currentLang==="de"?"Gesamtzahlung: ":"total paid: ";
+        const intLabel = currentLang==="de"?"Zinsen: ":"interest: ";
+        out.textContent = mLabel+formatMoney(payment)+" | "+totLabel+formatMoney(totalPaid)+" | "+intLabel+formatMoney(interest);
       });
 
-      // Physik Schnellrechner
-      document.getElementById("physForceBtn").addEventListener("click",()=>{
-        const m = Number(document.getElementById("phys_m").value);
-        const a = Number(document.getElementById("phys_a").value);
-        const out = document.getElementById("physForceOut");
-        if(isNaN(m)||isNaN(a)){
-          out.textContent = I18N[currentLang].physErrNumber;
+      // ----- Inflationsrechner -----
+      document.getElementById("retireInflBtn").addEventListener("click",()=>{
+        const t = I18N[currentLang];
+        const today = parseFloat(document.getElementById("inflToday").value);
+        const rate  = parseFloat(document.getElementById("inflRate").value)/100;
+        const years = parseFloat(document.getElementById("inflYears").value);
+        const out   = document.getElementById("retireInflResult");
+        if(!isFinite(today)||!isFinite(rate)||!isFinite(years)){
+          out.textContent = t.errorNumber;
+          out.style.color = "var(--danger)";
           return;
         }
-        out.textContent = (m*a)+" N";
+        const futurePrice = today*Math.pow(1+rate,years);
+        const realValue   = today*Math.pow(1-rate,years);
+        out.style.color = "var(--accent)";
+        const nowLabel = currentLang==="de"?"Betrag heute: ":"today: ";
+        const futLabel = currentLang==="de"?"Preis in Zukunft: ":"future price: ";
+        const powerLabel = currentLang==="de"?"ungefähre Kaufkraft: ":"approx. buying power: ";
+        out.textContent = nowLabel+formatMoney(today)+" → "+futLabel+formatMoney(futurePrice)+" | "+powerLabel+formatMoney(realValue);
       });
-      document.getElementById("physSpeedBtn").addEventListener("click",()=>{
-        const s = Number(document.getElementById("phys_s").value);
-        const t = Number(document.getElementById("phys_t").value);
-        const out = document.getElementById("physSpeedOut");
-        if(isNaN(s)||isNaN(t)||t===0){
-          out.textContent = I18N[currentLang].physErrSt;
+
+      // ----- Rentenlücke grob -----
+      document.getElementById("retireGapBtn").addEventListener("click",()=>{
+        const t = I18N[currentLang];
+        const wish  = parseFloat(document.getElementById("retireWish").value);
+        const years = parseFloat(document.getElementById("retireYears").value);
+        const rate  = parseFloat(document.getElementById("retireRate").value)/100;
+        const have  = parseFloat(document.getElementById("retireHave").value)||0;
+        const out   = document.getElementById("retireGapResult");
+        if(!isFinite(wish)||!isFinite(years)||!isFinite(rate)){
+          out.textContent = t.errorNumber;
+          out.style.color = "var(--danger)";
           return;
         }
-        out.textContent = (s/t)+" m/s";
+        const yearlyNeed = wish*12;
+        const neededCapital = yearlyNeed/rate; // sehr grobe Faustformel
+        const gap = neededCapital-have;
+        out.style.color = "var(--accent)";
+        const needLabel = currentLang==="de"?"Benötigtes Kapital: ":"required capital: ";
+        const haveLabel = currentLang==="de"?"aktuell: ":"current: ";
+        const gapLabel  = currentLang==="de"?"Lücke: ":"gap: ";
+        out.textContent = needLabel+formatMoney(neededCapital)+" | "+haveLabel+formatMoney(have)+" | "+gapLabel+formatMoney(gap);
+      });
+
+      // ----- Budgetrechner -----
+      document.getElementById("budgetBtn").addEventListener("click",()=>{
+        const t = I18N[currentLang];
+        const income = parseFloat(document.getElementById("budgetIncome").value);
+        const rent   = parseFloat(document.getElementById("budgetRent").value)||0;
+        const food   = parseFloat(document.getElementById("budgetFood").value)||0;
+        const mob    = parseFloat(document.getElementById("budgetMobility").value)||0;
+        const fun    = parseFloat(document.getElementById("budgetFun").value)||0;
+        const other  = parseFloat(document.getElementById("budgetOther").value)||0;
+        const out    = document.getElementById("budgetResult");
+        if(!isFinite(income)||income<=0){
+          out.textContent = t.errorNumber;
+          out.style.color = "var(--danger)";
+          return;
+        }
+        const sum = rent+food+mob+fun+other;
+        const free = income-sum;
+        function pct(v){return (v/income*100).toFixed(1)+"%";}
+        out.style.color = "var(--accent)";
+        const freeLabel = currentLang==="de"?"frei verfügbar: ":"free left: ";
+        const rentLabel = currentLang==="de"?"Wohnen: ","Rent: ";
+        const foodLabel = currentLang==="de"?"Lebensmittel: ","Food: ";
+        const mobLabel  = currentLang==="de"?"Mobilität: ","Mobility: ";
+        const funLabel  = currentLang==="de"?"Freizeit: ","Fun: ";
+        const otherLabel= currentLang==="de"?"Sonstiges: ","Other: ";
+        out.textContent =
+          rentLabel+formatMoney(rent)+" ("+pct(rent)+") | "+
+          foodLabel+formatMoney(food)+" ("+pct(food)+") | "+
+          mobLabel+formatMoney(mob)+" ("+pct(mob)+") | "+
+          funLabel+formatMoney(fun)+" ("+pct(fun)+") | "+
+          otherLabel+formatMoney(other)+" ("+pct(other)+") | "+
+          freeLabel+formatMoney(free)+" ("+pct(free)+")";
       });
     });
   </script>
@@ -1102,10 +641,10 @@
 <body>
   <div class="container">
     <header>
-      <div class="logo">C</div>
+      <div class="logo">€</div>
       <div>
-        <h1 id="headerTitle">Universal Umrechner & Formel-Löser</h1>
-        <div class="lead" id="headerLead">Einfach zu bedienen, viele Einheiten & Formeln. Für Schule, Ausbildung, Beruf – von 14 bis 99 Jahren.</div>
+        <h1 id="headerTitle">Money Assistant – Finanzrechner</h1>
+        <div class="lead" id="headerLead">Zinseszins, Sparplan, Kredit, Inflation &amp; Rente. Einfach erklärt, kostenlos, auf Deutsch und Englisch.</div>
       </div>
       <div class="lang-switch">
         <button id="langDE" class="lang-btn active">DE</button>
@@ -1115,128 +654,184 @@
 
     <nav aria-label="Hauptnavigation">
       <button data-page="home" id="navHome" class="active">Startseite</button>
-      <button data-page="converter" id="navConv">Umrechner</button>
-      <button data-page="formulas" id="navFormulas">Formeln</button>
-      <button data-page="geometry" id="navGeo">Geometrie</button>
-      <button data-page="physics" id="navPhys">Physik</button>
+      <button data-page="savings" id="navSavings">Sparen &amp; Zinseszins</button>
+      <button data-page="loans" id="navLoans">Kredit &amp; Schulden</button>
+      <button data-page="retire" id="navRetire">Inflation &amp; Rente</button>
+      <button data-page="budget" id="navBudget">Budget &amp; Alltag</button>
     </nav>
 
     <!-- Startseite -->
     <section id="page-home" class="page active">
       <div class="card">
-        <h2 id="homeWhat">Was möchtest du tun?</h2>
-        <div class="small" id="homeInfo">Wähle eine Funktion. Du kannst nichts kaputt machen 🙂</div>
+        <h2 id="homeTitle">Was möchtest du mit deinem Geld machen?</h2>
+        <div class="small" id="homeLead">Wähle einen Bereich. Du kannst nichts kaputt machen – alle Rechner laufen lokal im Browser.</div>
         <div class="controls" style="margin-top:14px">
-          <button class="main big" id="btnConv" onclick="showPage('converter')">Einheiten umrechnen</button>
-          <button class="secondary big" id="btnFormulas" onclick="showPage('formulas')">Formel lösen</button>
-          <button class="secondary big" id="btnGeo" onclick="showPage('geometry')">Flächen / Volumen</button>
-          <button class="secondary big" id="btnPhys" onclick="showPage('physics')">Schnellrechner Physik</button>
+          <button class="main" id="homeBtnSavings">Vermögen aufbauen</button>
+          <button class="secondary" id="homeBtnLoans">Kredit planen</button>
+          <button class="secondary" id="homeBtnRetire">Rente &amp; Kaufkraft</button>
+          <button class="secondary" id="homeBtnBudget">Alltag &amp; Budget</button>
         </div>
         <div class="tag-row">
-          <span class="tag">Länge</span>
-          <span class="tag">Masse</span>
-          <span class="tag">Daten</span>
-          <span class="tag">Temperatur</span>
-          <span class="tag">Druck</span>
-          <span class="tag">Mathe</span>
-          <span class="tag">Physik</span>
-          <span class="tag">Chemie</span>
-          <span class="tag">Elektrik</span>
+          <span class="tag">Zinseszins</span>
+          <span class="tag">Sparplan</span>
+          <span class="tag">Kredit</span>
+          <span class="tag">Inflation</span>
+          <span class="tag">Rente</span>
+          <span class="tag">Budget</span>
+          <span class="tag">Finanzen</span>
+          <span class="tag">ETF</span>
+        </div>
+        <div class="ad-placeholder">
+          Werbeplatz (oben, Desktop &amp; Mobile) – hier kannst du später z.&nbsp;B. AdSense einbinden.
         </div>
       </div>
     </section>
 
-    <!-- Umrechner -->
-    <section id="page-converter" class="page">
+    <!-- Sparen & Zinseszins -->
+    <section id="page-savings" class="page">
       <div class="card">
-        <h2 id="convTitle">Einheiten-Umrechner</h2>
-        <div class="small" id="convIntro">1. Kategorie, 2. Einheiten, 3. Wert – fertig.</div>
+        <h2 id="savingsMainTitle">Zinseszins-Rechner</h2>
+        <div class="small" id="savingsMainLead">Berechne, wie sich eine einmalige Anlage über die Jahre entwickelt.</div>
         <div class="controls">
-          <select id="convCategory"></select>
-          <select id="convFrom" style="min-width:220px"></select>
-          <input id="convValue" placeholder="Wert" style="width:120px">
-          <select id="convTo" style="min-width:220px"></select>
+          <label class="small" id="labelSavingsStart" for="savingsStart">Startkapital</label>
+          <input id="savingsStart" type="number" step="0.01" placeholder="10.000">
+          <label class="small" id="labelSavingsRate" for="savingsRate">Jährliche Rendite (%)</label>
+          <input id="savingsRate" type="number" step="0.01" placeholder="6">
+          <label class="small" id="labelSavingsYears" for="savingsYears">Jahre</label>
+          <input id="savingsYears" type="number" step="1" placeholder="20">
+          <button id="savingsBtn" class="main">Berechnen</button>
         </div>
-        <div class="controls">
-          <button id="convSwap" class="secondary">Einheiten tauschen</button>
-          <button id="convBtn" class="main">Umrechnen</button>
-        </div>
-        <div class="result" id="convResult">—</div>
-
-        <hr style="margin:14px 0;border:none;border-top:1px solid #e5e7eb">
-
-        <h3 id="convQuick">Schnell-Auswahl</h3>
-        <div class="controls">
-          <button data-preset="length|m|km|1000" class="secondary">1000 m → km</button>
-          <button data-preset="mass|g|kg|1000" class="secondary">1000 g → kg</button>
-          <button data-preset="data|MB|GB|1024" class="secondary">1024 MB → GB</button>
-          <button data-preset="temperature|C|F|20" class="secondary">20 °C → °F</button>
-        </div>
+        <div class="small" style="margin-top:10px" id="savingsResultLabel">Endkapital und Zinsen:</div>
+        <div class="result" id="savingsResult">—</div>
       </div>
-    </section>
 
-    <!-- Formeln -->
-    <section id="page-formulas" class="page">
       <div class="card">
-        <h2 id="formulasTitle">Formel-Bibliothek</h2>
-        <div class="small" id="formulasIntro">Suche nach Namen oder wähle eine Kategorie. Dann Werte eingeben und „Berechnen“ drücken.</div>
+        <h2 id="savingsPlanTitle">Sparplan-Rechner (monatlich)</h2>
+        <div class="small" id="savingsPlanLead">Monatlich sparen und sehen, wie viel daraus wird.</div>
         <div class="controls">
-          <input id="formulaSearch" class="search-box" placeholder='z. B. „Ohm“, „Fläche“, „Geschwindigkeit“…'>
-          <select id="formulaCategory"></select>
+          <label class="small" id="labelPlanMonthly" for="planMonthly">Monatliche Einzahlung</label>
+          <input id="planMonthly" type="number" step="0.01" placeholder="200">
+          <label class="small" id="labelPlanStart" for="planStart">Startkapital (optional)</label>
+          <input id="planStart" type="number" step="0.01" placeholder="0">
+          <label class="small" id="labelPlanYears" for="planYears">Sparjahre</label>
+          <input id="planYears" type="number" step="1" placeholder="25">
+          <label class="small" id="labelPlanRate" for="planRate">Jährliche Rendite (%)</label>
+          <input id="planRate" type="number" step="0.01" placeholder="6">
+          <button id="savingsPlanBtn" class="main">Sparplan berechnen</button>
         </div>
-        <div id="formulaList" class="formula-list" style="margin-top:10px"></div>
+        <div class="small" style="margin-top:10px" id="savingsPlanResultLabel">Ergebnis Sparplan:</div>
+        <div class="result" id="savingsPlanResult">—</div>
+
+        <div class="ad-placeholder">
+          Werbeplatz Sparen – z.&nbsp;B. Banken, ETF-Broker, Kreditkarten-Anbieter.
+        </div>
       </div>
     </section>
 
-    <!-- Geometrie -->
-    <section id="page-geometry" class="page">
+    <!-- Kredit & Schulden -->
+    <section id="page-loans" class="page">
       <div class="card">
-        <h2 id="geoTitle">Geometrie-Rechner</h2>
-        <div class="small" id="geoIntro">Wähle die Form und gib die Seiten / Radien ein.</div>
+        <h2 id="loansTitle">Kreditrechner</h2>
+        <div class="small" id="loansLead">Berechne Monatsrate, Gesamtkosten und Zinsen eines Annuitätendarlehens.</div>
         <div class="controls">
-          <select id="geoShape"></select>
+          <label class="small" id="labelLoanAmount" for="loanAmount">Kreditsumme</label>
+          <input id="loanAmount" type="number" step="0.01" placeholder="20000">
+          <label class="small" id="labelLoanRate" for="loanRate">Effektiver Jahreszins (%)</label>
+          <input id="loanRate" type="number" step="0.01" placeholder="4">
+          <label class="small" id="labelLoanYears" for="loanYears">Laufzeit (Jahre)</label>
+          <input id="loanYears" type="number" step="1" placeholder="7">
+          <button id="loansBtn" class="main">Kredit berechnen</button>
         </div>
-        <div class="controls">
-          <input id="geo_a" placeholder="a (m)">
-          <input id="geo_b" placeholder="b (m)">
-          <input id="geo_h" placeholder="h (m)">
-          <input id="geo_r" placeholder="r (m)">
+        <div class="small" style="margin-top:10px" id="loansResultLabel">Kredit-Ergebnis:</div>
+        <div class="result" id="loansResult">—</div>
+
+        <div class="ad-placeholder">
+          Werbeplatz Kredit – perfekt für Banken, Vergleichsportale, Kreditvermittler.
         </div>
-        <button id="geoCalc" class="main" style="margin-top:8px">Berechnen</button>
-        <div class="result" id="geoResult">—</div>
       </div>
     </section>
 
-    <!-- Physik -->
-    <section id="page-physics" class="page">
+    <!-- Inflation & Rente -->
+    <section id="page-retire" class="page">
       <div class="card">
-        <h2 id="physTitle">Physik – Schnellrechner</h2>
-        <div class="small" id="physIntro">Einige der wichtigsten Formeln als Mini-Rechner.</div>
-
-        <div class="card" style="margin-top:10px">
-          <h3 id="physForceTitle">Kraft F = m · a</h3>
-          <div class="controls">
-            <input id="phys_m" placeholder="m (kg)">
-            <input id="phys_a" placeholder="a (m/s²)">
-            <button id="physForceBtn" class="main">Berechnen</button>
-          </div>
-          <div class="small">F = <span class="result" id="physForceOut">—</span></div>
+        <h2 id="retireInflTitle">Inflationsrechner</h2>
+        <div class="small" id="retireInflLead">Wie viel ist dein Geld in der Zukunft noch wert?</div>
+        <div class="controls">
+          <label class="small" id="labelInflToday" for="inflToday">Betrag heute</label>
+          <input id="inflToday" type="number" step="0.01" placeholder="1000">
+          <label class="small" id="labelInflRate" for="inflRate">Inflation pro Jahr (%)</label>
+          <input id="inflRate" type="number" step="0.01" placeholder="2">
+          <label class="small" id="labelInflYears" for="inflYears">Jahre in der Zukunft</label>
+          <input id="inflYears" type="number" step="1" placeholder="15">
+          <button id="retireInflBtn" class="main">Inflation berechnen</button>
         </div>
+        <div class="small" style="margin-top:10px" id="retireInflResultLabel">Kaufkraft in der Zukunft:</div>
+        <div class="result" id="retireInflResult">—</div>
+      </div>
 
-        <div class="card" style="margin-top:10px">
-          <h3 id="physSpeedTitle">Geschwindigkeit v = s / t</h3>
-          <div class="controls">
-            <input id="phys_s" placeholder="s (m)">
-            <input id="phys_t" placeholder="t (s)">
-            <button id="physSpeedBtn" class="main">Berechnen</button>
-          </div>
-          <div class="small">v = <span class="result" id="physSpeedOut">—</span></div>
+      <div class="card">
+        <h2 id="retireGapTitle">Rentenlücke grob schätzen</h2>
+        <div class="small" id="retireGapLead">Wie viel Kapital brauchst du ungefähr für deine Wunsch-Rente?</div>
+        <div class="controls">
+          <label class="small" id="labelRetireWish" for="retireWish">Wunsch-Rente netto pro Monat</label>
+          <input id="retireWish" type="number" step="0.01" placeholder="2000">
+          <label class="small" id="labelRetireYears" for="retireYears">Geplante Rentenjahre</label>
+          <input id="retireYears" type="number" step="1" placeholder="25">
+          <label class="small" id="labelRetireRate" for="retireRate">Entnahme-Quote pro Jahr (%)</label>
+          <input id="retireRate" type="number" step="0.01" placeholder="4">
+          <label class="small" id="labelRetireHave" for="retireHave">Bisher angespartes Vermögen</label>
+          <input id="retireHave" type="number" step="0.01" placeholder="50000">
+          <button id="retireGapBtn" class="main">Rentenbedarf berechnen</button>
+        </div>
+        <div class="small" style="margin-top:10px" id="retireGapResultLabel">Ergebnis Rente:</div>
+        <div class="result" id="retireGapResult">—</div>
+
+        <div class="ad-placeholder">
+          Werbeplatz Rente – Versicherungen, ETF-Sparpläne, Robo-Advisor, Finanz-Coaches.
         </div>
       </div>
     </section>
 
-    <footer style="margin-top:22px;font-size:12px;color:#6b7280;text-align:center">
-      <span id="footerText">Universal Umrechner & Formel-Löser – speichere diese Datei als index.html und lade sie auf dein Hosting oder GitHub Pages hoch.</span>
+    <!-- Budget & Alltag -->
+    <section id="page-budget" class="page">
+      <div class="card">
+        <h2 id="budgetTitle">Budget-Rechner (monatlich)</h2>
+        <div class="small" id="budgetLead">Verteile dein Einkommen auf Kategorien und sehe Prozente.</div>
+        <div class="controls">
+          <label class="small" id="labelBudgetIncome" for="budgetIncome">Netto-Einkommen / Monat</label>
+          <input id="budgetIncome" type="number" step="0.01" placeholder="2500">
+          <label class="small" id="labelBudgetRent" for="budgetRent">Miete / Wohnen</label>
+          <input id="budgetRent" type="number" step="0.01" placeholder="900">
+          <label class="small" id="labelBudgetFood" for="budgetFood">Lebensmittel</label>
+          <input id="budgetFood" type="number" step="0.01" placeholder="350">
+          <label class="small" id="labelBudgetMobility" for="budgetMobility">Mobilität</label>
+          <input id="budgetMobility" type="number" step="0.01" placeholder="150">
+          <label class="small" id="labelBudgetFun" for="budgetFun">Freizeit / Hobbys</label>
+          <input id="budgetFun" type="number" step="0.01" placeholder="200">
+          <label class="small" id="labelBudgetOther" for="budgetOther">Sonstiges</label>
+          <input id="budgetOther" type="number" step="0.01" placeholder="100">
+          <button id="budgetBtn" class="main">Budget auswerten</button>
+        </div>
+        <div class="small" style="margin-top:10px" id="budgetResultLabel">Budget-Auswertung:</div>
+        <div class="result" id="budgetResult">—</div>
+
+        <div class="ad-placeholder">
+          Werbeplatz Alltag – z.&nbsp;B. Stromvergleich, Mobilfunk, Versicherungen, Rabatt-Apps.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>SEO- & Monetarisierungs-Hinweis</h3>
+        <div class="small" id="convHint">
+          Tipp: Du kannst diese Seite später mit Werbung monetarisieren – oben nur Inhalte, unten Werbeplätze.
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span id="footerText">
+        Money Assistant – speichere diese Datei als index.html und lade sie auf dein Hosting oder GitHub Pages hoch. Später kannst du hier Werbung einbinden.
+      </span>
     </footer>
   </div>
 </body>
