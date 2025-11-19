@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Universal Umrechner & Formel-Löser</title>
-  <meta name="description" content="Einfacher Universal-Umrechner & Formel-Löser auf Deutsch und Englisch. Länge, Masse, Daten, Physik, Chemie, Elektrik und mehr.">
-  <meta name="keywords" content="Umrechner, Converter, Formeln, Mathematik, Physik, Chemie, Elektrik, Länge, Masse, Daten">
+  <meta name="description" content="Einfacher Universal-Umrechner & Formel-Löser auf Deutsch und Englisch. Länge, Masse, Daten, Physik, Chemie, Elektrik, Geometrie und mehr.">
+  <meta name="keywords" content="Umrechner, Converter, Formeln, Mathematik, Physik, Chemie, Elektrik, Länge, Masse, Daten, Geometrie">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0d76ff">
   <style>
@@ -116,18 +116,9 @@
       margin-top:16px;
       box-shadow:0 6px 18px rgba(15,23,42,0.08);
     }
-    .card h2{
-      margin-top:0;
-      font-size:18px;
-    }
-    .card h3{
-      margin-top:0;
-      font-size:16px;
-    }
-    .small{
-      font-size:13px;
-      color:var(--muted);
-    }
+    .card h2{margin-top:0;font-size:18px;}
+    .card h3{margin-top:0;font-size:16px;}
+    .small{font-size:13px;color:var(--muted);}
     .result{
       font-size:20px;
       font-weight:700;
@@ -159,17 +150,13 @@
       font-weight:600;
       cursor:pointer;
     }
-    button.main:hover{
-      filter:brightness(1.05);
-    }
+    button.main:hover{filter:brightness(1.05);}
     button.secondary{
       background:#e5e7eb;
       border:none;
       cursor:pointer;
     }
-    button.secondary:hover{
-      background:#d1d5db;
-    }
+    button.secondary:hover{background:#d1d5db;}
     .big{
       font-size:18px;
       padding:11px 14px;
@@ -202,9 +189,7 @@
       margin-bottom:8px;
       background:#f9fafb;
     }
-    .formula-item strong{
-      font-size:14px;
-    }
+    .formula-item strong{font-size:14px;}
     .formula-item .formula-desc{
       font-size:12px;
       color:var(--muted);
@@ -241,19 +226,19 @@
     }
     @media(max-width:600px){
       header{flex-direction:column;align-items:flex-start;}
-      .lang-switch{margin-left:0;}
+      .lang-switch{margin-left:0;margin-top:8px;}
       nav{flex-direction:column;align-items:stretch;}
       nav button{text-align:center;}
     }
   </style>
   <script>
-    // Sprachdaten
+    // --- Sprachdaten ---
     const I18N = {
       de:{
         metaTitle:"Universal Umrechner & Formel-Löser",
-        metaDesc:"Einfacher Universal-Umrechner & Formel-Löser auf Deutsch und Englisch. Länge, Masse, Daten, Physik, Chemie, Elektrik und mehr.",
+        metaDesc:"Einfacher Universal-Umrechner & Formel-Löser auf Deutsch und Englisch. Länge, Masse, Daten, Physik, Chemie, Elektrik und Geometrie.",
         headerTitle:"Universal Umrechner & Formel-Löser",
-        headerLead:"Einfach zu bedienen, viele Einheiten & Formeln. Für Schule, Ausbildung und Beruf.",
+        headerLead:"Einfach zu bedienen, viele Einheiten & Formeln. Für Schule, Ausbildung, Beruf – von 14 bis 99 Jahren.",
         navHome:"Startseite",
         navConv:"Umrechner",
         navFormulas:"Formeln",
@@ -278,24 +263,30 @@
         formulasAllCats:"Alle Kategorien",
         geoTitle:"Geometrie-Rechner",
         geoIntro:"Wähle die Form und gib die Seiten / Radien ein.",
-        geoShapeRect:"Rechteck – Fläche",
-        geoShapeTri:"Dreieck – Fläche",
-        geoShapeCircle:"Kreis – Fläche & Umfang",
-        geoShapeCyl:"Zylinder – Volumen",
         geoBtn:"Berechnen",
         physTitle:"Physik – Schnellrechner",
         physIntro:"Einige der wichtigsten Formeln als Mini-Rechner.",
         physForceTitle:"Kraft F = m · a",
         physSpeedTitle:"Geschwindigkeit v = s / t",
-        footerText:"Universal Umrechner & Formel-Löser – speichere diese Datei als index.html und lade sie auf dein Hosting oder GitHub Pages hoch.",
         physErrNumber:"Bitte Zahlen eingeben.",
-        physErrSt:"Bitte s und t > 0 eingeben."
+        physErrSt:"Bitte s und t > 0 eingeben.",
+        footerText:"Universal Umrechner & Formel-Löser – speichere diese Datei als index.html und lade sie auf dein Hosting oder GitHub Pages hoch.",
+        geoShapes:[
+          {value:"rect",label:"Rechteck – Fläche & Umfang"},
+          {value:"box",label:"Quader – Volumen & Oberfläche"},
+          {value:"cube",label:"Würfel – Volumen & Oberfläche"},
+          {value:"tri",label:"Dreieck – Fläche"},
+          {value:"circle",label:"Kreis – Fläche & Umfang"},
+          {value:"cyl",label:"Zylinder – Volumen"},
+          {value:"sphere",label:"Kugel – Volumen & Oberfläche"},
+          {value:"cone",label:"Kegel – Volumen"}
+        ]
       },
       en:{
         metaTitle:"Universal Converter & Formula Solver",
-        metaDesc:"Simple universal unit converter and formula solver in English and German. Length, mass, data, physics, chemistry, electricity and more.",
+        metaDesc:"Simple universal unit converter & formula solver in English and German. Length, mass, data, physics, chemistry, electricity and geometry.",
         headerTitle:"Universal Converter & Formula Solver",
-        headerLead:"Easy to use, many units & formulas. For school, study and work.",
+        headerLead:"Easy to use, many units & formulas. For school, training and work – from 14 to 99 years.",
         navHome:"Home",
         navConv:"Converter",
         navFormulas:"Formulas",
@@ -305,7 +296,7 @@
         homeInfo:"Choose a tool. You can’t break anything 🙂",
         btnConv:"Convert units",
         btnFormulas:"Solve formula",
-        btnGeo:"Areas / Volumes",
+        btnGeo:"Areas / volumes",
         btnPhys:"Physics quick tools",
         convTitle:"Unit converter",
         convIntro:"1. Category, 2. Units, 3. Value – done.",
@@ -316,69 +307,75 @@
         convErrGeneric:"Conversion not possible.",
         formulasTitle:"Formula library",
         formulasIntro:"Search by name or choose a category. Then enter values and press “Calculate”.",
-        formulasSearchPh:'e.g. "Ohm", "area", "speed"...',
+        formulasSearchPh:"e.g. \"Ohm\", \"area\", \"speed\"...",
         formulasAllCats:"All categories",
         geoTitle:"Geometry calculator",
         geoIntro:"Choose a shape and enter sides / radii.",
-        geoShapeRect:"Rectangle – area",
-        geoShapeTri:"Triangle – area",
-        geoShapeCircle:"Circle – area & circumference",
-        geoShapeCyl:"Cylinder – volume",
         geoBtn:"Calculate",
         physTitle:"Physics – quick tools",
         physIntro:"Some important formulas as mini calculators.",
         physForceTitle:"Force F = m · a",
         physSpeedTitle:"Speed v = s / t",
-        footerText:"Universal Converter & Formula Solver – save this file as index.html and upload to your hosting or GitHub Pages.",
         physErrNumber:"Please enter numbers.",
-        physErrSt:"Please enter s and t > 0."
+        physErrSt:"Please enter s and t > 0.",
+        footerText:"Universal Converter & Formula Solver – save this file as index.html and upload it to your hosting or GitHub Pages.",
+        geoShapes:[
+          {value:"rect",label:"Rectangle – area & perimeter"},
+          {value:"box",label:"Box – volume & surface"},
+          {value:"cube",label:"Cube – volume & surface"},
+          {value:"tri",label:"Triangle – area"},
+          {value:"circle",label:"Circle – area & circumference"},
+          {value:"cyl",label:"Cylinder – volume"},
+          {value:"sphere",label:"Sphere – volume & surface"},
+          {value:"cone",label:"Cone – volume"}
+        ]
       }
     };
 
     let currentLang = "de";
 
-    // Einheiten: Kategorien + Einheiten mit Übersetzung
+    // --- Einheiten ---
     const UNIT_CATEGORIES = [
       {
         id:"length",
-        label:{de:"Länge",en:"Length"},
         base:"m",
+        label:{de:"Länge",en:"Length"},
         units:[
-          {id:"pm", factor:1e-12, label:{de:"Picometer (pm)",en:"picometer (pm)"}},
-          {id:"nm", factor:1e-9,  label:{de:"Nanometer (nm)",en:"nanometer (nm)"}},
-          {id:"um", factor:1e-6,  label:{de:"Mikrometer (µm)",en:"micrometer (µm)"}},
-          {id:"mm", factor:1e-3,  label:{de:"Millimeter (mm)",en:"millimeter (mm)"}},
-          {id:"cm", factor:1e-2,  label:{de:"Zentimeter (cm)",en:"centimeter (cm)"}},
-          {id:"m",  factor:1,     label:{de:"Meter (m)",en:"meter (m)"}},
-          {id:"km", factor:1000,  label:{de:"Kilometer (km)",en:"kilometer (km)"}},
-          {id:"in", factor:0.0254,label:{de:"Zoll (inch)",en:"inch (in)"}},
-          {id:"ft", factor:0.3048,label:{de:"Fuß (ft)",en:"foot (ft)"}},
-          {id:"yd", factor:0.9144,label:{de:"Yard (yd)",en:"yard (yd)"}},
-          {id:"mi", factor:1609.344,label:{de:"Meile (mi)",en:"mile (mi)"}}
+          {id:"pm",factor:1e-12,label:{de:"Picometer (pm)",en:"picometer (pm)"}},
+          {id:"nm",factor:1e-9,label:{de:"Nanometer (nm)",en:"nanometer (nm)"}},
+          {id:"um",factor:1e-6,label:{de:"Mikrometer (µm)",en:"micrometer (µm)"}},
+          {id:"mm",factor:1e-3,label:{de:"Millimeter (mm)",en:"millimeter (mm)"}},
+          {id:"cm",factor:1e-2,label:{de:"Zentimeter (cm)",en:"centimeter (cm)"}},
+          {id:"m",factor:1,label:{de:"Meter (m)",en:"meter (m)"}},
+          {id:"km",factor:1000,label:{de:"Kilometer (km)",en:"kilometer (km)"}},
+          {id:"in",factor:0.0254,label:{de:"Zoll (inch)",en:"inch (in)"}},
+          {id:"ft",factor:0.3048,label:{de:"Fuß (ft)",en:"foot (ft)"}},
+          {id:"yd",factor:0.9144,label:{de:"Yard (yd)",en:"yard (yd)"}},
+          {id:"mi",factor:1609.344,label:{de:"Meile (mi)",en:"mile (mi)"}}
         ]
       },
       {
         id:"area",
-        label:{de:"Fläche",en:"Area"},
         base:"m²",
+        label:{de:"Fläche",en:"Area"},
         units:[
-          {id:"m2",  factor:1, label:{de:"Quadratmeter (m²)",en:"square meter (m²)"}},
-          {id:"cm2", factor:1e-4,label:{de:"Quadratzentimeter (cm²)",en:"square centimeter (cm²)"}},
-          {id:"km2", factor:1e6,label:{de:"Quadratkilometer (km²)",en:"square kilometer (km²)"}},
-          {id:"ft2", factor:0.092903,label:{de:"Quadratfuß (ft²)",en:"square foot (ft²)"}},
-          {id:"in2", factor:0.00064516,label:{de:"Quadratzoll (in²)",en:"square inch (in²)"}},
-          {id:"ha",  factor:10000,label:{de:"Hektar (ha)",en:"hectare (ha)"}},
+          {id:"m2",factor:1,label:{de:"Quadratmeter (m²)",en:"square meter (m²)"}},
+          {id:"cm2",factor:1e-4,label:{de:"Quadratzentimeter (cm²)",en:"square centimeter (cm²)"}},
+          {id:"km2",factor:1e6,label:{de:"Quadratkilometer (km²)",en:"square kilometer (km²)"}},
+          {id:"ft2",factor:0.092903,label:{de:"Quadratfuß (ft²)",en:"square foot (ft²)"}},
+          {id:"in2",factor:0.00064516,label:{de:"Quadratzoll (in²)",en:"square inch (in²)"}},
+          {id:"ha",factor:10000,label:{de:"Hektar (ha)",en:"hectare (ha)"}},
           {id:"acre",factor:4046.8564224,label:{de:"Acre",en:"acre"}}
         ]
       },
       {
         id:"volume",
-        label:{de:"Volumen",en:"Volume"},
         base:"m³",
+        label:{de:"Volumen",en:"Volume"},
         units:[
-          {id:"m3", factor:1,label:{de:"Kubikmeter (m³)",en:"cubic meter (m³)"}},
-          {id:"l",  factor:0.001,label:{de:"Liter (L)",en:"liter (L)"}},
-          {id:"ml", factor:1e-6,label:{de:"Milliliter (mL)",en:"milliliter (mL)"}},
+          {id:"m3",factor:1,label:{de:"Kubikmeter (m³)",en:"cubic meter (m³)"}},
+          {id:"l",factor:0.001,label:{de:"Liter (L)",en:"liter (L)"}},
+          {id:"ml",factor:1e-6,label:{de:"Milliliter (mL)",en:"milliliter (mL)"}},
           {id:"cm3",factor:1e-6,label:{de:"Kubikzentimeter (cm³)",en:"cubic centimeter (cm³)"}},
           {id:"ft3",factor:0.028316846592,label:{de:"Kubikfuß (ft³)",en:"cubic foot (ft³)"}},
           {id:"gal",factor:0.003785411784,label:{de:"Gallone (US)",en:"gallon (US)"}}
@@ -386,68 +383,68 @@
       },
       {
         id:"mass",
-        label:{de:"Masse",en:"Mass"},
         base:"kg",
+        label:{de:"Masse",en:"Mass"},
         units:[
-          {id:"mg",  factor:1e-6,label:{de:"Milligramm (mg)",en:"milligram (mg)"}},
-          {id:"g",   factor:0.001,label:{de:"Gramm (g)",en:"gram (g)"}},
-          {id:"kg",  factor:1,label:{de:"Kilogramm (kg)",en:"kilogram (kg)"}},
-          {id:"t",   factor:1000,label:{de:"Tonne (t)",en:"tonne (t)"}},
-          {id:"oz",  factor:0.028349523125,label:{de:"Unze (oz)",en:"ounce (oz)"}},
-          {id:"lb",  factor:0.45359237,label:{de:"Pfund (lb)",en:"pound (lb)"}}
+          {id:"mg",factor:1e-6,label:{de:"Milligramm (mg)",en:"milligram (mg)"}},
+          {id:"g",factor:0.001,label:{de:"Gramm (g)",en:"gram (g)"}},
+          {id:"kg",factor:1,label:{de:"Kilogramm (kg)",en:"kilogram (kg)"}},
+          {id:"t",factor:1000,label:{de:"Tonne (t)",en:"tonne (t)"}},
+          {id:"oz",factor:0.028349523125,label:{de:"Unze (oz)",en:"ounce (oz)"}},
+          {id:"lb",factor:0.45359237,label:{de:"Pfund (lb)",en:"pound (lb)"}}
         ]
       },
       {
         id:"data",
-        label:{de:"Daten",en:"Data"},
         base:"B",
+        label:{de:"Daten",en:"Data"},
         units:[
-          {id:"bit", factor:1/8,label:{de:"Bit",en:"bit"}},
-          {id:"B",   factor:1,label:{de:"Byte",en:"byte"}},
-          {id:"KB",  factor:1e3,label:{de:"Kilobyte (KB)",en:"kilobyte (KB)"}},
-          {id:"MB",  factor:1e6,label:{de:"Megabyte (MB)",en:"megabyte (MB)"}},
-          {id:"GB",  factor:1e9,label:{de:"Gigabyte (GB)",en:"gigabyte (GB)"}},
-          {id:"TB",  factor:1e12,label:{de:"Terabyte (TB)",en:"terabyte (TB)"}}
+          {id:"bit",factor:1/8,label:{de:"Bit",en:"bit"}},
+          {id:"B",factor:1,label:{de:"Byte",en:"byte"}},
+          {id:"KB",factor:1e3,label:{de:"Kilobyte (KB)",en:"kilobyte (KB)"}},
+          {id:"MB",factor:1e6,label:{de:"Megabyte (MB)",en:"megabyte (MB)"}},
+          {id:"GB",factor:1e9,label:{de:"Gigabyte (GB)",en:"gigabyte (GB)"}},
+          {id:"TB",factor:1e12,label:{de:"Terabyte (TB)",en:"terabyte (TB)"}}
         ]
       },
       {
         id:"time",
-        label:{de:"Zeit",en:"Time"},
         base:"s",
+        label:{de:"Zeit",en:"Time"},
         units:[
-          {id:"s", factor:1,label:{de:"Sekunde (s)",en:"second (s)"}},
+          {id:"s",factor:1,label:{de:"Sekunde (s)",en:"second (s)"}},
           {id:"min",factor:60,label:{de:"Minute (min)",en:"minute (min)"}},
-          {id:"h", factor:3600,label:{de:"Stunde (h)",en:"hour (h)"}},
-          {id:"d", factor:86400,label:{de:"Tag",en:"day"}},
-          {id:"w", factor:604800,label:{de:"Woche",en:"week"}}
+          {id:"h",factor:3600,label:{de:"Stunde (h)",en:"hour (h)"}},
+          {id:"d",factor:86400,label:{de:"Tag",en:"day"}},
+          {id:"w",factor:604800,label:{de:"Woche",en:"week"}}
         ]
       },
       {
         id:"temperature",
-        label:{de:"Temperatur",en:"Temperature"},
         base:"K",
+        label:{de:"Temperatur",en:"Temperature"},
         units:[
-          {id:"C", label:{de:"Grad Celsius (°C)",en:"degrees Celsius (°C)"}},
-          {id:"F", label:{de:"Grad Fahrenheit (°F)",en:"degrees Fahrenheit (°F)"}},
-          {id:"K", label:{de:"Kelvin (K)",en:"Kelvin (K)"}}
+          {id:"C",label:{de:"Grad Celsius (°C)",en:"degrees Celsius (°C)"}},
+          {id:"F",label:{de:"Grad Fahrenheit (°F)",en:"degrees Fahrenheit (°F)"}},
+          {id:"K",label:{de:"Kelvin (K)",en:"Kelvin (K)"}}
         ]
       },
       {
         id:"speed",
-        label:{de:"Geschwindigkeit",en:"Speed"},
         base:"m/s",
+        label:{de:"Geschwindigkeit",en:"Speed"},
         units:[
-          {id:"ms", factor:1,label:{de:"m/s",en:"m/s"}},
+          {id:"ms",factor:1,label:{de:"m/s",en:"m/s"}},
           {id:"kmh",factor:1000/3600,label:{de:"km/h",en:"km/h"}},
           {id:"mph",factor:1609.344/3600,label:{de:"mph",en:"mph"}}
         ]
       },
       {
         id:"pressure",
-        label:{de:"Druck",en:"Pressure"},
         base:"Pa",
+        label:{de:"Druck",en:"Pressure"},
         units:[
-          {id:"Pa", factor:1,label:{de:"Pascal (Pa)",en:"pascal (Pa)"}},
+          {id:"Pa",factor:1,label:{de:"Pascal (Pa)",en:"pascal (Pa)"}},
           {id:"kPa",factor:1000,label:{de:"Kilopascal (kPa)",en:"kilopascal (kPa)"}},
           {id:"bar",factor:100000,label:{de:"Bar",en:"bar"}},
           {id:"atm",factor:101325,label:{de:"Atmosphäre (atm)",en:"atmosphere (atm)"}},
@@ -456,33 +453,31 @@
       }
     ];
 
-    function getCategoryById(id){
-      return UNIT_CATEGORIES.find(c=>c.id===id);
-    }
-    function convertUnits(catId, fromId, toId, value){
-      const cat = getCategoryById(catId);
+    function getCategory(id){return UNIT_CATEGORIES.find(c=>c.id===id);}
+    function convertUnits(catId,fromId,toId,value){
+      const cat = getCategory(catId);
       if(!cat) return NaN;
-      if(cat.id==="temperature"){
+      if(catId==="temperature"){
         return convertTemperature(fromId,toId,value);
       }
       const from = cat.units.find(u=>u.id===fromId);
       const to   = cat.units.find(u=>u.id===toId);
       if(!from || !to || typeof from.factor!=="number" || typeof to.factor!=="number") return NaN;
-      const baseVal = Number(value)*from.factor;
-      return baseVal/to.factor;
+      const base = Number(value)*from.factor;
+      return base/to.factor;
     }
     function convertTemperature(from,to,value){
       const v = Number(value);
       let K;
-      if(from==="C") K = v+273.15;
-      else if(from==="F") K = (v-32)*5/9+273.15;
+      if(from==="C") K = v + 273.15;
+      else if(from==="F") K = (v-32)*5/9 + 273.15;
       else K = v;
       if(to==="C") return K-273.15;
-      if(to==="F") return (K-273.15)*9/5+32;
+      if(to==="F") return (K-273.15)*9/5 + 32;
       return K;
     }
 
-    // Formelkategorien
+    // --- Formel-Kategorien ---
     const FORMULA_CATEGORIES = {
       math:{de:"Mathe",en:"Math"},
       geometry:{de:"Geometrie",en:"Geometry"},
@@ -491,7 +486,7 @@
       chemistry:{de:"Chemie",en:"Chemistry"}
     };
 
-    // Formeln: keine Platzhalter
+    // --- Formeln (keine Platzhalter) ---
     const FORMULAS = [
       // Mathe
       {
@@ -508,7 +503,7 @@
           a=Number(a);b=Number(b);c=Number(c);
           const d=b*b-4*a*c;
           if(isNaN(d)) return {err:{de:"Ungültige Eingabe",en:"Invalid input"}};
-          if(d<0) return {err:{de:"Nur reelle Lösungen",en:"Only real roots are shown"}};
+          if(d<0) return {err:{de:"Nur reelle Lösungen",en:"Only real roots"}};
           const x1=(-b+Math.sqrt(d))/(2*a);
           const x2=(-b-Math.sqrt(d))/(2*a);
           return {value:`x₁=${x1.toPrecision(8)}, x₂=${x2.toPrecision(8)}`};
@@ -550,20 +545,50 @@
         compute:({a,b})=>({value:Number(a)*Number(b),unit:"m²"})
       },
       {
-        id:"area_circle",
+        id:"box_volume",
         category:"geometry",
-        title:{de:"Fläche Kreis",en:"Circle area"},
-        desc:{de:"A = π r²",en:"A = π r²"},
+        title:{de:"Volumen Quader",en:"Box volume"},
+        desc:{de:"V = l · b · h",en:"V = l · w · h"},
+        inputs:[
+          {key:"l",label:{de:"Länge l (m)",en:"length l (m)"}},
+          {key:"w",label:{de:"Breite b (m)",en:"width w (m)"}},
+          {key:"h",label:{de:"Höhe h (m)",en:"height h (m)"}}
+        ],
+        compute:({l,w,h})=>({value:Number(l)*Number(w)*Number(h),unit:"m³"})
+      },
+      {
+        id:"cube",
+        category:"geometry",
+        title:{de:"Würfel: Volumen & Oberfläche",en:"Cube: volume & surface"},
+        desc:{de:"V = a³, A = 6a²",en:"V = a³, A = 6a²"},
+        inputs:[
+          {key:"a",label:{de:"Kantenlänge a (m)",en:"edge length a (m)"}}
+        ],
+        compute:({a})=>{
+          const A = 6*Number(a)*Number(a);
+          const V = Number(a)*Number(a)*Number(a);
+          return {value:`V=${V} m³, A=${A} m²`};
+        }
+      },
+      {
+        id:"circle_area",
+        category:"geometry",
+        title:{de:"Kreis: Fläche & Umfang",en:"Circle: area & circumference"},
+        desc:{de:"A = πr², U = 2πr",en:"A = πr², C = 2πr"},
         inputs:[
           {key:"r",label:{de:"Radius r (m)",en:"radius r (m)"}}
         ],
-        compute:({r})=>({value:Math.PI*Number(r)*Number(r),unit:"m²"})
+        compute:({r})=>{
+          const A = Math.PI*Number(r)*Number(r);
+          const U = 2*Math.PI*Number(r);
+          return {value:`A=${A} m², U=${U} m`};
+        }
       },
       {
-        id:"volume_cyl",
+        id:"cyl_volume",
         category:"geometry",
         title:{de:"Volumen Zylinder",en:"Cylinder volume"},
-        desc:{de:"V = π r² h",en:"V = π r² h"},
+        desc:{de:"V = πr²h",en:"V = πr²h"},
         inputs:[
           {key:"r",label:{de:"Radius r (m)",en:"radius r (m)"}},
           {key:"h",label:{de:"Höhe h (m)",en:"height h (m)"}}
@@ -571,14 +596,19 @@
         compute:({r,h})=>({value:Math.PI*Number(r)*Number(r)*Number(h),unit:"m³"})
       },
       {
-        id:"volume_sphere",
+        id:"sphere_volume",
         category:"geometry",
-        title:{de:"Volumen Kugel",en:"Sphere volume"},
-        desc:{de:"V = 4/3 π r³",en:"V = 4/3 π r³"},
+        title:{de:"Kugel: Volumen & Oberfläche",en:"Sphere: volume & surface"},
+        desc:{de:"V = 4/3πr³, A = 4πr²",en:"V = 4/3πr³, A = 4πr²"},
         inputs:[
           {key:"r",label:{de:"Radius r (m)",en:"radius r (m)"}}
         ],
-        compute:({r})=>({value:(4/3)*Math.PI*Math.pow(Number(r),3),unit:"m³"})
+        compute:({r})=>{
+          const rr = Number(r);
+          const V = (4/3)*Math.PI*rr*rr*rr;
+          const A = 4*Math.PI*rr*rr;
+          return {value:`V=${V} m³, A=${A} m²`};
+        }
       },
 
       // Physik
@@ -608,7 +638,7 @@
         id:"kinetic",
         category:"physics",
         title:{de:"Kinetische Energie",en:"Kinetic energy"},
-        desc:{de:"E = 1/2 · m · v²",en:"E = 1/2 · m · v²"},
+        desc:{de:"E = 1/2 m v²",en:"E = 1/2 m v²"},
         inputs:[
           {key:"m",label:{de:"Masse m (kg)",en:"mass m (kg)"}},
           {key:"v",label:{de:"Geschwindigkeit v (m/s)",en:"velocity v (m/s)"}}
@@ -619,7 +649,7 @@
         id:"potential",
         category:"physics",
         title:{de:"Potentielle Energie",en:"Potential energy"},
-        desc:{de:"E = m · g · h",en:"E = m · g · h"},
+        desc:{de:"E = m g h",en:"E = m g h"},
         inputs:[
           {key:"m",label:{de:"Masse m (kg)",en:"mass m (kg)"}},
           {key:"g",label:{de:"g (m/s²), z. B. 9.81",en:"g (m/s²), e.g. 9.81"}},
@@ -668,6 +698,17 @@
           {key:"I",label:{de:"Strom I (A)",en:"current I (A)"}}
         ],
         compute:({U,I})=>({value:Number(U)*Number(I),unit:"W"})
+      },
+      {
+        id:"energy_el",
+        category:"electric",
+        title:{de:"Elektrische Arbeit",en:"Electrical energy"},
+        desc:{de:"W = P · t",en:"W = P · t"},
+        inputs:[
+          {key:"P",label:{de:"Leistung P (W)",en:"power P (W)"}},
+          {key:"t",label:{de:"Zeit t (s)",en:"time t (s)"}}
+        ],
+        compute:({P,t})=>({value:Number(P)*Number(t),unit:"J"})
       },
       {
         id:"transformer",
@@ -722,15 +763,152 @@
       if(btn) btn.classList.add("active");
     }
 
+    function buildConverterSelects(){
+      const catSel = document.getElementById("convCategory");
+      const fromSel = document.getElementById("convFrom");
+      const toSel   = document.getElementById("convTo");
+      const prevCat = catSel.value || "length";
+      const prevFrom = fromSel.value;
+      const prevTo   = toSel.value;
+
+      catSel.innerHTML = "";
+      UNIT_CATEGORIES.forEach(c=>{
+        const opt = document.createElement("option");
+        opt.value = c.id;
+        opt.textContent = c.label[currentLang];
+        catSel.appendChild(opt);
+      });
+      catSel.value = prevCat;
+
+      function fillUnits(){
+        const cat = getCategory(catSel.value);
+        fromSel.innerHTML = "";
+        toSel.innerHTML   = "";
+        cat.units.forEach(u=>{
+          const o1 = document.createElement("option");
+          o1.value = u.id;
+          o1.textContent = u.label[currentLang];
+          const o2 = o1.cloneNode(true);
+          fromSel.appendChild(o1);
+          toSel.appendChild(o2);
+        });
+        if(prevFrom) fromSel.value = prevFrom;
+        if(prevTo) toSel.value = prevTo;
+      }
+      catSel.onchange = fillUnits;
+      fillUnits();
+    }
+
+    function buildFormulaCategorySelect(){
+      const sel = document.getElementById("formulaCategory");
+      const t = I18N[currentLang];
+      sel.innerHTML = "";
+      const allOpt = document.createElement("option");
+      allOpt.value = "all";
+      allOpt.textContent = t.formulasAllCats;
+      sel.appendChild(allOpt);
+
+      const used = new Set(FORMULAS.map(f=>f.category));
+      used.forEach(cid=>{
+        const opt = document.createElement("option");
+        opt.value = cid;
+        opt.textContent = FORMULA_CATEGORIES[cid][currentLang];
+        sel.appendChild(opt);
+      });
+    }
+
+    function renderFormulas(){
+      const list = document.getElementById("formulaList");
+      const searchText = (document.getElementById("formulaSearch").value || "").toLowerCase();
+      const catFilter = document.getElementById("formulaCategory").value;
+      list.innerHTML = "";
+
+      FORMULAS.filter(f=>{
+        const text = (f.title[currentLang] + " " + f.desc[currentLang]).toLowerCase();
+        const matchesText = text.includes(searchText);
+        const matchesCat = catFilter==="all" || !catFilter || f.category===catFilter;
+        return matchesText && matchesCat;
+      }).forEach(f=>{
+        const item = document.createElement("div");
+        item.className = "formula-item";
+
+        const head = document.createElement("div");
+        head.innerHTML = "<strong>"+f.title[currentLang]+"</strong> " +
+          "<span style='font-size:11px;color:#6b7280'>("+FORMULA_CATEGORIES[f.category][currentLang]+")</span>" +
+          "<div class='formula-desc'>"+f.desc[currentLang]+"</div>";
+        item.appendChild(head);
+
+        const form = document.createElement("form");
+        form.addEventListener("submit",e=>e.preventDefault());
+
+        f.inputs.forEach(inp=>{
+          const row = document.createElement("div");
+          row.className = "formula-input-row";
+          const label = document.createElement("label");
+          label.textContent = inp.label[currentLang];
+          const input = document.createElement("input");
+          input.name = inp.key;
+          row.appendChild(label);
+          row.appendChild(input);
+          form.appendChild(row);
+        });
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "main";
+        btn.style.marginTop = "6px";
+        btn.textContent = currentLang==="de" ? "Berechnen" : "Calculate";
+        const out = document.createElement("div");
+        out.className = "formula-output";
+
+        btn.addEventListener("click",()=>{
+          const fd = new FormData(form);
+          const args = {};
+          for(const [k,v] of fd.entries()) args[k]=v;
+          try{
+            const res = f.compute(args);
+            if(res && res.err){
+              out.style.color = "var(--danger)";
+              if(typeof res.err === "string") out.textContent = res.err;
+              else out.textContent = res.err[currentLang] || "";
+            }else{
+              const txt = (res.value!==undefined?res.value:"") + (res.unit?" "+res.unit:"");
+              out.style.color = "#111827";
+              out.textContent = txt;
+            }
+          }catch(e){
+            out.style.color = "var(--danger)";
+            out.textContent = currentLang==="de" ? "Fehler bei Berechnung" : "Error during calculation";
+          }
+        });
+
+        form.appendChild(btn);
+        item.appendChild(form);
+        item.appendChild(out);
+        list.appendChild(item);
+      });
+    }
+
+    function buildGeometryShapeSelect(){
+      const sel = document.getElementById("geoShape");
+      const t = I18N[currentLang];
+      sel.innerHTML = "";
+      t.geoShapes.forEach(s=>{
+        const opt = document.createElement("option");
+        opt.value = s.value;
+        opt.textContent = s.label;
+        sel.appendChild(opt);
+      });
+    }
+
     function applyLanguage(lang){
       currentLang = lang;
       document.documentElement.lang = lang;
-      document.title = I18N[lang].metaTitle;
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if(metaDesc) metaDesc.content = I18N[lang].metaDesc;
-
-      // Textblöcke aktualisieren
       const t = I18N[lang];
+      document.title = t.metaTitle;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if(metaDesc) metaDesc.content = t.metaDesc;
+
       document.getElementById("headerTitle").textContent = t.headerTitle;
       document.getElementById("headerLead").textContent = t.headerLead;
       document.getElementById("navHome").textContent = t.navHome;
@@ -761,168 +939,34 @@
       document.getElementById("physSpeedTitle").textContent = t.physSpeedTitle;
       document.getElementById("footerText").textContent = t.footerText;
 
-      // Geometrie-Select
-      document.getElementById("geoShape").innerHTML = `
-        <option value="rect">${t.geoShapeRect}</option>
-        <option value="tri">${t.geoShapeTri}</option>
-        <option value="circle">${t.geoShapeCircle}</option>
-        <option value="cyl">${t.geoShapeCyl}</option>
-      `;
-
-      // Sprachauswahl-Buttons
       document.querySelectorAll(".lang-btn").forEach(b=>b.classList.remove("active"));
       document.getElementById(lang==="de"?"langDE":"langEN").classList.add("active");
 
-      // Umrechner-Auswahl neu aufbauen
       buildConverterSelects();
-
-      // Formelliste neu aufbauen
       buildFormulaCategorySelect();
       renderFormulas();
-    }
-
-    // Umrechner UI
-    function buildConverterSelects(){
-      const catSel = document.getElementById("convCategory");
-      const fromSel = document.getElementById("convFrom");
-      const toSel   = document.getElementById("convTo");
-      const previousCat = catSel.value || "length";
-      const previousFrom = fromSel.value;
-      const previousTo   = toSel.value;
-
-      catSel.innerHTML = "";
-      UNIT_CATEGORIES.forEach(c=>{
-        const opt = document.createElement("option");
-        opt.value = c.id;
-        opt.textContent = c.label[currentLang];
-        catSel.appendChild(opt);
-      });
-      catSel.value = previousCat || "length";
-
-      function fillUnits(){
-        const cat = getCategoryById(catSel.value);
-        fromSel.innerHTML = "";
-        toSel.innerHTML   = "";
-        cat.units.forEach(u=>{
-          const o1 = document.createElement("option");
-          o1.value = u.id;
-          o1.textContent = u.label[currentLang];
-          const o2 = o1.cloneNode(true);
-          fromSel.appendChild(o1);
-          toSel.appendChild(o2);
-        });
-        if(previousFrom) fromSel.value = previousFrom;
-        if(previousTo) toSel.value = previousTo;
-      }
-      catSel.onchange = fillUnits;
-      fillUnits();
-    }
-
-    // Formeln UI
-    function buildFormulaCategorySelect(){
-      const sel = document.getElementById("formulaCategory");
-      const t = currentLang==="de"?I18N.de:I18N.en;
-      sel.innerHTML = `<option value="all">${t.formulasAllCats}</option>`;
-      const catSet = new Set(FORMULAS.map(f=>f.category));
-      Array.from(catSet).forEach(cid=>{
-        const opt = document.createElement("option");
-        opt.value = cid;
-        opt.textContent = FORMULA_CATEGORIES[cid][currentLang];
-        sel.appendChild(opt);
-      });
-    }
-
-    function renderFormulas(){
-      const list = document.getElementById("formulaList");
-      const search = (document.getElementById("formulaSearch").value || "").toLowerCase();
-      const catFilter = document.getElementById("formulaCategory").value;
-      list.innerHTML = "";
-
-      FORMULAS.filter(f=>{
-        const txt = (f.title[currentLang]+" "+f.desc[currentLang]).toLowerCase();
-        const matchesText = txt.includes(search);
-        const matchesCat = catFilter==="all" || !catFilter || f.category===catFilter;
-        return matchesText && matchesCat;
-      }).forEach(f=>{
-        const item = document.createElement("div");
-        item.className = "formula-item";
-
-        const head = document.createElement("div");
-        head.innerHTML = `<strong>${f.title[currentLang]}</strong> <span style="font-size:11px;color:#6b7280">(${FORMULA_CATEGORIES[f.category][currentLang]})</span><div class="formula-desc">${f.desc[currentLang]}</div>`;
-        item.appendChild(head);
-
-        const form = document.createElement("form");
-        form.addEventListener("submit",e=>e.preventDefault());
-
-        f.inputs.forEach(inp=>{
-          const row = document.createElement("div");
-          row.className = "formula-input-row";
-          const label = document.createElement("label");
-          label.textContent = inp.label[currentLang];
-          const input = document.createElement("input");
-          input.name = inp.key;
-          row.appendChild(label);
-          row.appendChild(input);
-          form.appendChild(row);
-        });
-
-        const btn = document.createElement("button");
-        btn.type="button";
-        btn.className="main";
-        btn.style.marginTop="6px";
-        btn.textContent = currentLang==="de" ? "Berechnen" : "Calculate";
-        const out = document.createElement("div");
-        out.className = "formula-output";
-
-        btn.addEventListener("click",()=>{
-          const fd = new FormData(form);
-          const args={};
-          for(const [k,v] of fd.entries()) args[k]=v;
-          try{
-            const res = f.compute(args);
-            if(res && res.err){
-              out.style.color="var(--danger)";
-              out.textContent = res.err[currentLang] || res.err;
-            }else{
-              const txt = (res.value!==undefined?res.value:"") + (res.unit?(" "+res.unit):"");
-              out.style.color="#111827";
-              out.textContent = txt;
-            }
-          }catch(e){
-            out.style.color="var(--danger)";
-            out.textContent = currentLang==="de" ? "Fehler bei Berechnung" : "Error during calculation";
-          }
-        });
-
-        form.appendChild(btn);
-        item.appendChild(form);
-        item.appendChild(out);
-        list.appendChild(item);
-      });
+      buildGeometryShapeSelect();
     }
 
     document.addEventListener("DOMContentLoaded",function(){
-      // Sprache setzen
+      // Sprache + Navigation
       applyLanguage("de");
-
-      // Sprache-Buttons
       document.getElementById("langDE").addEventListener("click",()=>applyLanguage("de"));
       document.getElementById("langEN").addEventListener("click",()=>applyLanguage("en"));
 
-      // Navigation
       document.querySelectorAll("nav button").forEach(btn=>{
         btn.addEventListener("click",()=>showPage(btn.dataset.page));
       });
       showPage("home");
 
-      // Umrechner-Logik
+      // Umrechner Logik
       const convBtn = document.getElementById("convBtn");
       const convSwap = document.getElementById("convSwap");
-      const catSel   = document.getElementById("convCategory");
-      const fromSel  = document.getElementById("convFrom");
-      const toSel    = document.getElementById("convTo");
-      const valueIn  = document.getElementById("convValue");
-      const convRes  = document.getElementById("convResult");
+      const catSel = document.getElementById("convCategory");
+      const fromSel = document.getElementById("convFrom");
+      const toSel = document.getElementById("convTo");
+      const valueIn = document.getElementById("convValue");
+      const convRes = document.getElementById("convResult");
 
       convBtn.addEventListener("click",()=>{
         const t = I18N[currentLang];
@@ -938,23 +982,24 @@
           convRes.style.color = "var(--danger)";
         }else{
           convRes.style.color = "var(--accent)";
-          convRes.textContent = out + " " + toSel.options[toSel.selectedIndex].text.replace(/\s*\(.+\)/,"");
+          const unitText = toSel.options[toSel.selectedIndex].text.replace(/\s*\(.+\)/,"");
+          convRes.textContent = out + " " + unitText;
         }
       });
+
       convSwap.addEventListener("click",()=>{
         const tmp = fromSel.value;
         fromSel.value = toSel.value;
         toSel.value = tmp;
       });
 
-      // Presets
       document.querySelectorAll("[data-preset]").forEach(btn=>{
         btn.addEventListener("click",()=>{
           const [cat,from,to,val] = btn.dataset.preset.split("|");
           catSel.value = cat;
-          buildConverterSelects(); // rebuild to apply language
+          buildConverterSelects();
           catSel.value = cat;
-          const c = getCategoryById(cat);
+          const catObj = getCategory(cat);
           const fromSel2 = document.getElementById("convFrom");
           const toSel2   = document.getElementById("convTo");
           fromSel2.value = from;
@@ -976,26 +1021,79 @@
         const r = Number(document.getElementById("geo_r").value);
         const out = document.getElementById("geoResult");
         let text = "";
-        if(shape==="rect") text = "A = "+(a*b)+" m²";
-        if(shape==="tri")  text = "A = "+(0.5*a*h)+" m²";
-        if(shape==="circle") text = "A = "+(Math.PI*r*r).toFixed(4)+" m², U = "+(2*Math.PI*r).toFixed(4)+" m";
-        if(shape==="cyl")    text = "V = "+(Math.PI*r*r*h).toFixed(6)+" m³";
-        out.textContent = text || (currentLang==="de" ? "Bitte Werte eingeben." : "Please enter values.");
+
+        if(shape==="rect"){
+          if(!isNaN(a)&&!isNaN(b)){
+            const A = a*b;
+            const U = 2*(a+b);
+            text = "A = "+A+" m², U = "+U+" m";
+          }
+        }else if(shape==="box"){
+          if(!isNaN(a)&&!isNaN(b)&&!isNaN(h)){
+            const V = a*b*h;
+            const A = 2*(a*b + a*h + b*h);
+            text = "V = "+V+" m³, A = "+A+" m²";
+          }
+        }else if(shape==="cube"){
+          if(!isNaN(a)){
+            const V = a*a*a;
+            const A = 6*a*a;
+            text = "V = "+V+" m³, A = "+A+" m²";
+          }
+        }else if(shape==="tri"){
+          if(!isNaN(a)&&!isNaN(h)){
+            const A = 0.5*a*h;
+            text = "A = "+A+" m²";
+          }
+        }else if(shape==="circle"){
+          if(!isNaN(r)){
+            const A = Math.PI*r*r;
+            const U = 2*Math.PI*r;
+            text = "A = "+A.toFixed(4)+" m², U = "+U.toFixed(4)+" m";
+          }
+        }else if(shape==="cyl"){
+          if(!isNaN(r)&&!isNaN(h)){
+            const V = Math.PI*r*r*h;
+            text = "V = "+V.toFixed(6)+" m³";
+          }
+        }else if(shape==="sphere"){
+          if(!isNaN(r)){
+            const V = (4/3)*Math.PI*r*r*r;
+            const A = 4*Math.PI*r*r;
+            text = "V = "+V.toFixed(6)+" m³, A = "+A.toFixed(4)+" m²";
+          }
+        }else if(shape==="cone"){
+          if(!isNaN(r)&&!isNaN(h)){
+            const V = (Math.PI*r*r*h)/3;
+            text = "V = "+V.toFixed(6)+" m³";
+          }
+        }
+        if(!text){
+          out.textContent = currentLang==="de" ? "Bitte passende Werte eingeben." : "Please enter valid values.";
+        }else{
+          out.textContent = text;
+        }
       });
 
-      // Physik-Schnellrechner
+      // Physik Schnellrechner
       document.getElementById("physForceBtn").addEventListener("click",()=>{
         const m = Number(document.getElementById("phys_m").value);
         const a = Number(document.getElementById("phys_a").value);
         const out = document.getElementById("physForceOut");
-        if(isNaN(m)||isNaN(a)){out.textContent=I18N[currentLang].physErrNumber;return;}
+        if(isNaN(m)||isNaN(a)){
+          out.textContent = I18N[currentLang].physErrNumber;
+          return;
+        }
         out.textContent = (m*a)+" N";
       });
       document.getElementById("physSpeedBtn").addEventListener("click",()=>{
         const s = Number(document.getElementById("phys_s").value);
         const t = Number(document.getElementById("phys_t").value);
         const out = document.getElementById("physSpeedOut");
-        if(isNaN(s)||isNaN(t)||t===0){out.textContent=I18N[currentLang].physErrSt;return;}
+        if(isNaN(s)||isNaN(t)||t===0){
+          out.textContent = I18N[currentLang].physErrSt;
+          return;
+        }
         out.textContent = (s/t)+" m/s";
       });
     });
@@ -1007,7 +1105,7 @@
       <div class="logo">C</div>
       <div>
         <h1 id="headerTitle">Universal Umrechner & Formel-Löser</h1>
-        <div class="lead" id="headerLead">Einfach zu bedienen, viele Einheiten & Formeln. Für Schule, Ausbildung und Beruf.</div>
+        <div class="lead" id="headerLead">Einfach zu bedienen, viele Einheiten & Formeln. Für Schule, Ausbildung, Beruf – von 14 bis 99 Jahren.</div>
       </div>
       <div class="lang-switch">
         <button id="langDE" class="lang-btn active">DE</button>
@@ -1083,10 +1181,8 @@
         <h2 id="formulasTitle">Formel-Bibliothek</h2>
         <div class="small" id="formulasIntro">Suche nach Namen oder wähle eine Kategorie. Dann Werte eingeben und „Berechnen“ drücken.</div>
         <div class="controls">
-          <input id="formulaSearch" class="search-box" placeholder="z. B. „Ohm“, „Fläche“, „Geschwindigkeit“…">
-          <select id="formulaCategory">
-            <option value="all" id="formulaCatAll">Alle Kategorien</option>
-          </select>
+          <input id="formulaSearch" class="search-box" placeholder='z. B. „Ohm“, „Fläche“, „Geschwindigkeit“…'>
+          <select id="formulaCategory"></select>
         </div>
         <div id="formulaList" class="formula-list" style="margin-top:10px"></div>
       </div>
@@ -1098,9 +1194,7 @@
         <h2 id="geoTitle">Geometrie-Rechner</h2>
         <div class="small" id="geoIntro">Wähle die Form und gib die Seiten / Radien ein.</div>
         <div class="controls">
-          <select id="geoShape">
-            <!-- wird durch applyLanguage gesetzt -->
-          </select>
+          <select id="geoShape"></select>
         </div>
         <div class="controls">
           <input id="geo_a" placeholder="a (m)">
