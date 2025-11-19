@@ -3,36 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Money Assistant – Finanzrechner & Sparplan (DE & EN)</title>
-  <meta name="description" content="Money Assistant: kostenlose Finanzrechner für Zinseszins, Sparplan, Kredit, Inflation und Rente. Deutsch & Englisch. Ideal für Schule, Beruf und private Geldplanung.">
-  <meta name="keywords" content="Zinseszinsrechner, Sparplan Rechner, Kreditrechner, Rentenrechner, Inflationsrechner, Finanzrechner, Money Assistant, Geld, Finanzen, ETF, Sparen">
-  <link rel="canonical" href="https://deine-domain.example/">
+  <title>toolsenAI Money Assistant – Finanzrechner & Sparplan</title>
+  <meta name="description" content="toolsenAI Money Assistant: kostenlose Finanzrechner für Zinseszins, Sparplan, ETF-Sparen, Kredit, Inflation, Rente und Budget. Einfach, übersichtlich, ohne Anmeldung.">
+  <meta name="keywords" content="Zinseszinsrechner, Sparplan, ETF Rechner, Kreditrechner, Inflationsrechner, Rentenrechner, Budget Rechner, Finanzrechner, Geld, Finanzen">
+  <link rel="canonical" href="https://toolsenai.com/">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#0f766e">
 
   <style>
     :root{
-      --bg:#f4f6fb;
+      --bg:#f3f4f6;
       --card:#ffffff;
       --accent:#0f766e;
-      --accent-soft:#e0f2f1;
+      --accent2:#10b981;
       --muted:#6b7280;
-      --danger:#e11d48;
-      --radius:16px;
+      --danger:#dc2626;
+      --radius:18px;
     }
     *{box-sizing:border-box;}
     html,body{
       margin:0;
       padding:0;
-      height:100%;
+      min-height:100%;
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-      background:var(--bg);
+      background:radial-gradient(circle at top,#e0f2f1,#f3f4f6 50%,#e5e7eb);
       color:#111827;
     }
-    .container{
+    .app{
       max-width:1100px;
       margin:0 auto;
-      padding:16px 16px 32px;
+      padding:18px 16px 32px;
     }
     header{
       display:flex;
@@ -41,152 +41,254 @@
       align-items:center;
     }
     .logo{
-      width:64px;
-      height:64px;
-      border-radius:20px;
-      background:linear-gradient(135deg,#0f766e,#10b981);
+      width:72px;
+      height:72px;
+      border-radius:24px;
+      background:conic-gradient(from 210deg,var(--accent),var(--accent2),#22c55e,var(--accent));
       display:flex;
       align-items:center;
       justify-content:center;
-      color:#fff;
-      font-size:30px;
+      color:#ecfdf5;
       font-weight:800;
-      box-shadow:0 10px 24px rgba(15,118,110,0.4);
+      font-size:26px;
+      box-shadow:0 14px 28px rgba(15,118,110,0.45);
+    }
+    .logo span{
+      line-height:1;
+      text-align:center;
     }
     h1{
       margin:0;
       font-size:24px;
     }
-    .lead{
-      margin-top:4px;
+    .brand-sub{
       font-size:13px;
       color:var(--muted);
+      margin-top:4px;
     }
-    .lang-switch{
-      margin-left:auto;
-      display:flex;
-      gap:6px;
-    }
-    .lang-btn{
-      border-radius:999px;
-      border:1px solid #d1d5db;
-      background:#fff;
-      padding:6px 12px;
-      font-size:12px;
-      cursor:pointer;
-    }
-    .lang-btn.active{
-      background:var(--accent);
-      border-color:var(--accent);
-      color:#fff;
+    .brand-name{
+      font-weight:700;
+      letter-spacing:0.04em;
+      font-size:11px;
+      text-transform:uppercase;
+      color:#0f766e;
     }
 
     nav{
-      margin-top:16px;
-      background:#ffffff;
-      border-radius:var(--radius);
+      margin-top:18px;
+      background:rgba(255,255,255,0.92);
+      backdrop-filter:blur(10px);
+      border-radius:999px;
       padding:8px;
       display:flex;
-      gap:8px;
-      justify-content:center;
+      gap:6px;
       flex-wrap:wrap;
-      box-shadow:0 4px 12px rgba(15,23,42,0.12);
+      justify-content:center;
+      box-shadow:0 10px 24px rgba(15,23,42,0.18);
+      position:sticky;
+      top:8px;
+      z-index:10;
     }
     nav button{
-      padding:8px 14px;
-      border-radius:999px;
       border:none;
       background:transparent;
-      font-size:14px;
+      padding:8px 14px;
+      border-radius:999px;
       cursor:pointer;
-      color:#374151;
+      font-size:14px;
       font-weight:600;
+      color:#374151;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    nav button span.icon{
+      font-size:16px;
     }
     nav button.active{
-      background:var(--accent);
-      color:#fff;
-      box-shadow:0 4px 12px rgba(16,185,129,0.5);
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#ecfdf5;
+      box-shadow:0 8px 18px rgba(16,185,129,0.6);
     }
     nav button:hover:not(.active){
-      background:var(--accent-soft);
+      background:#e5f6f3;
     }
 
-    .page{display:none;}
+    main{
+      margin-top:18px;
+    }
+    .page{display:none;animation:fadeIn 0.18s ease-out;}
     .page.active{display:block;}
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(4px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:2fr 1.1fr;
+      gap:16px;
+    }
+    @media(max-width:880px){
+      .grid{grid-template-columns:1fr;}
+    }
 
     .card{
       background:var(--card);
       border-radius:var(--radius);
-      padding:16px;
-      margin-top:16px;
-      box-shadow:0 6px 18px rgba(15,23,42,0.1);
+      padding:16px 16px 18px;
+      margin-bottom:16px;
+      box-shadow:0 10px 24px rgba(15,23,42,0.18);
+      position:relative;
+      overflow:hidden;
     }
-    .card h2{margin-top:0;font-size:18px;}
-    .card h3{margin-top:0;font-size:16px;}
-    .small{font-size:13px;color:var(--muted);}
-    .result{
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at top right,rgba(16,185,129,0.12),transparent 55%);
+      pointer-events:none;
+    }
+    .card h2{
+      margin-top:0;
       font-size:18px;
-      font-weight:700;
-      color:var(--accent);
-      margin-top:6px;
-      word-break:break-word;
+    }
+    .card h3{
+      margin-top:0;
+      font-size:16px;
+    }
+    .small{
+      font-size:13px;
+      color:var(--muted);
+    }
+    .hint{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:8px;
     }
 
     .controls{
       display:flex;
       flex-wrap:wrap;
-      gap:8px;
+      gap:10px;
       margin-top:10px;
+      align-items:flex-end;
     }
-    input,select,button{
-      font-size:14px;
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width:140px;
+      flex:1 1 140px;
+    }
+    .field label{
+      font-size:12px;
+      color:#4b5563;
+    }
+    input[type="number"]{
       padding:8px 10px;
       border-radius:10px;
       border:1px solid #d1d5db;
+      font-size:14px;
+      background:#f9fafb;
       outline:none;
+      width:100%;
     }
-    input:focus,select:focus{
+    input[type="number"]:focus{
       border-color:var(--accent);
-      box-shadow:0 0 0 3px rgba(15,118,110,0.35);
+      box-shadow:0 0 0 2px rgba(16,185,129,0.5);
+      background:#ffffff;
     }
     button.main{
-      background:var(--accent);
+      padding:9px 16px;
+      border-radius:999px;
       border:none;
-      color:#fff;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#ecfdf5;
       font-weight:600;
+      font-size:14px;
       cursor:pointer;
+      box-shadow:0 8px 18px rgba(16,185,129,0.6);
+      white-space:nowrap;
     }
-    button.main:hover{filter:brightness(1.07);}
-    button.secondary{
-      background:#e5e7eb;
-      border:none;
+    button.main:hover{filter:brightness(1.05);}
+    button.ghost{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid #d1d5db;
+      background:#ffffff;
+      font-size:12px;
       cursor:pointer;
+      color:#4b5563;
+      white-space:nowrap;
     }
-    button.secondary:hover{background:#d1d5db;}
+    button.ghost:hover{
+      background:#f3f4f6;
+    }
+
+    .result{
+      margin-top:10px;
+      font-size:16px;
+      font-weight:700;
+      color:var(--accent);
+      word-break:break-word;
+    }
+    .result.error{
+      color:var(--danger);
+      font-weight:600;
+    }
+    .result span.small-line{
+      font-size:13px;
+      font-weight:400;
+      color:var(--muted);
+      display:block;
+      margin-top:4px;
+    }
 
     .tag-row{
       display:flex;
       flex-wrap:wrap;
       gap:6px;
-      margin-top:10px;
+      margin-top:12px;
     }
     .tag{
       font-size:11px;
-      padding:4px 9px;
+      padding:4px 10px;
       border-radius:999px;
-      background:#e5e7eb;
-      color:#374151;
+      background:#e5f6f3;
+      color:#0f766e;
+      font-weight:600;
     }
 
-    .ad-placeholder{
-      margin-top:10px;
-      border-radius:12px;
-      border:2px dashed #cbd5f5;
-      padding:10px;
-      text-align:center;
-      font-size:12px;
-      color:var(--muted);
+    .pill-info{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-size:11px;
+      padding:4px 9px;
+      border-radius:999px;
       background:#f9fafb;
+      color:#4b5563;
+      margin-top:6px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:13px;
+      margin-top:10px;
+    }
+    th,td{
+      padding:6px 8px;
+      text-align:left;
+      border-bottom:1px solid #e5e7eb;
+    }
+    th{
+      background:#f9fafb;
+      font-weight:600;
+    }
+    tr:hover td{
+      background:#f3f4ff;
     }
 
     footer{
@@ -196,643 +298,571 @@
       text-align:center;
     }
 
-    @media(max-width:800px){
-      .container{padding:12px;}
+    @media(max-width:720px){
+      .app{padding:12px;}
       header{align-items:flex-start;}
-      .lang-switch{margin-left:0;margin-top:6px;}
-      nav{flex-direction:column;align-items:stretch;}
-      nav button{text-align:center;}
+      .logo{width:64px;height:64px;font-size:22px;}
+      nav{
+        border-radius:16px;
+        flex-wrap:nowrap;
+        overflow-x:auto;
+        justify-content:flex-start;
+      }
+      nav button{
+        flex:0 0 auto;
+      }
     }
   </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="logo">
+        <span>t<br>AI</span>
+      </div>
+      <div>
+        <div class="brand-name">toolsenAI · Money Assistant</div>
+        <h1>Finanzrechner &amp; Sparplan</h1>
+        <div class="brand-sub">
+          Zinseszins, ETF-Sparen, Kredit, Rente, Inflation &amp; Budget – alles in einer Seite. Keine Anmeldung, keine Werbung.
+        </div>
+      </div>
+    </header>
 
-  <!-- Strukturierte Daten für SEO -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"WebApplication",
-    "name":"Money Assistant – Finanzrechner",
-    "url":"https://deine-domain.example/",
-    "applicationCategory":"FinanceApplication",
-    "description":"Kostenlose Finanzrechner für Zinseszins, Sparplan, Kredit, Inflation und Rente. Deutsch & Englisch."
-  }
-  </script>
+    <nav aria-label="Navigation">
+      <button data-page="home" class="active"><span class="icon">🏠</span>Start</button>
+      <button data-page="sparen"><span class="icon">📈</span>Sparen &amp; Zinseszins</button>
+      <button data-page="kredit"><span class="icon">💳</span>Kreditrechner</button>
+      <button data-page="etf"><span class="icon">📊</span>ETF-Sparen</button>
+      <button data-page="rente"><span class="icon">👵</span>Rente &amp; Inflation</button>
+      <button data-page="budget"><span class="icon">📋</span>Budget</button>
+    </nav>
+
+    <main>
+      <!-- STARTSEITE -->
+      <section id="page-home" class="page active">
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h2>Was möchtest du mit deinem Geld machen?</h2>
+              <div class="small">
+                Wähle einen Bereich. Alle Berechnungen laufen nur in deinem Browser – es wird nichts gespeichert.
+              </div>
+              <div class="controls" style="margin-top:14px">
+                <button class="main" data-go="sparen">Vermögen aufbauen</button>
+                <button class="ghost" data-go="kredit">Kredit durchrechnen</button>
+                <button class="ghost" data-go="etf">ETF-Sparplan planen</button>
+                <button class="ghost" data-go="rente">Rente &amp; Kaufkraft prüfen</button>
+                <button class="ghost" data-go="budget">Monatsbudget checken</button>
+              </div>
+              <div class="tag-row">
+                <span class="tag">Zinseszins</span>
+                <span class="tag">ETF</span>
+                <span class="tag">Sparplan</span>
+                <span class="tag">Kredit</span>
+                <span class="tag">Rente</span>
+                <span class="tag">Inflation</span>
+                <span class="tag">Budget</span>
+              </div>
+              <div class="hint">
+                Hinweis: Dies ist keine Anlageberatung. Die Rechner helfen beim Verständnis von Zahlen und Szenarien.
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>Schnellstart – typische Szenarien</h3>
+              <ul class="small">
+                <li>„Wenn ich <strong>200 € pro Monat</strong> in einen ETF spare – wie viel habe ich in 20 Jahren?“</li>
+                <li>„Wie hoch ist die <strong>Kreditrate</strong> für 15.000 € über 5 Jahre bei 5 %?“</li>
+                <li>„Wie viel Kapital brauche ich für <strong>2.000 € Rente</strong> im Monat?“</li>
+                <li>„Wie frisst <strong>Inflation</strong> mein Geld auf?“</li>
+                <li>„Wie viel bleibt mir im Monat übrig, nachdem ich Miete &amp; Fixkosten bezahlt habe?“</li>
+              </ul>
+              <div class="pill-info">
+                ℹ️ Alle Ergebnisse sind Näherungen – Banken &amp; Staat rechnen manchmal leicht anders.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPAREN & ZINSESZINS -->
+      <section id="page-sparen" class="page">
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h2>Zinseszins – Einmalanlage</h2>
+              <div class="small">Rechne aus, wie sich ein einmal angelegter Betrag mit Zinsen entwickelt.</div>
+              <div class="controls">
+                <div class="field">
+                  <label for="zz_start">Startkapital (€)</label>
+                  <input id="zz_start" type="number" step="0.01" placeholder="z. B. 10.000">
+                </div>
+                <div class="field">
+                  <label for="zz_rate">jährliche Rendite (%)</label>
+                  <input id="zz_rate" type="number" step="0.1" placeholder="z. B. 6">
+                </div>
+                <div class="field">
+                  <label for="zz_years">Anlagedauer (Jahre)</label>
+                  <input id="zz_years" type="number" step="1" placeholder="z. B. 20">
+                </div>
+                <button class="main" id="zz_btn">Berechnen</button>
+              </div>
+              <div class="result" id="zz_result">—</div>
+            </div>
+
+            <div class="card">
+              <h2>Sparplan – monatlich</h2>
+              <div class="small">Regelmäßige Einzahlungen + Zinsen. Ideal für ETF-/Aktien-Sparen.</div>
+              <div class="controls">
+                <div class="field">
+                  <label for="sp_month">Monatliche Einzahlung (€)</label>
+                  <input id="sp_month" type="number" step="0.01" placeholder="z. B. 200">
+                </div>
+                <div class="field">
+                  <label for="sp_start">Startkapital (€, optional)</label>
+                  <input id="sp_start" type="number" step="0.01" placeholder="0">
+                </div>
+                <div class="field">
+                  <label for="sp_rate">jährliche Rendite (%)</label>
+                  <input id="sp_rate" type="number" step="0.1" placeholder="z. B. 7">
+                </div>
+                <div class="field">
+                  <label for="sp_years">Sparjahre</label>
+                  <input id="sp_years" type="number" step="1" placeholder="z. B. 25">
+                </div>
+                <button class="main" id="sp_btn">Sparplan berechnen</button>
+              </div>
+              <div class="result" id="sp_result">—</div>
+              <div class="hint">
+                Vergleich: Viele Menschen unterschätzen, wie stark Zinseszins über Jahrzehnte wirkt.
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>Kleine Faustregeln</h3>
+              <ul class="small">
+                <li><strong>72-Regel:</strong> 72 ÷ Zinssatz ≈ Jahre, bis sich dein Geld verdoppelt.</li>
+                <li><strong>Je früher</strong> du startest, desto wichtiger wird Zinseszins – Zeit ist dein Freund.</li>
+                <li>Renditen schwanken: Die Rechner nehmen einen konstanten Durchschnitt an.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- KREDIT -->
+      <section id="page-kredit" class="page">
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h2>Kreditrechner (Annuität)</h2>
+              <div class="small">Berechne monatliche Rate, Gesamtzahlung und Zinsen.</div>
+              <div class="controls">
+                <div class="field">
+                  <label for="kr_sum">Kreditsumme (€)</label>
+                  <input id="kr_sum" type="number" step="0.01" placeholder="z. B. 15.000">
+                </div>
+                <div class="field">
+                  <label for="kr_rate">effektiver Jahreszins (%)</label>
+                  <input id="kr_rate" type="number" step="0.01" placeholder="z. B. 5">
+                </div>
+                <div class="field">
+                  <label for="kr_years">Laufzeit (Jahre)</label>
+                  <input id="kr_years" type="number" step="1" placeholder="z. B. 5">
+                </div>
+                <button class="main" id="kr_btn">Kredit berechnen</button>
+              </div>
+              <div class="result" id="kr_result">—</div>
+              <div class="hint">
+                Achtung: Banken verwenden teils zusätzliche Gebühren, Versicherungen oder andere Zinssätze.
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>Kredit-Tipps (allgemein)</h3>
+              <ul class="small">
+                <li>Vergleiche immer die <strong>effektiven Jahreszinsen</strong>, nicht nur Sollzinsen.</li>
+                <li>Kürzere Laufzeit = höhere Rate, aber insgesamt weniger Zinsen.</li>
+                <li>Notgroschen einplanen, statt alles Geld in die Kreditrate zu stecken.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ETF-SPAREN -->
+      <section id="page-etf" class="page">
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h2>ETF-Sparplan-Rechner</h2>
+              <div class="small">
+                Simpler ETF-Rechner: monatliches Sparen mit angenommener Durchschnittsrendite.
+              </div>
+              <div class="controls">
+                <div class="field">
+                  <label for="etf_month">Monatlicher ETF-Sparbetrag (€)</label>
+                  <input id="etf_month" type="number" step="0.01" placeholder="z. B. 150">
+                </div>
+                <div class="field">
+                  <label for="etf_years">Sparjahre</label>
+                  <input id="etf_years" type="number" step="1" placeholder="z. B. 30">
+                </div>
+                <div class="field">
+                  <label for="etf_rate">erwartete Rendite p.a. (%)</label>
+                  <input id="etf_rate" type="number" step="0.1" placeholder="z. B. 6">
+                </div>
+                <button class="main" id="etf_btn">ETF-Sparen berechnen</button>
+              </div>
+              <div class="result" id="etf_result">—</div>
+              <div class="hint">
+                Dieser Rechner nutzt eine vereinfachte Formel (konstante Rendite, keine Steuern, keine Gebühren).
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>Begriffe einfach erklärt</h3>
+              <ul class="small">
+                <li><strong>ETF:</strong> Börsengehandelter Fonds, der meist einen Index (z. B. MSCI World) abbildet.</li>
+                <li><strong>TER:</strong> Laufende Kosten des ETFs. Hier nicht eingerechnet.</li>
+                <li><strong>Rendite:</strong> Durchschnittliche Wertentwicklung pro Jahr. In der Realität schwankt sie.</li>
+              </ul>
+              <div class="pill-info">
+                💡 Für echte ETF-Auswahl musst du selbst aktuelle Daten &amp; Anbieter prüfen – diese Seite liefert nur Rechenbeispiele.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RENTE & INFLATION -->
+      <section id="page-rente" class="page">
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h2>Inflationsrechner</h2>
+              <div class="small">Wie verändert sich der Wert deines Geldes über die Zeit?</div>
+              <div class="controls">
+                <div class="field">
+                  <label for="inf_today">Betrag heute (€)</label>
+                  <input id="inf_today" type="number" step="0.01" placeholder="z. B. 1.000">
+                </div>
+                <div class="field">
+                  <label for="inf_rate">Inflation pro Jahr (%)</label>
+                  <input id="inf_rate" type="number" step="0.1" placeholder="z. B. 2">
+                </div>
+                <div class="field">
+                  <label for="inf_years">Zeitspanne (Jahre)</label>
+                  <input id="inf_years" type="number" step="1" placeholder="z. B. 15">
+                </div>
+                <button class="main" id="inf_btn">Inflation berechnen</button>
+              </div>
+              <div class="result" id="inf_result">—</div>
+            </div>
+
+            <div class="card">
+              <h2>Rentenlücke grob schätzen</h2>
+              <div class="small">
+                Wie viel Vermögen brauchst du ungefähr, um deine gewünschte monatliche Rente zu finanzieren?
+              </div>
+              <div class="controls">
+                <div class="field">
+                  <label for="re_wish">Wunsch-Rente netto pro Monat (€)</label>
+                  <input id="re_wish" type="number" step="0.01" placeholder="z. B. 2.000">
+                </div>
+                <div class="field">
+                  <label for="re_years">geplante Rentenjahre</label>
+                  <input id="re_years" type="number" step="1" placeholder="z. B. 25">
+                </div>
+                <div class="field">
+                  <label for="re_rate">Entnahmequote pro Jahr (%)</label>
+                  <input id="re_rate" type="number" step="0.1" placeholder="z. B. 4">
+                </div>
+                <div class="field">
+                  <label for="re_have">heute vorhandenes Vermögen (€)</label>
+                  <input id="re_have" type="number" step="0.01" placeholder="z. B. 50.000">
+                </div>
+                <button class="main" id="re_btn">Rentenbedarf berechnen</button>
+              </div>
+              <div class="result" id="re_result">—</div>
+              <div class="hint">
+                Das ist nur eine grobe Faustformel, ersetzt keine individuelle Beratung (Steuern, gesetzliche Rente, etc.).
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>4-Prozent-Regel (grob!)</h3>
+              <div class="small">
+                Eine oft genannte Faustregel besagt, dass man langfristig ca. 4&nbsp;% seines Vermögens pro Jahr entnehmen kann.
+                Die Realität hängt aber von Markt, Steuern und Lebenssituation ab.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BUDGET -->
+      <section id="page-budget" class="page">
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h2>Monatsbudget-Rechner</h2>
+              <div class="small">Trage dein Netto-Einkommen und die wichtigsten Ausgaben ein.</div>
+              <div class="controls">
+                <div class="field">
+                  <label for="bu_income">Netto-Einkommen / Monat (€)</label>
+                  <input id="bu_income" type="number" step="0.01" placeholder="z. B. 2.500">
+                </div>
+                <div class="field">
+                  <label for="bu_rent">Miete / Wohnen (€)</label>
+                  <input id="bu_rent" type="number" step="0.01" placeholder="z. B. 900">
+                </div>
+                <div class="field">
+                  <label for="bu_food">Lebensmittel (€)</label>
+                  <input id="bu_food" type="number" step="0.01" placeholder="z. B. 350">
+                </div>
+                <div class="field">
+                  <label for="bu_mob">Mobilität (€)</label>
+                  <input id="bu_mob" type="number" step="0.01" placeholder="z. B. 150">
+                </div>
+                <div class="field">
+                  <label for="bu_fun">Freizeit / Hobbys (€)</label>
+                  <input id="bu_fun" type="number" step="0.01" placeholder="z. B. 200">
+                </div>
+                <div class="field">
+                  <label for="bu_other">Sonstiges (€)</label>
+                  <input id="bu_other" type="number" step="0.01" placeholder="z. B. 100">
+                </div>
+                <button class="main" id="bu_btn">Budget auswerten</button>
+              </div>
+              <div class="result" id="bu_result">—</div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>Einfache 50-30-20-Regel</h3>
+              <ul class="small">
+                <li><strong>50&nbsp;%</strong> für Notwendiges (Miete, Essen, Strom, Versicherungen).</li>
+                <li><strong>30&nbsp;%</strong> für Wünsche (Freizeit, Hobbys, Urlaub).</li>
+                <li><strong>20&nbsp;%</strong> zum Sparen &amp; Schuldenabbau.</li>
+              </ul>
+              <div class="pill-info">
+                📌 Die Regel ist nur ein Richtwert. Wichtig: Überblick behalten und regelmäßig anpassen.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      toolsenAI Money Assistant – speichere diese Datei als <code>index.html</code> und lade sie auf dein Hosting oder GitHub Pages hoch.
+    </footer>
+  </div>
 
   <script>
-    // ----- Sprachtexte -----
-    const I18N = {
-      de:{
-        metaTitle:"Money Assistant – Finanzrechner & Sparplan (DE & EN)",
-        metaDesc:"Money Assistant: kostenlose Finanzrechner für Zinseszins, Sparplan, Kredit, Inflation und Rente. Deutsch & Englisch.",
-        headerTitle:"Money Assistant – Finanzrechner",
-        headerLead:"Zinseszins, Sparplan, Kredit, Inflation & Rente. Einfach erklärt, kostenlos, auf Deutsch und Englisch.",
-        navHome:"Startseite",
-        navSavings:"Sparen & Zinseszins",
-        navLoans:"Kredit & Schulden",
-        navRetire:"Inflation & Rente",
-        navBudget:"Budget & Alltag",
-        homeTitle:"Was möchtest du mit deinem Geld machen?",
-        homeLead:"Wähle einen Bereich. Du kannst nichts kaputt machen – alle Rechner laufen lokal im Browser.",
-        homeBtnSavings:"Vermögen aufbauen",
-        homeBtnLoans:"Kredit planen",
-        homeBtnRetire:"Rente & Kaufkraft",
-        homeBtnBudget:"Alltag & Budget",
-        convHint:"Tipp: Du kannst diese Seite später mit Werbung monetarisieren – oben nur Inhalte, unten Werbeplätze.",
-        savingsMainTitle:"Zinseszins-Rechner",
-        savingsMainLead:"Berechne, wie sich eine einmalige Anlage über die Jahre entwickelt.",
-        savingsStart:"Startkapital",
-        savingsRate:"Jährliche Rendite (%)",
-        savingsYears:"Jahre",
-        savingsBtn:"Berechnen",
-        savingsResultLabel:"Endkapital und Zinsen:",
-        savingsPlanTitle:"Sparplan-Rechner (monatlich)",
-        savingsPlanLead:"Monatlich sparen und sehen, wie viel daraus wird.",
-        savingsPlanMonthly:"Monatliche Einzahlung",
-        savingsPlanStart:"Startkapital (optional)",
-        savingsPlanYears:"Sparjahre",
-        savingsPlanRate:"Jährliche Rendite (%)",
-        savingsPlanBtn:"Sparplan berechnen",
-        savingsPlanResultLabel:"Ergebnis Sparplan:",
-        loansTitle:"Kreditrechner",
-        loansLead:"Berechne Monatsrate, Gesamtkosten und Zinsen eines Annuitätendarlehens.",
-        loansAmount:"Kreditsumme",
-        loansRate:"Effektiver Jahreszins (%)",
-        loansYears:"Laufzeit (Jahre)",
-        loansBtn:"Kredit berechnen",
-        loansResultLabel:"Kredit-Ergebnis:",
-        retireInflTitle:"Inflationsrechner",
-        retireInflLead:"Wie viel ist dein Geld in der Zukunft noch wert?",
-        retireInflToday:"Betrag heute",
-        retireInflRate:"Inflation pro Jahr (%)",
-        retireInflYears:"Jahre in der Zukunft",
-        retireInflBtn:"Inflation berechnen",
-        retireInflResultLabel:"Kaufkraft in der Zukunft:",
-        retireGapTitle:"Rentenlücke grob schätzen",
-        retireGapLead:"Wie viel Kapital brauchst du ungefähr für deine Wunsch-Rente?",
-        retireWish:"Wunsch-Rente netto pro Monat",
-        retireYears:"Geplante Rentenjahre",
-        retireRate:"Entnahme-Quote pro Jahr (%)",
-        retireHave:"Bisher angespartes Vermögen",
-        retireGapBtn:"Rentenbedarf berechnen",
-        retireGapResultLabel:"Ergebnis Rente:",
-        budgetTitle:"Budget-Rechner (monatlich)",
-        budgetLead:"Verteile dein Einkommen auf Kategorien und sehe Prozente.",
-        budgetIncome:"Netto-Einkommen / Monat",
-        budgetRent:"Miete / Wohnen",
-        budgetFood:"Lebensmittel",
-        budgetMobility:"Mobilität",
-        budgetFun:"Freizeit / Hobbys",
-        budgetOther:"Sonstiges",
-        budgetBtn:"Budget auswerten",
-        budgetResultLabel:"Budget-Auswertung:",
-        errorNumber:"Bitte gültige Zahlen eingeben.",
-        footerText:"Money Assistant – speichere diese Datei als index.html und lade sie auf dein Hosting oder GitHub Pages hoch. Später kannst du hier Werbung einbinden."
-      },
-      en:{
-        metaTitle:"Money Assistant – Finance Calculators & Savings Planner (EN & DE)",
-        metaDesc:"Money Assistant: free finance calculators for compound interest, savings plan, loans, inflation and retirement. English & German.",
-        headerTitle:"Money Assistant – Finance Calculators",
-        headerLead:"Compound interest, savings, loans, inflation & retirement. Easy, free, in English and German.",
-        navHome:"Home",
-        navSavings:"Saving & Interest",
-        navLoans:"Loans & Debt",
-        navRetire:"Inflation & Retirement",
-        navBudget:"Budget & Everyday",
-        homeTitle:"What do you want to do with your money?",
-        homeLead:"Choose a section. All calculators run locally in your browser – nothing is sent to a server.",
-        homeBtnSavings:"Build wealth",
-        homeBtnLoans:"Plan a loan",
-        homeBtnRetire:"Retirement & inflation",
-        homeBtnBudget:"Everyday budget",
-        convHint:"Tip: You can monetize this site later with ads – keep the tools on top and ad slots below.",
-        savingsMainTitle:"Compound interest calculator",
-        savingsMainLead:"See how a one-time investment grows over the years.",
-        savingsStart:"Initial amount",
-        savingsRate:"Yearly return (%)",
-        savingsYears:"Years",
-        savingsBtn:"Calculate",
-        savingsResultLabel:"Final amount & interest:",
-        savingsPlanTitle:"Monthly savings plan",
-        savingsPlanLead:"Save every month and see the result.",
-        savingsPlanMonthly:"Monthly deposit",
-        savingsPlanStart:"Initial capital (optional)",
-        savingsPlanYears:"Years of saving",
-        savingsPlanRate:"Yearly return (%)",
-        savingsPlanBtn:"Calculate savings plan",
-        savingsPlanResultLabel:"Savings plan result:",
-        loansTitle:"Loan calculator",
-        loansLead:"Calculate monthly payment, total cost and interest of an annuity loan.",
-        loansAmount:"Loan amount",
-        loansRate:"Effective yearly interest (%)",
-        loansYears:"Term (years)",
-        loansBtn:"Calculate loan",
-        loansResultLabel:"Loan result:",
-        retireInflTitle:"Inflation calculator",
-        retireInflLead:"How much will your money be worth in the future?",
-        retireInflToday:"Amount today",
-        retireInflRate:"Inflation per year (%)",
-        retireInflYears:"Years in the future",
-        retireInflBtn:"Calculate inflation",
-        retireInflResultLabel:"Future buying power:",
-        retireGapTitle:"Rough retirement gap",
-        retireGapLead:"How much capital do you roughly need for your desired pension?",
-        retireWish:"Desired net pension per month",
-        retireYears:"Planned retirement years",
-        retireRate:"Withdrawal rate per year (%)",
-        retireHave:"Capital already saved",
-        retireGapBtn:"Calculate retirement need",
-        retireGapResultLabel:"Retirement result:",
-        budgetTitle:"Monthly budget calculator",
-        budgetLead:"Split your income into categories and see percentages.",
-        budgetIncome:"Net income / month",
-        budgetRent:"Rent / housing",
-        budgetFood:"Food",
-        budgetMobility:"Mobility",
-        budgetFun:"Fun / hobbies",
-        budgetOther:"Other",
-        budgetBtn:"Analyse budget",
-        budgetResultLabel:"Budget overview:",
-        errorNumber:"Please enter valid numbers.",
-        footerText:"Money Assistant – save this file as index.html and upload it to your hosting or GitHub Pages. You can add ads later."
-      }
-    };
-
-    let currentLang = "de";
-
-    function setText(id,key){
-      const el = document.getElementById(id);
-      if(el) el.textContent = I18N[currentLang][key];
-    }
-
+    // Navigation zwischen Seiten
     function showPage(name){
       document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
       const page = document.getElementById("page-"+name);
       if(page) page.classList.add("active");
+
       document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-      const btn = document.querySelector('nav button[data-page="'+name+'"]');
-      if(btn) btn.classList.add("active");
+      const navBtn = document.querySelector('nav button[data-page="'+name+'"]');
+      if(navBtn) navBtn.classList.add("active");
     }
 
-    function formatMoney(value){
-      if(!isFinite(value)) return "–";
-      const v = Math.round(value*100)/100;
-      return v.toLocaleString(currentLang==="de"?"de-DE":"en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
-    }
-
-    function applyLanguage(lang){
-      currentLang = lang;
-      document.documentElement.lang = lang;
-
-      const t = I18N[lang];
-      document.title = t.metaTitle;
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if(metaDesc) metaDesc.content = t.metaDesc;
-
-      setText("headerTitle","headerTitle");
-      setText("headerLead","headerLead");
-      setText("navHome","navHome");
-      setText("navSavings","navSavings");
-      setText("navLoans","navLoans");
-      setText("navRetire","navRetire");
-      setText("navBudget","navBudget");
-      setText("homeTitle","homeTitle");
-      setText("homeLead","homeLead");
-      setText("homeBtnSavings","homeBtnSavings");
-      setText("homeBtnLoans","homeBtnLoans");
-      setText("homeBtnRetire","homeBtnRetire");
-      setText("homeBtnBudget","homeBtnBudget");
-      setText("convHint","convHint");
-
-      setText("savingsMainTitle","savingsMainTitle");
-      setText("savingsMainLead","savingsMainLead");
-      setText("labelSavingsStart","savingsStart");
-      setText("labelSavingsRate","savingsRate");
-      setText("labelSavingsYears","savingsYears");
-      setText("savingsBtn","savingsBtn");
-      setText("savingsResultLabel","savingsResultLabel");
-
-      setText("savingsPlanTitle","savingsPlanTitle");
-      setText("savingsPlanLead","savingsPlanLead");
-      setText("labelPlanMonthly","savingsPlanMonthly");
-      setText("labelPlanStart","savingsPlanStart");
-      setText("labelPlanYears","savingsPlanYears");
-      setText("labelPlanRate","savingsPlanRate");
-      setText("savingsPlanBtn","savingsPlanBtn");
-      setText("savingsPlanResultLabel","savingsPlanResultLabel");
-
-      setText("loansTitle","loansTitle");
-      setText("loansLead","loansLead");
-      setText("labelLoanAmount","loansAmount");
-      setText("labelLoanRate","loansRate");
-      setText("labelLoanYears","loansYears");
-      setText("loansBtn","loansBtn");
-      setText("loansResultLabel","loansResultLabel");
-
-      setText("retireInflTitle","retireInflTitle");
-      setText("retireInflLead","retireInflLead");
-      setText("labelInflToday","retireInflToday");
-      setText("labelInflRate","retireInflRate");
-      setText("labelInflYears","retireInflYears");
-      setText("retireInflBtn","retireInflBtn");
-      setText("retireInflResultLabel","retireInflResultLabel");
-
-      setText("retireGapTitle","retireGapTitle");
-      setText("retireGapLead","retireGapLead");
-      setText("labelRetireWish","retireWish");
-      setText("labelRetireYears","retireYears");
-      setText("labelRetireRate","retireRate");
-      setText("labelRetireHave","retireHave");
-      setText("retireGapBtn","retireGapBtn");
-      setText("retireGapResultLabel","retireGapResultLabel");
-
-      setText("budgetTitle","budgetTitle");
-      setText("budgetLead","budgetLead");
-      setText("labelBudgetIncome","budgetIncome");
-      setText("labelBudgetRent","budgetRent");
-      setText("labelBudgetFood","budgetFood");
-      setText("labelBudgetMobility","budgetMobility");
-      setText("labelBudgetFun","budgetFun");
-      setText("labelBudgetOther","budgetOther");
-      setText("budgetBtn","budgetBtn");
-      setText("budgetResultLabel","budgetResultLabel");
-
-      setText("footerText","footerText");
-
-      document.querySelectorAll(".lang-btn").forEach(b=>b.classList.remove("active"));
-      document.getElementById(lang==="de"?"langDE":"langEN").classList.add("active");
+    function formatMoney(num){
+      if(!isFinite(num)) return "–";
+      const v = Math.round(num*100)/100;
+      return v.toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €";
     }
 
     document.addEventListener("DOMContentLoaded",function(){
-      // Sprache initial setzen
-      applyLanguage("de");
-
-      document.getElementById("langDE").addEventListener("click",()=>applyLanguage("de"));
-      document.getElementById("langEN").addEventListener("click",()=>applyLanguage("en"));
-
-      // Navigation
+      // Nav Buttons
       document.querySelectorAll("nav button").forEach(btn=>{
         btn.addEventListener("click",()=>showPage(btn.dataset.page));
       });
-      showPage("home");
 
-      // Home Buttons
-      document.getElementById("homeBtnSavings").addEventListener("click",()=>showPage("savings"));
-      document.getElementById("homeBtnLoans").addEventListener("click",()=>showPage("loans"));
-      document.getElementById("homeBtnRetire").addEventListener("click",()=>showPage("retire"));
-      document.getElementById("homeBtnBudget").addEventListener("click",()=>showPage("budget"));
+      // Schnellstart Buttons
+      document.querySelectorAll("[data-go]").forEach(btn=>{
+        btn.addEventListener("click",()=>showPage(btn.dataset.go));
+      });
 
-      // ----- Zinseszins Rechner -----
-      document.getElementById("savingsBtn").addEventListener("click",()=>{
-        const t = I18N[currentLang];
-        const start = parseFloat(document.getElementById("savingsStart").value);
-        const rate  = parseFloat(document.getElementById("savingsRate").value)/100;
-        const years = parseFloat(document.getElementById("savingsYears").value);
-        const out   = document.getElementById("savingsResult");
+      // Zinseszins
+      document.getElementById("zz_btn").addEventListener("click",function(){
+        const start = parseFloat(document.getElementById("zz_start").value);
+        const rate  = parseFloat(document.getElementById("zz_rate").value)/100;
+        const years = parseFloat(document.getElementById("zz_years").value);
+        const out   = document.getElementById("zz_result");
         if(!isFinite(start)||!isFinite(rate)||!isFinite(years)){
-          out.textContent = t.errorNumber;
-          out.style.color = "var(--danger)";
+          out.textContent = "Bitte gültige Zahlen eingeben.";
+          out.classList.add("error");
           return;
         }
-        const finalAmount = start*Math.pow(1+rate,years);
-        const interest = finalAmount-start;
-        out.style.color = "var(--accent)";
-        out.textContent = formatMoney(finalAmount)+" ("+(currentLang==="de"?"Zinsen: ":"interest: ")+formatMoney(interest)+")";
+        out.classList.remove("error");
+        const end = start*Math.pow(1+rate,years);
+        const zinsen = end-start;
+        out.innerHTML = "Endkapital: "+formatMoney(end)+"<span class=\"small-line\">davon Zinsen: "+formatMoney(zinsen)+"</span>";
       });
 
-      // ----- Sparplan Rechner -----
-      document.getElementById("savingsPlanBtn").addEventListener("click",()=>{
-        const t = I18N[currentLang];
-        const monthly = parseFloat(document.getElementById("planMonthly").value);
-        const start   = parseFloat(document.getElementById("planStart").value)||0;
-        const rate    = parseFloat(document.getElementById("planRate").value)/100;
-        const years   = parseFloat(document.getElementById("planYears").value);
-        const out     = document.getElementById("savingsPlanResult");
-        if(!isFinite(monthly)||!isFinite(rate)||!isFinite(years)){
-          out.textContent = t.errorNumber;
-          out.style.color = "var(--danger)";
+      // Sparplan
+      document.getElementById("sp_btn").addEventListener("click",function(){
+        const m     = parseFloat(document.getElementById("sp_month").value);
+        const start = parseFloat(document.getElementById("sp_start").value)||0;
+        const r     = parseFloat(document.getElementById("sp_rate").value)/100;
+        const years = parseFloat(document.getElementById("sp_years").value);
+        const out   = document.getElementById("sp_result");
+        if(!isFinite(m)||!isFinite(r)||!isFinite(years)){
+          out.textContent = "Bitte gültige Zahlen eingeben.";
+          out.classList.add("error");
           return;
         }
+        out.classList.remove("error");
         const n = years*12;
-        const i = rate/12;
-        let futureMonthly;
-        if(i===0){
-          futureMonthly = monthly*n;
+        const i = r/12;
+        let fvEinzahlungen;
+        if(i === 0){
+          fvEinzahlungen = m*n;
         }else{
-          futureMonthly = monthly*((Math.pow(1+i,n)-1)/i);
+          fvEinzahlungen = m*((Math.pow(1+i,n)-1)/i);
         }
-        const finalAmount = start*Math.pow(1+rate,years)+futureMonthly;
-        const totalInvested = start + monthly*n;
-        const interest = finalAmount-totalInvested;
-        out.style.color = "var(--accent)";
-        const investedLabel = currentLang==="de"?"eingezahlt: ":"paid in: ";
-        const interestLabel = currentLang==="de"?"Zinsen: ":"interest: ";
-        out.textContent = formatMoney(finalAmount)+" ("+investedLabel+formatMoney(totalInvested)+", "+interestLabel+formatMoney(interest)+")";
+        const fvStart = start*Math.pow(1+r,years);
+        const end = fvStart+fvEinzahlungen;
+        const investiert = start + m*n;
+        const zinsen = end-investiert;
+        out.innerHTML = "Endkapital: "+formatMoney(end)+"<span class=\"small-line\">eingezahlt: "+formatMoney(investiert)+" · Zinsen: "+formatMoney(zinsen)+"</span>";
       });
 
-      // ----- Kreditrechner -----
-      document.getElementById("loansBtn").addEventListener("click",()=>{
-        const t = I18N[currentLang];
-        const amount = parseFloat(document.getElementById("loanAmount").value);
-        const rate   = parseFloat(document.getElementById("loanRate").value)/100;
-        const years  = parseFloat(document.getElementById("loanYears").value);
-        const out    = document.getElementById("loansResult");
-        if(!isFinite(amount)||!isFinite(rate)||!isFinite(years)){
-          out.textContent = t.errorNumber;
-          out.style.color = "var(--danger)";
+      // Kredit
+      document.getElementById("kr_btn").addEventListener("click",function(){
+        const K = parseFloat(document.getElementById("kr_sum").value);
+        const r = parseFloat(document.getElementById("kr_rate").value)/100;
+        const years = parseFloat(document.getElementById("kr_years").value);
+        const out = document.getElementById("kr_result");
+        if(!isFinite(K)||!isFinite(r)||!isFinite(years)){
+          out.textContent = "Bitte gültige Zahlen eingeben.";
+          out.classList.add("error");
           return;
         }
+        out.classList.remove("error");
         const n = years*12;
-        const i = rate/12;
-        let payment;
-        if(i===0){
-          payment = amount/n;
+        const i = r/12;
+        let rateMonat;
+        if(i === 0){
+          rateMonat = K/n;
         }else{
-          const factor = Math.pow(1+i,n);
-          payment = amount * (i*factor)/(factor-1);
+          const faktor = Math.pow(1+i,n);
+          rateMonat = K * (i*faktor)/(faktor-1);
         }
-        const totalPaid = payment*n;
-        const interest = totalPaid-amount;
-        out.style.color = "var(--accent)";
-        const mLabel = currentLang==="de"?"Rate/Monat: ":"monthly payment: ";
-        const totLabel = currentLang==="de"?"Gesamtzahlung: ":"total paid: ";
-        const intLabel = currentLang==="de"?"Zinsen: ":"interest: ";
-        out.textContent = mLabel+formatMoney(payment)+" | "+totLabel+formatMoney(totalPaid)+" | "+intLabel+formatMoney(interest);
+        const gesamt = rateMonat*n;
+        const zinsen = gesamt-K;
+        out.innerHTML =
+          "Rate pro Monat: "+formatMoney(rateMonat)+
+          "<span class=\"small-line\">Gesamtzahlung: "+formatMoney(gesamt)+" · Zinsen: "+formatMoney(zinsen)+"</span>";
       });
 
-      // ----- Inflationsrechner -----
-      document.getElementById("retireInflBtn").addEventListener("click",()=>{
-        const t = I18N[currentLang];
-        const today = parseFloat(document.getElementById("inflToday").value);
-        const rate  = parseFloat(document.getElementById("inflRate").value)/100;
-        const years = parseFloat(document.getElementById("inflYears").value);
-        const out   = document.getElementById("retireInflResult");
-        if(!isFinite(today)||!isFinite(rate)||!isFinite(years)){
-          out.textContent = t.errorNumber;
-          out.style.color = "var(--danger)";
+      // ETF-Sparen
+      document.getElementById("etf_btn").addEventListener("click",function(){
+        const m = parseFloat(document.getElementById("etf_month").value);
+        const years = parseFloat(document.getElementById("etf_years").value);
+        const r = parseFloat(document.getElementById("etf_rate").value)/100;
+        const out = document.getElementById("etf_result");
+        if(!isFinite(m)||!isFinite(years)||!isFinite(r)){
+          out.textContent = "Bitte gültige Zahlen eingeben.";
+          out.classList.add("error");
           return;
         }
-        const futurePrice = today*Math.pow(1+rate,years);
-        const realValue   = today*Math.pow(1-rate,years);
-        out.style.color = "var(--accent)";
-        const nowLabel = currentLang==="de"?"Betrag heute: ":"today: ";
-        const futLabel = currentLang==="de"?"Preis in Zukunft: ":"future price: ";
-        const powerLabel = currentLang==="de"?"ungefähre Kaufkraft: ":"approx. buying power: ";
-        out.textContent = nowLabel+formatMoney(today)+" → "+futLabel+formatMoney(futurePrice)+" | "+powerLabel+formatMoney(realValue);
+        out.classList.remove("error");
+        const n = years*12;
+        const i = r/12;
+        let fv;
+        if(i === 0){
+          fv = m*n;
+        }else{
+          fv = m*((Math.pow(1+i,n)-1)/i);
+        }
+        const investiert = m*n;
+        const zinsen = fv-investiert;
+        out.innerHTML =
+          "voraussichtliches Endkapital: "+formatMoney(fv)+
+          "<span class=\"small-line\">eingezahlt: "+formatMoney(investiert)+" · Zuwachs durch Rendite: "+formatMoney(zinsen)+"</span>";
       });
 
-      // ----- Rentenlücke grob -----
-      document.getElementById("retireGapBtn").addEventListener("click",()=>{
-        const t = I18N[currentLang];
-        const wish  = parseFloat(document.getElementById("retireWish").value);
-        const years = parseFloat(document.getElementById("retireYears").value);
-        const rate  = parseFloat(document.getElementById("retireRate").value)/100;
-        const have  = parseFloat(document.getElementById("retireHave").value)||0;
-        const out   = document.getElementById("retireGapResult");
-        if(!isFinite(wish)||!isFinite(years)||!isFinite(rate)){
-          out.textContent = t.errorNumber;
-          out.style.color = "var(--danger)";
+      // Inflation
+      document.getElementById("inf_btn").addEventListener("click",function(){
+        const today = parseFloat(document.getElementById("inf_today").value);
+        const p = parseFloat(document.getElementById("inf_rate").value)/100;
+        const years = parseFloat(document.getElementById("inf_years").value);
+        const out = document.getElementById("inf_result");
+        if(!isFinite(today)||!isFinite(p)||!isFinite(years)){
+          out.textContent = "Bitte gültige Zahlen eingeben.";
+          out.classList.add("error");
           return;
         }
-        const yearlyNeed = wish*12;
-        const neededCapital = yearlyNeed/rate; // sehr grobe Faustformel
-        const gap = neededCapital-have;
-        out.style.color = "var(--accent)";
-        const needLabel = currentLang==="de"?"Benötigtes Kapital: ":"required capital: ";
-        const haveLabel = currentLang==="de"?"aktuell: ":"current: ";
-        const gapLabel  = currentLang==="de"?"Lücke: ":"gap: ";
-        out.textContent = needLabel+formatMoney(neededCapital)+" | "+haveLabel+formatMoney(have)+" | "+gapLabel+formatMoney(gap);
+        out.classList.remove("error");
+        const futurePreis = today*Math.pow(1+p,years);
+        const kaufkraft = today/Math.pow(1+p,years);
+        out.innerHTML =
+          "Zukünftiger Preis: "+formatMoney(futurePreis)+
+          "<span class=\"small-line\">ungefähre Kaufkraft des heutigen Betrags: "+formatMoney(kaufkraft)+"</span>";
       });
 
-      // ----- Budgetrechner -----
-      document.getElementById("budgetBtn").addEventListener("click",()=>{
-        const t = I18N[currentLang];
-        const income = parseFloat(document.getElementById("budgetIncome").value);
-        const rent   = parseFloat(document.getElementById("budgetRent").value)||0;
-        const food   = parseFloat(document.getElementById("budgetFood").value)||0;
-        const mob    = parseFloat(document.getElementById("budgetMobility").value)||0;
-        const fun    = parseFloat(document.getElementById("budgetFun").value)||0;
-        const other  = parseFloat(document.getElementById("budgetOther").value)||0;
-        const out    = document.getElementById("budgetResult");
+      // Rente
+      document.getElementById("re_btn").addEventListener("click",function(){
+        const w = parseFloat(document.getElementById("re_wish").value);
+        const years = parseFloat(document.getElementById("re_years").value);
+        const q = parseFloat(document.getElementById("re_rate").value)/100;
+        const have = parseFloat(document.getElementById("re_have").value)||0;
+        const out = document.getElementById("re_result");
+        if(!isFinite(w)||!isFinite(years)||!isFinite(q)||q<=0){
+          out.textContent = "Bitte gültige Zahlen eingeben (Entnahmequote > 0).";
+          out.classList.add("error");
+          return;
+        }
+        out.classList.remove("error");
+        const jahresbedarf = w*12;
+        // vereinfachte Faustformel: Kapital ~ Jahresbedarf / Entnahmequote
+        const kapital = jahresbedarf/q;
+        const luecke = kapital-have;
+        out.innerHTML =
+          "geschätztes benötigtes Vermögen: "+formatMoney(kapital)+
+          "<span class=\"small-line\">heute vorhanden: "+formatMoney(have)+" · grobe Lücke: "+formatMoney(luecke)+"</span>";
+      });
+
+      // Budget
+      document.getElementById("bu_btn").addEventListener("click",function(){
+        const income = parseFloat(document.getElementById("bu_income").value);
+        const rent   = parseFloat(document.getElementById("bu_rent").value)||0;
+        const food   = parseFloat(document.getElementById("bu_food").value)||0;
+        const mob    = parseFloat(document.getElementById("bu_mob").value)||0;
+        const fun    = parseFloat(document.getElementById("bu_fun").value)||0;
+        const other  = parseFloat(document.getElementById("bu_other").value)||0;
+        const out    = document.getElementById("bu_result");
         if(!isFinite(income)||income<=0){
-          out.textContent = t.errorNumber;
-          out.style.color = "var(--danger)";
+          out.textContent = "Bitte ein gültiges Netto-Einkommen eingeben.";
+          out.classList.add("error");
           return;
         }
+        out.classList.remove("error");
         const sum = rent+food+mob+fun+other;
-        const free = income-sum;
-        function pct(v){return (v/income*100).toFixed(1)+"%";}
-        out.style.color = "var(--accent)";
-        const freeLabel = currentLang==="de"?"frei verfügbar: ":"free left: ";
-        const rentLabel = currentLang==="de"?"Wohnen: ","Rent: ";
-        const foodLabel = currentLang==="de"?"Lebensmittel: ","Food: ";
-        const mobLabel  = currentLang==="de"?"Mobilität: ","Mobility: ";
-        const funLabel  = currentLang==="de"?"Freizeit: ","Fun: ";
-        const otherLabel= currentLang==="de"?"Sonstiges: ","Other: ";
-        out.textContent =
-          rentLabel+formatMoney(rent)+" ("+pct(rent)+") | "+
-          foodLabel+formatMoney(food)+" ("+pct(food)+") | "+
-          mobLabel+formatMoney(mob)+" ("+pct(mob)+") | "+
-          funLabel+formatMoney(fun)+" ("+pct(fun)+") | "+
-          otherLabel+formatMoney(other)+" ("+pct(other)+") | "+
-          freeLabel+formatMoney(free)+" ("+pct(free)+")";
+        const frei = income-sum;
+        function pct(v){return (v/income*100).toFixed(1).replace(".",",")+" %";}
+        out.innerHTML =
+          "Wohnen: "+formatMoney(rent)+" ("+pct(rent)+") · "+
+          "Lebensmittel: "+formatMoney(food)+" ("+pct(food)+") · "+
+          "Mobilität: "+formatMoney(mob)+" ("+pct(mob)+") · "+
+          "Freizeit: "+formatMoney(fun)+" ("+pct(fun)+") · "+
+          "Sonstiges: "+formatMoney(other)+" ("+pct(other)+")"+
+          "<span class=\"small-line\">frei verfügbar: "+formatMoney(frei)+" ("+pct(frei)+")</span>";
       });
     });
   </script>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <div class="logo">€</div>
-      <div>
-        <h1 id="headerTitle">Money Assistant – Finanzrechner</h1>
-        <div class="lead" id="headerLead">Zinseszins, Sparplan, Kredit, Inflation &amp; Rente. Einfach erklärt, kostenlos, auf Deutsch und Englisch.</div>
-      </div>
-      <div class="lang-switch">
-        <button id="langDE" class="lang-btn active">DE</button>
-        <button id="langEN" class="lang-btn">EN</button>
-      </div>
-    </header>
-
-    <nav aria-label="Hauptnavigation">
-      <button data-page="home" id="navHome" class="active">Startseite</button>
-      <button data-page="savings" id="navSavings">Sparen &amp; Zinseszins</button>
-      <button data-page="loans" id="navLoans">Kredit &amp; Schulden</button>
-      <button data-page="retire" id="navRetire">Inflation &amp; Rente</button>
-      <button data-page="budget" id="navBudget">Budget &amp; Alltag</button>
-    </nav>
-
-    <!-- Startseite -->
-    <section id="page-home" class="page active">
-      <div class="card">
-        <h2 id="homeTitle">Was möchtest du mit deinem Geld machen?</h2>
-        <div class="small" id="homeLead">Wähle einen Bereich. Du kannst nichts kaputt machen – alle Rechner laufen lokal im Browser.</div>
-        <div class="controls" style="margin-top:14px">
-          <button class="main" id="homeBtnSavings">Vermögen aufbauen</button>
-          <button class="secondary" id="homeBtnLoans">Kredit planen</button>
-          <button class="secondary" id="homeBtnRetire">Rente &amp; Kaufkraft</button>
-          <button class="secondary" id="homeBtnBudget">Alltag &amp; Budget</button>
-        </div>
-        <div class="tag-row">
-          <span class="tag">Zinseszins</span>
-          <span class="tag">Sparplan</span>
-          <span class="tag">Kredit</span>
-          <span class="tag">Inflation</span>
-          <span class="tag">Rente</span>
-          <span class="tag">Budget</span>
-          <span class="tag">Finanzen</span>
-          <span class="tag">ETF</span>
-        </div>
-        <div class="ad-placeholder">
-          Werbeplatz (oben, Desktop &amp; Mobile) – hier kannst du später z.&nbsp;B. AdSense einbinden.
-        </div>
-      </div>
-    </section>
-
-    <!-- Sparen & Zinseszins -->
-    <section id="page-savings" class="page">
-      <div class="card">
-        <h2 id="savingsMainTitle">Zinseszins-Rechner</h2>
-        <div class="small" id="savingsMainLead">Berechne, wie sich eine einmalige Anlage über die Jahre entwickelt.</div>
-        <div class="controls">
-          <label class="small" id="labelSavingsStart" for="savingsStart">Startkapital</label>
-          <input id="savingsStart" type="number" step="0.01" placeholder="10.000">
-          <label class="small" id="labelSavingsRate" for="savingsRate">Jährliche Rendite (%)</label>
-          <input id="savingsRate" type="number" step="0.01" placeholder="6">
-          <label class="small" id="labelSavingsYears" for="savingsYears">Jahre</label>
-          <input id="savingsYears" type="number" step="1" placeholder="20">
-          <button id="savingsBtn" class="main">Berechnen</button>
-        </div>
-        <div class="small" style="margin-top:10px" id="savingsResultLabel">Endkapital und Zinsen:</div>
-        <div class="result" id="savingsResult">—</div>
-      </div>
-
-      <div class="card">
-        <h2 id="savingsPlanTitle">Sparplan-Rechner (monatlich)</h2>
-        <div class="small" id="savingsPlanLead">Monatlich sparen und sehen, wie viel daraus wird.</div>
-        <div class="controls">
-          <label class="small" id="labelPlanMonthly" for="planMonthly">Monatliche Einzahlung</label>
-          <input id="planMonthly" type="number" step="0.01" placeholder="200">
-          <label class="small" id="labelPlanStart" for="planStart">Startkapital (optional)</label>
-          <input id="planStart" type="number" step="0.01" placeholder="0">
-          <label class="small" id="labelPlanYears" for="planYears">Sparjahre</label>
-          <input id="planYears" type="number" step="1" placeholder="25">
-          <label class="small" id="labelPlanRate" for="planRate">Jährliche Rendite (%)</label>
-          <input id="planRate" type="number" step="0.01" placeholder="6">
-          <button id="savingsPlanBtn" class="main">Sparplan berechnen</button>
-        </div>
-        <div class="small" style="margin-top:10px" id="savingsPlanResultLabel">Ergebnis Sparplan:</div>
-        <div class="result" id="savingsPlanResult">—</div>
-
-        <div class="ad-placeholder">
-          Werbeplatz Sparen – z.&nbsp;B. Banken, ETF-Broker, Kreditkarten-Anbieter.
-        </div>
-      </div>
-    </section>
-
-    <!-- Kredit & Schulden -->
-    <section id="page-loans" class="page">
-      <div class="card">
-        <h2 id="loansTitle">Kreditrechner</h2>
-        <div class="small" id="loansLead">Berechne Monatsrate, Gesamtkosten und Zinsen eines Annuitätendarlehens.</div>
-        <div class="controls">
-          <label class="small" id="labelLoanAmount" for="loanAmount">Kreditsumme</label>
-          <input id="loanAmount" type="number" step="0.01" placeholder="20000">
-          <label class="small" id="labelLoanRate" for="loanRate">Effektiver Jahreszins (%)</label>
-          <input id="loanRate" type="number" step="0.01" placeholder="4">
-          <label class="small" id="labelLoanYears" for="loanYears">Laufzeit (Jahre)</label>
-          <input id="loanYears" type="number" step="1" placeholder="7">
-          <button id="loansBtn" class="main">Kredit berechnen</button>
-        </div>
-        <div class="small" style="margin-top:10px" id="loansResultLabel">Kredit-Ergebnis:</div>
-        <div class="result" id="loansResult">—</div>
-
-        <div class="ad-placeholder">
-          Werbeplatz Kredit – perfekt für Banken, Vergleichsportale, Kreditvermittler.
-        </div>
-      </div>
-    </section>
-
-    <!-- Inflation & Rente -->
-    <section id="page-retire" class="page">
-      <div class="card">
-        <h2 id="retireInflTitle">Inflationsrechner</h2>
-        <div class="small" id="retireInflLead">Wie viel ist dein Geld in der Zukunft noch wert?</div>
-        <div class="controls">
-          <label class="small" id="labelInflToday" for="inflToday">Betrag heute</label>
-          <input id="inflToday" type="number" step="0.01" placeholder="1000">
-          <label class="small" id="labelInflRate" for="inflRate">Inflation pro Jahr (%)</label>
-          <input id="inflRate" type="number" step="0.01" placeholder="2">
-          <label class="small" id="labelInflYears" for="inflYears">Jahre in der Zukunft</label>
-          <input id="inflYears" type="number" step="1" placeholder="15">
-          <button id="retireInflBtn" class="main">Inflation berechnen</button>
-        </div>
-        <div class="small" style="margin-top:10px" id="retireInflResultLabel">Kaufkraft in der Zukunft:</div>
-        <div class="result" id="retireInflResult">—</div>
-      </div>
-
-      <div class="card">
-        <h2 id="retireGapTitle">Rentenlücke grob schätzen</h2>
-        <div class="small" id="retireGapLead">Wie viel Kapital brauchst du ungefähr für deine Wunsch-Rente?</div>
-        <div class="controls">
-          <label class="small" id="labelRetireWish" for="retireWish">Wunsch-Rente netto pro Monat</label>
-          <input id="retireWish" type="number" step="0.01" placeholder="2000">
-          <label class="small" id="labelRetireYears" for="retireYears">Geplante Rentenjahre</label>
-          <input id="retireYears" type="number" step="1" placeholder="25">
-          <label class="small" id="labelRetireRate" for="retireRate">Entnahme-Quote pro Jahr (%)</label>
-          <input id="retireRate" type="number" step="0.01" placeholder="4">
-          <label class="small" id="labelRetireHave" for="retireHave">Bisher angespartes Vermögen</label>
-          <input id="retireHave" type="number" step="0.01" placeholder="50000">
-          <button id="retireGapBtn" class="main">Rentenbedarf berechnen</button>
-        </div>
-        <div class="small" style="margin-top:10px" id="retireGapResultLabel">Ergebnis Rente:</div>
-        <div class="result" id="retireGapResult">—</div>
-
-        <div class="ad-placeholder">
-          Werbeplatz Rente – Versicherungen, ETF-Sparpläne, Robo-Advisor, Finanz-Coaches.
-        </div>
-      </div>
-    </section>
-
-    <!-- Budget & Alltag -->
-    <section id="page-budget" class="page">
-      <div class="card">
-        <h2 id="budgetTitle">Budget-Rechner (monatlich)</h2>
-        <div class="small" id="budgetLead">Verteile dein Einkommen auf Kategorien und sehe Prozente.</div>
-        <div class="controls">
-          <label class="small" id="labelBudgetIncome" for="budgetIncome">Netto-Einkommen / Monat</label>
-          <input id="budgetIncome" type="number" step="0.01" placeholder="2500">
-          <label class="small" id="labelBudgetRent" for="budgetRent">Miete / Wohnen</label>
-          <input id="budgetRent" type="number" step="0.01" placeholder="900">
-          <label class="small" id="labelBudgetFood" for="budgetFood">Lebensmittel</label>
-          <input id="budgetFood" type="number" step="0.01" placeholder="350">
-          <label class="small" id="labelBudgetMobility" for="budgetMobility">Mobilität</label>
-          <input id="budgetMobility" type="number" step="0.01" placeholder="150">
-          <label class="small" id="labelBudgetFun" for="budgetFun">Freizeit / Hobbys</label>
-          <input id="budgetFun" type="number" step="0.01" placeholder="200">
-          <label class="small" id="labelBudgetOther" for="budgetOther">Sonstiges</label>
-          <input id="budgetOther" type="number" step="0.01" placeholder="100">
-          <button id="budgetBtn" class="main">Budget auswerten</button>
-        </div>
-        <div class="small" style="margin-top:10px" id="budgetResultLabel">Budget-Auswertung:</div>
-        <div class="result" id="budgetResult">—</div>
-
-        <div class="ad-placeholder">
-          Werbeplatz Alltag – z.&nbsp;B. Stromvergleich, Mobilfunk, Versicherungen, Rabatt-Apps.
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>SEO- & Monetarisierungs-Hinweis</h3>
-        <div class="small" id="convHint">
-          Tipp: Du kannst diese Seite später mit Werbung monetarisieren – oben nur Inhalte, unten Werbeplätze.
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <span id="footerText">
-        Money Assistant – speichere diese Datei als index.html und lade sie auf dein Hosting oder GitHub Pages hoch. Später kannst du hier Werbung einbinden.
-      </span>
-    </footer>
-  </div>
 </body>
 </html>
