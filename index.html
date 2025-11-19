@@ -4,11 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>toolsenAI Money Assistant – Finanzrechner & Sparplan</title>
-  <meta name="description" content="toolsenAI Money Assistant: kostenlose Finanzrechner für Zinseszins, Sparplan, ETF-Sparen, Kredit, Inflation, Rente und Budget. Einfach, übersichtlich, ohne Anmeldung.">
+  <meta name="description" content="toolsenAI Money Assistant: kostenlose Finanzrechner für Zinseszins, Sparplan, ETF-Sparen, Kredite, Inflation, Rente und Budget. Einfach, übersichtlich, ohne Anmeldung.">
   <meta name="keywords" content="Zinseszinsrechner, Sparplan, ETF Rechner, Kreditrechner, Inflationsrechner, Rentenrechner, Budget Rechner, Finanzrechner, Geld, Finanzen">
   <link rel="canonical" href="https://toolsenai.com/">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#0f766e">
+
+  <!-- Open Graph für Vorschau (WhatsApp, etc.) -->
+  <meta property="og:title" content="toolsenAI Money Assistant – Finanzrechner">
+  <meta property="og:description" content="Zinseszins, ETF, Kredit, Inflation, Budget und Rente bequem berechnen.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://toolsenai.com/">
+  <meta property="og:image" content="logo.png">
 
   <style>
     :root{
@@ -272,23 +279,18 @@
       margin-top:6px;
     }
 
-    table{
-      width:100%;
-      border-collapse:collapse;
+    ul.small{
       font-size:13px;
-      margin-top:10px;
+      color:#4b5563;
+      padding-left:18px;
     }
-    th,td{
-      padding:6px 8px;
-      text-align:left;
-      border-bottom:1px solid #e5e7eb;
-    }
-    th{
-      background:#f9fafb;
-      font-weight:600;
-    }
-    tr:hover td{
-      background:#f3f4ff;
+
+    /* Unsichtbarer Werbeplatz – jetzt nicht sichtbar, später nutzbar */
+    .ad-slot{
+      display:none;
+      opacity:0;
+      height:0;
+      overflow:hidden;
     }
 
     footer{
@@ -296,6 +298,7 @@
       font-size:12px;
       color:var(--muted);
       text-align:center;
+      display:none; /* unsichtbar wie gewünscht */
     }
 
     @media(max-width:720px){
@@ -324,7 +327,7 @@
         <div class="brand-name">toolsenAI · Money Assistant</div>
         <h1>Finanzrechner &amp; Sparplan</h1>
         <div class="brand-sub">
-          Zinseszins, ETF-Sparen, Kredit, Rente, Inflation &amp; Budget – alles in einer Seite. Keine Anmeldung, keine Werbung.
+          Zinseszins, ETF-Sparen, Kredit, Rente, Inflation &amp; Budget – alles in einer Seite. Keine Anmeldung, keine Werbung (noch).
         </div>
       </div>
     </header>
@@ -385,6 +388,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Unsichtbarer Werbeplatz für später -->
+        <div class="ad-slot" id="ad-home"></div>
       </section>
 
       <!-- SPAREN & ZINSESZINS -->
@@ -410,6 +416,7 @@
                 <button class="main" id="zz_btn">Berechnen</button>
               </div>
               <div class="result" id="zz_result">—</div>
+              <div class="small"><strong>Faustregel:</strong> 72 ÷ Zinssatz ≈ Jahre bis zur Verdopplung.</div>
             </div>
 
             <div class="card">
@@ -451,6 +458,8 @@
             </div>
           </div>
         </div>
+
+        <div class="ad-slot" id="ad-sparen"></div>
       </section>
 
       <!-- KREDIT -->
@@ -476,22 +485,26 @@
                 <button class="main" id="kr_btn">Kredit berechnen</button>
               </div>
               <div class="result" id="kr_result">—</div>
-              <div class="hint">
-                Achtung: Banken verwenden teils zusätzliche Gebühren, Versicherungen oder andere Zinssätze.
-              </div>
+              <ul class="small">
+                <li>Effektivzins ist wichtiger als Sollzins.</li>
+                <li>Kürzere Laufzeit = höhere Rate, aber insgesamt weniger Zinsen.</li>
+                <li>Rate sollte in der Regel nicht mehr als ~30 % des Nettoeinkommens sein.</li>
+              </ul>
             </div>
           </div>
           <div>
             <div class="card">
               <h3>Kredit-Tipps (allgemein)</h3>
               <ul class="small">
-                <li>Vergleiche immer die <strong>effektiven Jahreszinsen</strong>, nicht nur Sollzinsen.</li>
-                <li>Kürzere Laufzeit = höhere Rate, aber insgesamt weniger Zinsen.</li>
                 <li>Notgroschen einplanen, statt alles Geld in die Kreditrate zu stecken.</li>
+                <li>Vermeide unnötige Konsumkredite für Dinge, die an Wert verlieren.</li>
+                <li>Lies immer das Kleingedruckte: Gebühren, Versicherungen, Sondertilgung.</li>
               </ul>
             </div>
           </div>
         </div>
+
+        <div class="ad-slot" id="ad-kredit"></div>
       </section>
 
       <!-- ETF-SPAREN -->
@@ -538,6 +551,8 @@
             </div>
           </div>
         </div>
+
+        <div class="ad-slot" id="ad-etf"></div>
       </section>
 
       <!-- RENTE & INFLATION -->
@@ -605,6 +620,8 @@
             </div>
           </div>
         </div>
+
+        <div class="ad-slot" id="ad-rente"></div>
       </section>
 
       <!-- BUDGET -->
@@ -658,11 +675,13 @@
             </div>
           </div>
         </div>
+
+        <div class="ad-slot" id="ad-budget"></div>
       </section>
     </main>
 
     <footer>
-      toolsenAI Money Assistant – speichere diese Datei als <code>index.html</code> und lade sie auf dein Hosting oder GitHub Pages hoch.
+      toolsenAI Money Assistant – interner Hinweis, für Besucher unsichtbar.
     </footer>
   </div>
 
@@ -828,8 +847,7 @@
         }
         out.classList.remove("error");
         const jahresbedarf = w*12;
-        // vereinfachte Faustformel: Kapital ~ Jahresbedarf / Entnahmequote
-        const kapital = jahresbedarf/q;
+        const kapital = jahresbedarf/q; // grobe Faustformel
         const luecke = kapital-have;
         out.innerHTML =
           "geschätztes benötigtes Vermögen: "+formatMoney(kapital)+
