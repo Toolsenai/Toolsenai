@@ -1,550 +1,978 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Universal Converter & Formel-Löser</title>
-<meta name="description" content="Universal Converter & Formel-Löser — viele Einheiten, Formeln und Seiten. Kinderfreundlich, schnell, alles in einer Datei." />
-<meta name="keywords" content="Umrechner, Converter, Einheiten, Länge, Fläche, Volumen, Masse, Daten, Formeln, Physik, Chemie, Mathematik" />
-<link rel="canonical" href="https://your-domain.example/" />
-<meta name="robots" content="index, follow" />
-<meta name="author" content="Dein Name" />
-<meta name="theme-color" content="#0aa" />
-<style>
-  /* --- Modern light, accessible, kid-friendly styles --- */
-  :root{
-    --bg:#f7fafc; --card:#ffffff; --muted:#4a5568; --accent:#06b6d4; --accent-2:#4f46e5;
-    --radius:12px; --glass: rgba(15,23,42,0.03);
-    font-synthesis: none;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;background:var(--bg);color:#0b1220}
-  .container{max-width:1100px;margin:18px auto;padding:18px}
-  header{display:flex;align-items:center;gap:14px}
-  .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px}
-  h1{margin:0;font-size:20px}
-  p.lead{margin:6px 0 0;color:var(--muted);font-size:13px}
-  nav{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
-  nav button{background:transparent;border:1px solid rgba(11,18,32,0.06);padding:10px 12px;border-radius:10px;cursor:pointer;font-weight:600}
-  nav button.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:none;box-shadow:0 6px 18px rgba(79,70,229,0.12)}
-  .card{background:var(--card);border-radius:var(--radius);padding:14px;margin-top:14px;box-shadow:0 6px 18px rgba(11,18,32,0.04)}
-  .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
-  @media(max-width:980px){.grid{grid-template-columns:1fr}.aside{order:2}}
-  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  input,select,button,textarea{font-size:15px;padding:10px;border-radius:10px;border:1px solid rgba(11,18,32,0.06);outline:none}
-  input:focus,select:focus,textarea:focus{box-shadow:0 0 0 4px rgba(6,182,212,0.08);border-color:var(--accent)}
-  .big{font-size:18px;padding:12px 16px}
-  .result{font-weight:700;font-size:20px;color:var(--accent-2)}
-  .small{font-size:13px;color:var(--muted)}
-  .unit-row{display:flex;gap:8px;align-items:center}
-  .search{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(11,18,32,0.06)}
-  .formula-list{max-height:56vh;overflow:auto;padding-right:6px}
-  .formula-item{padding:10px;border-radius:10px;border:1px solid rgba(11,18,32,0.04);margin-bottom:8px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5))}
-  .nav-footer{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:12px}
-  .chip{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(11,18,32,0.06);background:rgba(11,18,32,0.02);font-weight:600}
-  .small-muted{font-size:12px;color:#6b7280}
-  /* responsive tweaks */
-  @media(max-width:560px){
-    .logo{width:48px;height:48px;font-size:18px}
-    nav button{padding:8px 10px;font-size:14px}
-  }
-</style>
-<script>
-/* -------------- Data: Units (Ultra many categories) -------------- */
-/* Structure: UNITS[category] = {base: 'unit', units: { 'label': factorToBase or special } } */
-/* For special ones (like Temperature) factor is string flag handled separately */
-const UNITS = {
-  "Length": { base: "m", units: {
-    "picometer (pm)":1e-12,"nanometer (nm)":1e-9,"micrometer (μm)":1e-6,"millimeter (mm)":1e-3,"centimeter (cm)":1e-2,
-    "inch (in)":0.0254,"foot (ft)":0.3048,"yard (yd)":0.9144,"meter (m)":1,"kilometer (km)":1000,"mile (mi)":1609.344,"nautical mile (nmi)":1852
-  }},
-  "Area": { base: "m²", units: {
-    "square millimeter (mm²)":1e-6,"square centimeter (cm²)":1e-4,"square meter (m²)":1,"square kilometer (km²)":1e6,
-    "square inch (in²)":0.00064516,"square foot (ft²)":0.092903,"acre":4046.8564224,"hectare (ha)":10000
-  }},
-  "Volume": { base:"m³", units:{
-    "cubic millimeter (mm³)":1e-9,"cubic centimeter (cm³) / mL":1e-6,"liter (L)":0.001,"cubic meter (m³)":1,"gallon (US)":0.003785411784,"cubic inch (in³)":1.6387064e-5,"cubic foot (ft³)":0.028316846592
-  }},
-  "Mass": { base:"kg", units:{
-    "microgram (µg)":1e-9,"milligram (mg)":1e-6,"gram (g)":0.001,"kilogram (kg)":1,"tonne (t)":1000,"short ton (US)":907.18474,"ounce (oz)":0.028349523125,"pound (lb)":0.45359237
-  }},
-  "Data": { base:"byte", units:{
-    "bit":1/8,"byte":1,"kilobyte (KB, 10^3)":1e3,"kibibyte (KiB, 2^10)":1024,"megabyte (MB)":1e6,"mebibyte (MiB)":1024**2,"gigabyte (GB)":1e9,"gibibyte (GiB)":1024**3,"terabyte (TB)":1e12,"tebibyte (TiB)":1024**4
-  }},
-  "Time": { base:"s", units:{
-    "nanosecond (ns)":1e-9,"microsecond (µs)":1e-6,"millisecond (ms)":1e-3,"second (s)":1,"minute":60,"hour":3600,"day":86400,"week":604800,"year (365d)":31536000
-  }},
-  "Temperature": { base:"K", units: {"Celsius (°C)":"c","Fahrenheit (°F)":"f","Kelvin (K)":"k"} },
-  "Speed": { base:"m/s", units: {"m/s":1,"km/h":1000/3600,"mph":1609.344/3600,"knot":1852/3600} },
-  "Pressure": { base:"Pa", units: {"Pa":1,"kPa":1000,"bar":100000,"atm":101325,"psi":6894.757293168} },
-  "Energy": { base:"J", units: {"Joule (J)":1,"kJ":1000,"calorie (cal)":4.184,"kcal":4184,"eV":1.602176634e-19} },
-  "Power": { base:"W", units: {"Watt (W)":1,"kW":1000,"hp":745.69987158227022} },
-  "Angle": { base:"rad", units: {"degree (°)":Math.PI/180,"radian (rad)":1} },
-  "Frequency": { base:"Hz", units: {"Hz":1,"kHz":1e3,"MHz":1e6} },
-  "Concentration": { base:"mol/L", units: {"mol/L":1,"mmol/L":1e-3,"µmol/L":1e-6,"mg/dL":"mg/dL"} },
-  "Force": { base:"N", units: {"Newton (N)":1,"kN":1000,"dyne":1e-5,"lbf":4.4482216152605} },
-  "Moment": { base:"N·m", units: {"N·m":1,"ft·lb":1.3558179483314} },
-  "Electrical": { base:"SI", units: {"Volt (V)":1,"Ampere (A)":1,"Ohm (Ω)":1,"Siemens (S)":1,"Coulomb (C)":1} },
-  "Optics": { base:"m", units: {"nanometer (nm)":1e-9,"micrometer (μm)":1e-6,"meter (m)":1} },
-  "Chemistry": { base:"mol", units: {"mol":1,"mmol":1e-3,"µmol":1e-6} },
-  "Radiation": { base:"Bq", units: {"Becquerel (Bq)":1,"Curie (Ci)":3.7e10} },
-  "Finance": { base:"currency", units: {"EUR":1,"USD":1.0,"GBP":1.0} }, // rates not maintained here
-  "Geometry": { base:"m", units: {"pixel":1/96,"inch":0.0254,"cm":0.01,"m":1} },
-  "Density": { base:"kg/m³", units: {"kg/m³":1,"g/cm³":1000} },
-  "Viscosity": { base:"Pa·s", units: {"Pa·s":1,"cP":0.001} },
-  "Entropy": { base:"J/K", units: {"J/K":1} },
-  "ElectricCharge": { base:"C", units: {"C":1,"mAh":3.6} },
-  "Custom": { base:"unit", units: {"custom":1} }
-};
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Universal Umrechner & Formel-Löser</title>
+  <meta name="description" content="Einfacher Universal-Umrechner und Formel-Löser für Mathe, Physik, Chemie und Geometrie. Viele Einheiten und Formeln, leicht zu bedienen, für 14 bis 99 Jahre.">
+  <meta name="keywords" content="Umrechner, Einheiten, Formeln, Mathematik, Physik, Chemie, Geometrie, Länge, Masse, Daten, Energie, Druck">
+  <link rel="canonical" href="https://deine-domain.de/">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0d76ff">
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --muted:#5f6470;
+      --accent:#0d76ff;
+      --accent-soft:#e2edff;
+      --danger:#e11d48;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+      background:var(--bg);
+      color:#111827;
+    }
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 16px 32px;
+    }
+    header{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .logo{
+      width:60px;
+      height:60px;
+      border-radius:18px;
+      background:linear-gradient(135deg,#0d76ff,#22c1c3);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-weight:800;
+      font-size:28px;
+      box-shadow:0 8px 20px rgba(15,23,42,0.25);
+    }
+    h1{
+      margin:0;
+      font-size:22px;
+    }
+    .lead{
+      margin-top:4px;
+      font-size:13px;
+      color:var(--muted);
+    }
 
-/* --- Helper functions for conversions --- */
-function convertUnits(category, fromLabel, toLabel, value){
-  if(!UNITS[category]) return NaN;
-  const cat = UNITS[category];
-  // Temperature special
-  if(category === "Temperature"){
-    return convertTemperature(fromLabel, toLabel, value);
-  }
-  const fromFactor = cat.units[fromLabel];
-  const toFactor = cat.units[toLabel];
-  if(typeof fromFactor === 'number' && typeof toFactor === 'number'){
-    const inBase = Number(value) * fromFactor;
-    return inBase / toFactor;
-  }
-  return NaN;
-}
-function convertTemperature(fromLabel, toLabel, value){
-  const f = fromLabel.toLowerCase();
-  const t = toLabel.toLowerCase();
-  let K;
-  if(f.includes('c')) K = Number(value) + 273.15;
-  else if(f.includes('f')) K = (Number(value)-32) * (5/9) + 273.15;
-  else K = Number(value);
-  if(t.includes('c')) return K - 273.15;
-  if(t.includes('f')) return (K - 273.15) * (9/5) + 32;
-  return K;
-}
+    /* Navigation */
+    nav{
+      margin-top:16px;
+      background:#ffffff;
+      border-radius:var(--radius);
+      padding:10px;
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      flex-wrap:wrap;
+      box-shadow:0 4px 12px rgba(15,23,42,0.08);
+    }
+    nav button{
+      border:none;
+      background:transparent;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:14px;
+      cursor:pointer;
+      color:#374151;
+      font-weight:600;
+    }
+    nav button.active{
+      background:var(--accent);
+      color:#fff;
+      box-shadow:0 4px 10px rgba(37,99,235,0.4);
+    }
+    nav button:hover:not(.active){
+      background:var(--accent-soft);
+    }
 
-/* -------------- Formula Library (many formulas + mixed UI) -------------- */
-/* Each formula: id,title,desc,inputs[{k,label,placeholder}],compute(args)->{value,unit or text} */
-const FORMULAS = [
-  {id:'ohm', title:"Ohm'sches Gesetz", desc:"U = R × I", inputs:[{k:'U',label:'Spannung U (V)'},{k:'I',label:'Strom I (A)'},{k:'R',label:'Widerstand R (Ω)'}], compute:({U,I,R})=>{
-    U=Number(U);I=Number(I);R=Number(R);
-    if(U && I) return {value:U/I, unit:'Ω'};
-    if(U && R) return {value:U/R, unit:'A'};
-    if(I && R) return {value:I*R, unit:'V'};
-    return {err:'Bitte zwei Werte ausfüllen.'};
-  }},
-  {id:'kinetic', title:'Kinetische Energie', desc:'E = 0.5 m v²', inputs:[{k:'m',label:'Masse m (kg)'},{k:'v',label:'Geschwindigkeit v (m/s)'}], compute:({m,v})=>({value:0.5*Number(m)*Number(v)*Number(v), unit:'J'})},
-  {id:'density', title:'Dichte', desc:'ρ = m / V', inputs:[{k:'m',label:'Masse (kg)'},{k:'V',label:'Volumen (m³)'}], compute:({m,V})=>({value:Number(m)/Number(V), unit:'kg/m³'})},
-  {id:'area_circle', title:'Fläche Kreis', desc:'A = π r²', inputs:[{k:'r',label:'Radius r (m)'}], compute:({r})=>({value: Math.PI * Number(r) * Number(r), unit:'m²'})},
-  {id:'volume_sphere', title:'Volumen Kugel', desc:'V = 4/3 π r³', inputs:[{k:'r',label:'Radius r (m)'}], compute:({r})=>({value:(4/3)*Math.PI*Math.pow(Number(r),3), unit:'m³'})},
-  {id:'ideal_gas', title:'Ideales Gasgesetz', desc:'pV = nRT', inputs:[{k:'p',label:'Druck p (Pa)'},{k:'V',label:'Volumen V (m³)'},{k:'n',label:'Stoffmenge n (mol)'},{k:'T',label:'Temperatur T (K)'},{k:'R',label:'Gaskonstante (optional)', placeholder:'8.314462618'}], compute:({p,V,n,T,R})=>{
-    R = Number(R) || 8.314462618;
-    if(p && V && n) return {value: (Number(p)*Number(V))/(Number(n)*R), unit:'K'};
-    return {err:'Gib p+V+n oder andere bekannte Kombinationen an.'};
-  }},
-  {id:'quad', title:'Quadratische Gleichung', desc:'Löst ax² + bx + c = 0', inputs:[{k:'a',label:'a'},{k:'b',label:'b'},{k:'c',label:'c'}], compute:({a,b,c})=>{
-    a=Number(a);b=Number(b);c=Number(c);
-    const d = b*b - 4*a*c;
-    if(isNaN(d)) return {err:'Ungültige Eingabe'};
-    if(d < 0) return {err:'Komplexe Lösungen (nicht unterstützt)'};
-    return {value:`x₁=${((-b+Math.sqrt(d))/(2*a)).toPrecision(10)}, x₂=${((-b-Math.sqrt(d))/(2*a)).toPrecision(10)}`, unit:''};
-  }},
-  {id:'factorial', title:'Fakultät (n!)', desc:'Berechnet n!', inputs:[{k:'n',label:'n (ganzzahlig, ≤170)'}], compute:({n})=>{
-    n = Number(n);
-    if(!Number.isInteger(n) || n < 0) return {err:'n muss eine nicht-negative ganze Zahl sein'};
-    if(n > 170) return {err:'n zu groß (Overflow)'};
-    let r=1; for(let i=2;i<=n;i++) r*=i;
-    return {value: r, unit:''};
-  }},
-  // Physics & chemistry common formulas
-  {id:'force', title:'Kraft', desc:'F = m × a', inputs:[{k:'m',label:'Masse m (kg)'},{k:'a',label:'Beschleunigung a (m/s²)'}], compute:({m,a})=>({value:Number(m)*Number(a), unit:'N'})},
-  {id:'momentum', title:'Impuls', desc:'p = m × v', inputs:[{k:'m',label:'Masse (kg)'},{k:'v',label:'Geschwindigkeit (m/s)'}], compute:({m,v})=>({value:Number(m)*Number(v), unit:'kg·m/s'})},
-  {id:'pressure_from_depth', title:'Druck in Flüssigkeit', desc:'p = ρ g h', inputs:[{k:'rho',label:'Dichte ρ (kg/m³)'},{k:'h',label:'Tiefe h (m)'},{k:'g',label:'g (m/s²)', placeholder:'9.81'}], compute:({rho,h,g})=>({value: Number(rho)* (Number(g)||9.81) * Number(h), unit:'Pa'})},
-  {id:'ohms_power', title:'Elektrische Leistung', desc:'P = U × I', inputs:[{k:'U',label:'Spannung U (V)'},{k:'I',label:'Strom I (A)'}], compute:({U,I})=>({value:Number(U)*Number(I), unit:'W'})},
-  // ... add many placeholders programmatically below to reach a large library
-];
+    /* Cards / Layout */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:16px;
+      margin-top:16px;
+      box-shadow:0 6px 18px rgba(15,23,42,0.08);
+    }
+    .card h2{
+      margin-top:0;
+      font-size:18px;
+    }
+    .card h3{
+      margin-top:0;
+      font-size:16px;
+    }
+    .small{
+      font-size:13px;
+      color:var(--muted);
+    }
+    .result{
+      font-size:20px;
+      font-weight:700;
+      color:var(--accent);
+      margin-top:8px;
+      word-break:break-word;
+    }
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+    input,select,button{
+      font-size:15px;
+      padding:9px 10px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+      outline:none;
+    }
+    input:focus,select:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 3px rgba(13,118,255,0.2);
+    }
+    button.main{
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      font-weight:600;
+      cursor:pointer;
+    }
+    button.main:hover{
+      filter:brightness(1.05);
+    }
+    button.secondary{
+      background:#e5e7eb;
+      border:none;
+      cursor:pointer;
+    }
+    button.secondary:hover{
+      background:#d1d5db;
+    }
+    .big{
+      font-size:18px;
+      padding:11px 14px;
+    }
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-top:10px;
+    }
+    .tag{
+      font-size:12px;
+      padding:4px 10px;
+      border-radius:999px;
+      background:#e5e7eb;
+      color:#374151;
+    }
 
-(function expandFormulas(){
-  // quick add many template formulas (placeholders and small helpers)
-  const extras = [
-    {id:'circumference', title:'Kreisumfang', desc:'U = 2πr', inputs:[{k:'r',label:'r (m)'}], compute:({r})=>({value:2*Math.PI*Number(r), unit:'m'})},
-    {id:'area_rectangle', title:'Fläche Rechteck', desc:'A = a × b', inputs:[{k:'a',label:'a (m)'},{k:'b',label:'b (m)'}], compute:({a,b})=>({value:Number(a)*Number(b), unit:'m²'})},
-    {id:'volume_cylinder', title:'Volumen Zylinder', desc:'V = π r² h', inputs:[{k:'r',label:'r (m)'},{k:'h',label:'h (m)'}], compute:({r,h})=>({value:Math.PI*Number(r)*Number(r)*Number(h), unit:'m³'})},
-    {id:'bhaskara', title:'Bhaskara (Schnell)', desc:'Beispiel-Formel', inputs:[{k:'x',label:'x'},{k:'y',label:'y'}], compute:({x,y})=>({value: Number(x)+Number(y), unit:''})},
-  ];
-  extras.forEach(e=>FORMULAS.push(e));
-  // placeholders to reach high count (but safe)
-  for(let i=0;i<80;i++){
-    FORMULAS.push({id:'tpl_'+i, title:`Formel ${i+1}`, desc:`Vorlage ${i+1}`, inputs:[{k:'x',label:'x'},{k:'y',label:'y'}], compute:({x,y})=>({value:`x=${x}, y=${y}`, unit:''})});
-  }
-})();
+    /* Page visibility */
+    .page{display:none;}
+    .page.active{display:block;}
 
-/* -------------- Simple natural-language parser (very basic) -------------- */
-/* supports patterns like: "Ich habe m=10 und a=2 berechne Kraft" or "m=10 a=2 force" */
-function parseSimpleNL(text){
-  // extract key=value pairs
-  const kv = {};
-  const pairs = text.match(/([a-zA-Z]+)\\s*=\\s*([0-9.+\\-eE]+)/g);
-  if(pairs){
-    pairs.forEach(p=>{
-      const m = p.match(/([a-zA-Z]+)\\s*=\\s*([0-9.+\\-eE]+)/);
-      if(m) kv[m[1]] = m[2];
+    /* Formula list */
+    .formula-list{
+      max-height:60vh;
+      overflow:auto;
+      padding-right:4px;
+    }
+    .formula-item{
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      padding:10px;
+      margin-bottom:8px;
+      background:#f9fafb;
+    }
+    .formula-item strong{
+      font-size:14px;
+    }
+    .formula-item .formula-desc{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+    .formula-input-row{
+      display:flex;
+      gap:6px;
+      margin-top:6px;
+      align-items:center;
+    }
+    .formula-input-row label{
+      width:40%;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .formula-input-row input{
+      flex:1;
+      padding:6px 8px;
+      font-size:14px;
+    }
+    .formula-output{
+      font-size:13px;
+      margin-top:6px;
+      color:#111827;
+    }
+    .search-box{
+      width:100%;
+      margin-top:8px;
+    }
+
+    /* Simple responsive */
+    @media(max-width:900px){
+      .container{padding:12px;}
+      header{flex-direction:row;}
+    }
+    @media(max-width:600px){
+      header{flex-direction:column;align-items:flex-start;}
+      nav{flex-direction:column;align-items:stretch;}
+      nav button{text-align:center;}
+    }
+  </style>
+  <script>
+    // ---------- EINHEITEN ----------
+
+    const UNITS = {
+      "Länge":{
+        base:"m",
+        units:{
+          "Picometer (pm)":1e-12,
+          "Nanometer (nm)":1e-9,
+          "Mikrometer (µm)":1e-6,
+          "Millimeter (mm)":1e-3,
+          "Zentimeter (cm)":1e-2,
+          "Meter (m)":1,
+          "Kilometer (km)":1000,
+          "Zoll (inch)":0.0254,
+          "Fuß (ft)":0.3048,
+          "Yard (yd)":0.9144,
+          "Meile (mi)":1609.344
+        }
+      },
+      "Fläche":{
+        base:"m²",
+        units:{
+          "Quadratmeter (m²)":1,
+          "Quadratzentimeter (cm²)":1e-4,
+          "Quadratkilometer (km²)":1e6,
+          "Quadratfuß (ft²)":0.092903,
+          "Quadratzoll (in²)":0.00064516,
+          "Hektar (ha)":10000,
+          "Acre":4046.8564224
+        }
+      },
+      "Volumen":{
+        base:"m³",
+        units:{
+          "Kubikmeter (m³)":1,
+          "Liter (L)":0.001,
+          "Milliliter (mL)":1e-6,
+          "Kubikzentimeter (cm³)":1e-6,
+          "Kubikfuß (ft³)":0.028316846592,
+          "Gallone (US)":0.003785411784
+        }
+      },
+      "Masse":{
+        base:"kg",
+        units:{
+          "Milligramm (mg)":1e-6,
+          "Gramm (g)":0.001,
+          "Kilogramm (kg)":1,
+          "Tonne (t)":1000,
+          "Unze (oz)":0.028349523125,
+          "Pfund (lb)":0.45359237
+        }
+      },
+      "Daten":{
+        base:"Byte",
+        units:{
+          "Bit":1/8,
+          "Byte":1,
+          "Kilobyte (KB, 10³)":1e3,
+          "Megabyte (MB, 10⁶)":1e6,
+          "Gigabyte (GB)":1e9,
+          "Terabyte (TB)":1e12
+        }
+      },
+      "Zeit":{
+        base:"s",
+        units:{
+          "Sekunde (s)":1,
+          "Minute (min)":60,
+          "Stunde (h)":3600,
+          "Tag":86400,
+          "Woche":604800,
+          "Jahr (365 d)":31536000
+        }
+      },
+      "Temperatur":{
+        base:"K",
+        units:{
+          "Grad Celsius (°C)":"C",
+          "Grad Fahrenheit (°F)":"F",
+          "Kelvin (K)":"K"
+        }
+      },
+      "Geschwindigkeit":{
+        base:"m/s",
+        units:{
+          "m/s":1,
+          "km/h":1000/3600,
+          "mph":1609.344/3600
+        }
+      },
+      "Druck":{
+        base:"Pa",
+        units:{
+          "Pascal (Pa)":1,
+          "Kilopascal (kPa)":1000,
+          "Bar":100000,
+          "Atmosphäre (atm)":101325,
+          "psi":6894.757293168
+        }
+      },
+      "Energie":{
+        base:"J",
+        units:{
+          "Joule (J)":1,
+          "Kilojoule (kJ)":1000,
+          "Kalorie (cal)":4.184,
+          "Kilokalorie (kcal)":4184
+        }
+      },
+      "Leistung":{
+        base:"W",
+        units:{
+          "Watt (W)":1,
+          "Kilowatt (kW)":1000,
+          "PS (hp)":745.69987158227022
+        }
+      },
+      "Dichte":{
+        base:"kg/m³",
+        units:{
+          "kg/m³":1,
+          "g/cm³":1000
+        }
+      }
+    };
+
+    function convertUnits(category, fromLabel, toLabel, value){
+      if(!UNITS[category]) return NaN;
+      const cat = UNITS[category];
+
+      // Temperatur extra
+      if(category === "Temperatur"){
+        return convertTemperature(fromLabel, toLabel, value);
+      }
+
+      const fromFactor = cat.units[fromLabel];
+      const toFactor   = cat.units[toLabel];
+      if(typeof fromFactor !== "number" || typeof toFactor !== "number") return NaN;
+
+      const inBase = Number(value) * fromFactor;
+      return inBase / toFactor;
+    }
+
+    function convertTemperature(fromLabel, toLabel, value){
+      const v = Number(value);
+      const f = fromLabel.toLowerCase();
+      const t = toLabel.toLowerCase();
+      let K;
+      if(f.includes("c")) K = v + 273.15;
+      else if(f.includes("f")) K = (v - 32) * (5/9) + 273.15;
+      else K = v;
+
+      if(t.includes("c")) return K - 273.15;
+      if(t.includes("f")) return (K - 273.15) * 9/5 + 32;
+      return K;
+    }
+
+    // ---------- FORMELN ----------
+
+    const FORMULAS = [];
+
+    function addFormula(def){ FORMULAS.push(def); }
+
+    // Mathe / Geometrie
+    addFormula({
+      id:"area_rect",
+      kategorie:"Geometrie",
+      title:"Fläche Rechteck",
+      desc:"A = a · b",
+      inputs:[{k:"a",label:"Seite a (m)"},{k:"b",label:"Seite b (m)"}],
+      compute:({a,b})=>({value:Number(a)*Number(b),unit:"m²"})
     });
-  }
-  // detect keywords
-  const keywords = text.toLowerCase();
-  return {kv, keywords};
-}
-
-/* -------------- Simple client-side routing (hash) -------------- */
-function navigateTo(page){
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  const btn = document.querySelector('[data-page="'+page+'"]');
-  if(btn) btn.classList.add('active');
-  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
-  const el = document.getElementById('page-'+page);
-  if(el) el.style.display = 'block';
-  window.location.hash = '#/'+page;
-}
-
-/* -------------- On DOM ready: render UI dynamic parts -------------- */
-document.addEventListener('DOMContentLoaded', ()=>{
-
-  // populate navigation behavior
-  document.querySelectorAll('nav button').forEach(btn=>{
-    btn.addEventListener('click', ()=> navigateTo(btn.dataset.page));
-  });
-
-  const initial = (window.location.hash && window.location.hash.startsWith('#/')) ? window.location.hash.slice(2) : 'converter';
-  navigateTo(initial);
-
-  // --- Fill category selects for Converter page ---
-  const catSel = document.getElementById('convCategory');
-  Object.keys(UNITS).forEach(k=>{
-    const o = document.createElement('option'); o.value = k; o.textContent = k; catSel.appendChild(o);
-  });
-  catSel.value = 'Length';
-  function populateUnitSelects(cat){
-    const from = document.getElementById('convFrom');
-    const to = document.getElementById('convTo');
-    from.innerHTML = ''; to.innerHTML = '';
-    const units = UNITS[cat].units;
-    Object.keys(units).forEach(u=>{
-      const o1 = document.createElement('option'); o1.value=u; o1.textContent=u; from.appendChild(o1);
-      const o2 = document.createElement('option'); o2.value=u; o2.textContent=u; to.appendChild(o2);
+    addFormula({
+      id:"area_square",
+      kategorie:"Geometrie",
+      title:"Fläche Quadrat",
+      desc:"A = a²",
+      inputs:[{k:"a",label:"Seite a (m)"}],
+      compute:({a})=>({value:Number(a)*Number(a),unit:"m²"})
     });
-  }
-  populateUnitSelects(catSel.value);
-  catSel.addEventListener('change', ()=> populateUnitSelects(catSel.value));
-
-  document.getElementById('convBtn').addEventListener('click', ()=>{
-    const cat = document.getElementById('convCategory').value;
-    const from = document.getElementById('convFrom').value;
-    const to = document.getElementById('convTo').value;
-    const val = document.getElementById('convValue').value;
-    if(val === '' || isNaN(Number(val))){ document.getElementById('convResult').textContent = 'Bitte gültigen Wert eingeben'; return; }
-    const out = convertUnits(cat, from, to, Number(val));
-    if(isNaN(out)) document.getElementById('convResult').textContent = 'Konvertierung nicht möglich';
-    else document.getElementById('convResult').textContent = `${out} ${to.replace(/\\s*\\(.+\\)/,'')}`;
-  });
-
-  // swap button
-  document.getElementById('swapUnits').addEventListener('click', ()=>{
-    const f = document.getElementById('convFrom');
-    const t = document.getElementById('convTo');
-    const tmp = f.value; f.value = t.value; t.value = tmp;
-  });
-
-  // quick presets (kids friendly big buttons)
-  document.querySelectorAll('[data-preset]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const p = btn.dataset.preset.split('|'); // cat|from|to|val
-      document.getElementById('convCategory').value = p[0]; populateUnitSelects(p[0]);
-      setTimeout(()=>{ document.getElementById('convFrom').value = p[1]; document.getElementById('convTo').value = p[2]; document.getElementById('convValue').value = p[3] || ''; }, 10);
+    addFormula({
+      id:"area_circle",
+      kategorie:"Geometrie",
+      title:"Fläche Kreis",
+      desc:"A = π · r²",
+      inputs:[{k:"r",label:"Radius r (m)"}],
+      compute:({r})=>({value:Math.PI*Number(r)*Number(r),unit:"m²"})
     });
-  });
-
-  // --- Formulas page: render list ---
-  const fList = document.getElementById('formulaList');
-  function renderFormulas(filter){
-    fList.innerHTML = '';
-    FORMULAS.filter(ff => !filter || (ff.title+ff.desc).toLowerCase().includes(filter.toLowerCase())).forEach(ff=>{
-      const node = document.createElement('div'); node.className = 'formula-item';
-      const head = document.createElement('div'); head.innerHTML = `<strong>${ff.title}</strong> <div class="small-muted">${ff.desc}</div>`;
-      node.appendChild(head);
-      const form = document.createElement('form'); form.style.marginTop='8px';
-      ff.inputs.forEach(inp=>{
-        const row = document.createElement('div'); row.className='unit-row'; row.style.marginBottom='6px';
-        const label = document.createElement('div'); label.textContent = inp.label; label.style.width='38%'; label.className='small';
-        const input = document.createElement('input'); input.name = inp.k; input.placeholder = inp.placeholder || ''; input.style.flex='1';
-        row.appendChild(label); row.appendChild(input); form.appendChild(row);
-      });
-      const result = document.createElement('div'); result.className='small'; result.style.marginTop='8px';
-      const btn = document.createElement('button'); btn.type='button'; btn.textContent='Berechnen'; btn.className='big'; btn.style.marginTop='6px';
-      btn.addEventListener('click', ()=>{
-        const fd = new FormData(form); const args = {};
-        for(const [k,v] of fd.entries()) args[k]=v;
-        try{
-          const res = ff.compute(args);
-          if(res.err) result.textContent = 'Fehler: ' + res.err;
-          else result.textContent = (res.value!==undefined?res.value:'') + (res.unit? ' ' + res.unit : '');
-        }catch(e){ result.textContent = 'Fehler bei Berechnung'; }
-      });
-      form.appendChild(btn); form.appendChild(result);
-      node.appendChild(form);
-      fList.appendChild(node);
+    addFormula({
+      id:"circumference_circle",
+      kategorie:"Geometrie",
+      title:"Umfang Kreis",
+      desc:"U = 2 · π · r",
+      inputs:[{k:"r",label:"Radius r (m)"}],
+      compute:({r})=>({value:2*Math.PI*Number(r),unit:"m"})
     });
-  }
-  renderFormulas('');
-  document.getElementById('formulaSearch').addEventListener('input', (e)=> renderFormulas(e.target.value));
+    addFormula({
+      id:"volume_box",
+      kategorie:"Geometrie",
+      title:"Volumen Quader",
+      desc:"V = l · b · h",
+      inputs:[{k:"l",label:"Länge l (m)"},{k:"b",label:"Breite b (m)"},{k:"h",label:"Höhe h (m)"}],
+      compute:({l,b,h})=>({value:Number(l)*Number(b)*Number(h),unit:"m³"})
+    });
+    addFormula({
+      id:"volume_cylinder",
+      kategorie:"Geometrie",
+      title:"Volumen Zylinder",
+      desc:"V = π · r² · h",
+      inputs:[{k:"r",label:"Radius r (m)"},{k:"h",label:"Höhe h (m)"}],
+      compute:({r,h})=>({value:Math.PI*Number(r)*Number(r)*Number(h),unit:"m³"})
+    });
+    addFormula({
+      id:"volume_sphere",
+      kategorie:"Geometrie",
+      title:"Volumen Kugel",
+      desc:"V = 4/3 · π · r³",
+      inputs:[{k:"r",label:"Radius r (m)"}],
+      compute:({r})=>({value:(4/3)*Math.PI*Math.pow(Number(r),3),unit:"m³"})
+    });
 
-  // --- Natural-language mini parser usage (on Formulas page) ---
-  document.getElementById('nlBtn').addEventListener('click', ()=>{
-    const txt = document.getElementById('nlInput').value;
-    if(!txt) return alert('Gib kurz etwas ein, z.B. "m=10 a=2 berechne force"');
-    const parsed = parseSimpleNL(txt);
-    // naive: match keywords to formula ids
-    let matched = null;
-    const kw = parsed.keywords;
-    if(kw.includes('kraft') || kw.includes('force')) matched = FORMULAS.find(f=>f.id==='force' || f.title.toLowerCase().includes('kraft'));
-    if(kw.includes('ohm') || kw.includes('spannung') || kw.includes('strom')) matched = matched || FORMULAS.find(f=>f.id==='ohm');
-    if(kw.includes('energie') || kw.includes('kinet')) matched = matched || FORMULAS.find(f=>f.id==='kinetic');
-    if(!matched){ alert('Keine passende Formel automatisch gefunden — bitte aus Bibliothek wählen.'); return; }
-    // fill inputs if possible
-    navigateTo('formulas');
-    setTimeout(()=>{
-      // scroll to matched formula (find first with the same title)
-      const elements = Array.from(document.querySelectorAll('.formula-item'));
-      const el = elements.find(e=> e.querySelector('strong').textContent.trim().toLowerCase().includes(matched.title.toLowerCase().split(' ')[0]));
-      if(el){
-        el.scrollIntoView({behavior:'smooth', block:'center'});
-        // try to set inputs
-        const inputs = el.querySelectorAll('input');
-        inputs.forEach(inp=>{
-          const name = inp.name;
-          if(parsed.kv[name]) inp.value = parsed.kv[name];
+    // Mathe allgemein
+    addFormula({
+      id:"linear",
+      kategorie:"Mathe",
+      title:"Lineare Funktion",
+      desc:"y = m · x + b",
+      inputs:[{k:"m",label:"m"},{k:"x",label:"x"},{k:"b",label:"b"}],
+      compute:({m,x,b})=>({value:Number(m)*Number(x)+Number(b),unit:""})
+    });
+    addFormula({
+      id:"quadratic",
+      kategorie:"Mathe",
+      title:"Quadratische Gleichung",
+      desc:"Löst a·x² + b·x + c = 0",
+      inputs:[{k:"a",label:"a"},{k:"b",label:"b"},{k:"c",label:"c"}],
+      compute:({a,b,c})=>{
+        a=Number(a);b=Number(b);c=Number(c);
+        const d=b*b-4*a*c;
+        if(isNaN(d)) return {err:"Ungültige Eingabe"};
+        if(d<0) return {err:"Nur reelle Lösungen werden angezeigt"};
+        const x1=(-b+Math.sqrt(d))/(2*a);
+        const x2=(-b-Math.sqrt(d))/(2*a);
+        return {value:`x₁ = ${x1.toPrecision(8)}, x₂ = ${x2.toPrecision(8)}`,unit:""};
+      }
+    });
+    addFormula({
+      id:"pythagoras",
+      kategorie:"Mathe",
+      title:"Satz des Pythagoras",
+      desc:"c² = a² + b²",
+      inputs:[{k:"a",label:"a"},{k:"b",label:"b"}],
+      compute:({a,b})=>({value:Math.sqrt(Number(a)*Number(a)+Number(b)*Number(b)),unit:""})
+    });
+    addFormula({
+      id:"percentage",
+      kategorie:"Mathe",
+      title:"Prozentrechnung",
+      desc:"p% von W",
+      inputs:[{k:"p",label:"p (%)"},{k:"W",label:"Grundwert W"}],
+      compute:({p,W})=>({value:Number(W)*Number(p)/100,unit:""})
+    });
+
+    // Physik
+    addFormula({
+      id:"force",
+      kategorie:"Physik",
+      title:"Kraft",
+      desc:"F = m · a",
+      inputs:[{k:"m",label:"Masse m (kg)"},{k:"a",label:"Beschleunigung a (m/s²)"}],
+      compute:({m,a})=>({value:Number(m)*Number(a),unit:"N"})
+    });
+    addFormula({
+      id:"momentum",
+      kategorie:"Physik",
+      title:"Impuls",
+      desc:"p = m · v",
+      inputs:[{k:"m",label:"Masse m (kg)"},{k:"v",label:"Geschwindigkeit v (m/s)"}],
+      compute:({m,v})=>({value:Number(m)*Number(v),unit:"kg·m/s"})
+    });
+    addFormula({
+      id:"kinetic_energy",
+      kategorie:"Physik",
+      title:"Kinetische Energie",
+      desc:"E = 1/2 · m · v²",
+      inputs:[{k:"m",label:"Masse m (kg)"},{k:"v",label:"Geschwindigkeit v (m/s)"}],
+      compute:({m,v})=>({value:0.5*Number(m)*Number(v)*Number(v),unit:"J"})
+    });
+    addFormula({
+      id:"potential_energy",
+      kategorie:"Physik",
+      title:"Potentielle Energie",
+      desc:"E = m · g · h",
+      inputs:[{k:"m",label:"Masse m (kg)"},{k:"g",label:"g (m/s², z.B. 9.81)"},{k:"h",label:"Höhe h (m)"}],
+      compute:({m,g,h})=>({value:Number(m)*Number(g)*Number(h),unit:"J"})
+    });
+    addFormula({
+      id:"pressure_fluid",
+      kategorie:"Physik",
+      title:"Druck in Flüssigkeit",
+      desc:"p = ρ · g · h",
+      inputs:[{k:"rho",label:"Dichte ρ (kg/m³)"},{k:"g",label:"g (m/s², z.B. 9.81)"},{k:"h",label:"Tiefe h (m)"}],
+      compute:({rho,g,h})=>({value:Number(rho)*Number(g)*Number(h),unit:"Pa"})
+    });
+    addFormula({
+      id:"speed_basic",
+      kategorie:"Physik",
+      title:"Geschwindigkeit",
+      desc:"v = s / t",
+      inputs:[{k:"s",label:"Strecke s (m)"},{k:"t",label:"Zeit t (s)"}],
+      compute:({s,t})=>({value:Number(s)/Number(t),unit:"m/s"})
+    });
+
+    // Elektrik
+    addFormula({
+      id:"ohm",
+      kategorie:"Elektrik",
+      title:"Ohm’sches Gesetz",
+      desc:"U = R · I",
+      inputs:[{k:"U",label:"Spannung U (V)"},{k:"R",label:"Widerstand R (Ω)"},{k:"I",label:"Strom I (A)"}],
+      compute:({U,R,I})=>{
+        U=Number(U);R=Number(R);I=Number(I);
+        if(U && R) return {value:U/R,unit:"A"};
+        if(U && I) return {value:U/I,unit:"Ω"};
+        if(R && I) return {value:R*I,unit:"V"};
+        return {err:"Bitte zwei Größen eingeben, die dritte wird berechnet."};
+      }
+    });
+    addFormula({
+      id:"electric_power",
+      kategorie:"Elektrik",
+      title:"Elektrische Leistung",
+      desc:"P = U · I",
+      inputs:[{k:"U",label:"Spannung U (V)"},{k:"I",label:"Strom I (A)"}],
+      compute:({U,I})=>({value:Number(U)*Number(I),unit:"W"})
+    });
+
+    // Chemie
+    addFormula({
+      id:"density_chem",
+      kategorie:"Chemie",
+      title:"Dichte",
+      desc:"ρ = m / V",
+      inputs:[{k:"m",label:"Masse m (g)"},{k:"V",label:"Volumen V (mL)"}],
+      compute:({m,V})=>({value:Number(m)/Number(V),unit:"g/mL"})
+    });
+    addFormula({
+      id:"molar",
+      kategorie:"Chemie",
+      title:"Stoffmenge / Masse",
+      desc:"m = n · M",
+      inputs:[{k:"n",label:"Stoffmenge n (mol)"},{k:"M",label:"Molmasse M (g/mol)"}],
+      compute:({n,M})=>({value:Number(n)*Number(M),unit:"g"})
+    });
+
+    // Viele einfache Vorlagen (damit die Bibliothek groß ist)
+    (function addExtraTemplates(){
+      const cats = ["Mathe","Physik","Geometrie","Chemie","Elektrik"];
+      for(let i=1;i<=60;i++){
+        addFormula({
+          id:"tpl_"+i,
+          kategorie:cats[i%cats.length],
+          title:"Formel "+i,
+          desc:"Platzhalter-Formel "+i+" (zum Notieren eigener Beziehungen).",
+          inputs:[{k:"x",label:"x"},{k:"y",label:"y"}],
+          compute:({x,y})=>({value:"x = "+x+", y = "+y,unit:""})
         });
       }
-    }, 150);
-  });
+    })();
 
-  // --- Geometry page simple helpers ---
-  document.getElementById('geoCalc').addEventListener('click', ()=>{
-    const shape = document.getElementById('geoShape').value;
-    const a = Number(document.getElementById('geo_a').value);
-    const b = Number(document.getElementById('geo_b').value);
-    const r = Number(document.getElementById('geo_r').value);
-    let out = '';
-    if(shape === 'rectangle') out = `A = ${a*b} m², U = ${2*(a+b)} m`;
-    if(shape === 'triangle') out = `A = ${0.5*a*b} m² (a=Basis, b=Höhe)`;
-    if(shape === 'circle') out = `A = ${Math.PI*r*r} m², U = ${2*Math.PI*r} m`;
-    document.getElementById('geoResult').textContent = out;
-  });
+    // ---------- UI / NAVIGATION ----------
 
-  // --- Settings: copy canonical ---
-  document.getElementById('copyCanonical').addEventListener('click', ()=>{
-    navigator.clipboard.writeText(document.querySelector('link[rel=canonical]').href).then(()=> alert('Canonical URL kopiert'));
-  });
+    function showPage(id){
+      document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+      const page = document.getElementById("page-"+id);
+      if(page) page.classList.add("active");
 
-  // --- Small SEO hint toggle ---
-  document.getElementById('toggleHints').addEventListener('click', ()=>{
-    const el = document.getElementById('seoHints');
-    el.style.display = (el.style.display === 'none' ? 'block' : 'none');
-  });
+      document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+      const btn = document.querySelector('nav button[data-page="'+id+'"]');
+      if(btn) btn.classList.add("active");
+    }
 
-  // --- Easy share / save snippet ---
-  document.getElementById('downloadHTML').addEventListener('click', ()=>{
-    const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = 'index.html'; a.click(); URL.revokeObjectURL(url);
-  });
+    document.addEventListener("DOMContentLoaded", function(){
 
-});
+      // Navigation
+      document.querySelectorAll("nav button").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const page = btn.dataset.page;
+          showPage(page);
+        });
+      });
+      showPage("home");
 
-/* End of script */
-</script>
+      // Umrechner initialisieren
+      const catSel = document.getElementById("convCategory");
+      const fromSel = document.getElementById("convFrom");
+      const toSel   = document.getElementById("convTo");
+      const valueIn = document.getElementById("convValue");
+      const outEl   = document.getElementById("convResult");
+
+      Object.keys(UNITS).forEach(cat=>{
+        const opt = document.createElement("option");
+        opt.value = cat;
+        opt.textContent = cat;
+        catSel.appendChild(opt);
+      });
+
+      function fillUnits(cat){
+        fromSel.innerHTML = "";
+        toSel.innerHTML   = "";
+        const u = UNITS[cat].units;
+        Object.keys(u).forEach(lbl=>{
+          const o1 = document.createElement("option");
+          o1.value = lbl;
+          o1.textContent = lbl;
+          fromSel.appendChild(o1);
+          const o2 = document.createElement("option");
+          o2.value = lbl;
+          o2.textContent = lbl;
+          toSel.appendChild(o2);
+        });
+      }
+      catSel.addEventListener("change",()=>fillUnits(catSel.value));
+      catSel.value = "Länge";
+      fillUnits("Länge");
+
+      document.getElementById("convBtn").addEventListener("click", ()=>{
+        const cat  = catSel.value;
+        const from = fromSel.value;
+        const to   = toSel.value;
+        const v    = valueIn.value;
+        if(v === "" || isNaN(Number(v))){
+          outEl.textContent = "Bitte eine Zahl eingeben.";
+          outEl.style.color = "var(--danger)";
+          return;
+        }
+        const res = convertUnits(cat,from,to,Number(v));
+        if(isNaN(res)){
+          outEl.textContent = "Umrechnung nicht möglich.";
+          outEl.style.color = "var(--danger)";
+        }else{
+          outEl.style.color = "var(--accent)";
+          const unitShort = to.replace(/\s*\(.+\)/,"");
+          outEl.textContent = res+" "+unitShort;
+        }
+      });
+
+      document.getElementById("convSwap").addEventListener("click", ()=>{
+        const tmp = fromSel.value;
+        fromSel.value = toSel.value;
+        toSel.value   = tmp;
+      });
+
+      // Schnell-Knöpfe
+      document.querySelectorAll("[data-preset]").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const [cat,from,to,val] = btn.dataset.preset.split("|");
+          catSel.value = cat;
+          fillUnits(cat);
+          setTimeout(()=>{
+            fromSel.value = from;
+            toSel.value   = to;
+            valueIn.value = val || "";
+          },0);
+        });
+      });
+
+      // Formeln rendern
+      const formulaList = document.getElementById("formulaList");
+      const formulaSearch = document.getElementById("formulaSearch");
+      const catFilter = document.getElementById("formulaCategory");
+
+      function renderFormulas(){
+        const text = (formulaSearch.value || "").toLowerCase();
+        const cat  = catFilter.value;
+        formulaList.innerHTML = "";
+
+        FORMULAS.filter(f=>{
+          const inText = (f.title+" "+f.desc+" "+(f.kategorie||"")).toLowerCase().includes(text);
+          const inCat  = !cat || cat === "alle" || f.kategorie === cat;
+          return inText && inCat;
+        }).forEach(f=>{
+          const item = document.createElement("div");
+          item.className = "formula-item";
+
+          const head = document.createElement("div");
+          head.innerHTML = "<strong>"+f.title+"</strong>" +
+                           (f.kategorie ? " <span style='font-size:11px;color:#6b7280'>("+f.kategorie+")</span>" : "") +
+                           "<div class='formula-desc'>"+f.desc+"</div>";
+          item.appendChild(head);
+
+          const form = document.createElement("form");
+          form.addEventListener("submit",e=>e.preventDefault());
+
+          f.inputs.forEach(inp=>{
+            const row = document.createElement("div");
+            row.className = "formula-input-row";
+            const label = document.createElement("label");
+            label.textContent = inp.label;
+            const input = document.createElement("input");
+            input.name = inp.k;
+            row.appendChild(label);
+            row.appendChild(input);
+            form.appendChild(row);
+          });
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.textContent = "Berechnen";
+          btn.className = "main";
+          btn.style.marginTop = "6px";
+
+          const out = document.createElement("div");
+          out.className = "formula-output";
+
+          btn.addEventListener("click", ()=>{
+            const fd = new FormData(form);
+            const args={};
+            for(const [k,v] of fd.entries()) args[k]=v;
+            try{
+              const res = f.compute(args);
+              if(res && res.err){
+                out.textContent = "Fehler: "+res.err;
+                out.style.color = "var(--danger)";
+              }else{
+                const txt = (res.value!==undefined ? res.value : "") + (res.unit ? " "+res.unit : "");
+                out.textContent = txt;
+                out.style.color = "#111827";
+              }
+            }catch(e){
+              out.textContent = "Fehler bei Berechnung.";
+              out.style.color = "var(--danger)";
+            }
+          });
+
+          form.appendChild(btn);
+          item.appendChild(form);
+          item.appendChild(out);
+          formulaList.appendChild(item);
+        });
+      }
+
+      // Kategorie-Auswahl für Formeln
+      const categories = Array.from(new Set(FORMULAS.map(f=>f.kategorie).filter(Boolean)));
+      categories.sort();
+      catFilter.innerHTML = "<option value='alle'>Alle Kategorien</option>";
+      categories.forEach(c=>{
+        const opt = document.createElement("option");
+        opt.value = c;
+        opt.textContent = c;
+        catFilter.appendChild(opt);
+      });
+
+      formulaSearch.addEventListener("input",renderFormulas);
+      catFilter.addEventListener("change",renderFormulas);
+      renderFormulas();
+
+      // Geometrie-Seite
+      document.getElementById("geoCalc").addEventListener("click", ()=>{
+        const shape = document.getElementById("geoShape").value;
+        const a = Number(document.getElementById("geo_a").value);
+        const b = Number(document.getElementById("geo_b").value);
+        const h = Number(document.getElementById("geo_h").value);
+        const r = Number(document.getElementById("geo_r").value);
+        let text = "";
+
+        if(shape==="rechteck"){
+          text = "A = "+(a*b)+" m²";
+        }else if(shape==="dreieck"){
+          text = "A = "+(0.5*a*h)+" m²";
+        }else if(shape==="kreis"){
+          text = "A = "+(Math.PI*r*r).toFixed(4)+" m², U = "+(2*Math.PI*r).toFixed(4)+" m";
+        }else if(shape==="zylinder"){
+          const V = Math.PI*r*r*h;
+          text = "V = "+V.toFixed(6)+" m³";
+        }
+        document.getElementById("geoResult").textContent = text || "Bitte Werte eingeben.";
+      });
+
+      // Physik-Schnellrechner
+      document.getElementById("physForceBtn").addEventListener("click", ()=>{
+        const m = Number(document.getElementById("phys_m").value);
+        const a = Number(document.getElementById("phys_a").value);
+        const out = document.getElementById("physForceOut");
+        if(isNaN(m)||isNaN(a)){out.textContent="Bitte Zahlen eingeben.";return;}
+        out.textContent = (m*a)+" N";
+      });
+      document.getElementById("physSpeedBtn").addEventListener("click", ()=>{
+        const s = Number(document.getElementById("phys_s").value);
+        const t = Number(document.getElementById("phys_t").value);
+        const out = document.getElementById("physSpeedOut");
+        if(isNaN(s)||isNaN(t)||t===0){out.textContent="Bitte s und t > 0 eingeben.";return;}
+        out.textContent = (s/t)+" m/s";
+      });
+
+    });
+  </script>
 </head>
 <body>
   <div class="container">
     <header>
       <div class="logo">C</div>
       <div>
-        <h1>Universal Converter & Formel-Löser</h1>
-        <p class="lead">Viele Einheiten & Formeln — kinderfreundlich, einfach und performant. Wähle oben eine Seite.</p>
+        <h1>Universal Umrechner & Formel-Löser</h1>
+        <div class="lead">Einfach zu bedienen, viele Einheiten & Formeln. Für Schule, Ausbildung, Beruf – von 14 bis 99 Jahren.</div>
       </div>
     </header>
 
-    <nav class="card" aria-label="Hauptnavigation">
-      <button data-page="converter" class="active">Converter</button>
+    <nav aria-label="Hauptnavigation">
+      <button data-page="home" class="active">Startseite</button>
+      <button data-page="converter">Umrechner</button>
       <button data-page="formulas">Formeln</button>
       <button data-page="geometry">Geometrie</button>
       <button data-page="physics">Physik</button>
-      <button data-page="settings">Einstellungen</button>
     </nav>
 
-    <!-- PAGES: Converter, Formulas, Geometry, Physics, Settings -->
-    <main class="grid">
-      <section id="page-converter" class="page">
-        <div class="card">
-          <h2>Einheiten-Converter</h2>
-          <div class="small">Wähle Kategorie, Einheiten und Wert. Große Schaltflächen für Schnellkonvertierungen.</div>
-          <div style="margin-top:12px" class="controls">
-            <select id="convCategory" class="big"></select>
-            <select id="convFrom" class="big" style="min-width:260px"></select>
-            <input id="convValue" placeholder="Wert" class="big" style="width:120px" />
-            <select id="convTo" class="big" style="min-width:260px"></select>
-            <button id="swapUnits" title="Tauschen" class="big">⇄</button>
-            <button id="convBtn" class="big" style="background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:none">Konvertieren</button>
-          </div>
-          <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
-            <div class="small">Ergebnis: <span id="convResult" class="result">—</span></div>
-            <div>
-              <button data-preset="Length|meter (m)|kilometer (km)|1000" class="chip">m → km</button>
-              <button data-preset="Mass|gram (g)|kilogram (kg)|1000" class="chip">g → kg</button>
-              <button data-preset="Data|byte|terabyte (TB)|1000000000" class="chip">B → TB</button>
-            </div>
-          </div>
-          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(11,18,32,0.04)" />
-          <div class="small">Suche Einheiten oder Kategorie:</div>
-          <input class="search" placeholder="z. B. 'km' oder 'Mass'">
-          <div style="margin-top:10px" class="small-muted">Tipp: Nutze die Chip-Tasten für schnelle Beispiele.</div>
+    <!-- STARTSEITE -->
+    <section id="page-home" class="page active">
+      <div class="card">
+        <h2>Was möchtest du tun?</h2>
+        <div class="small">Wähle eine Funktion. Du kannst nichts kaputt machen 🙂</div>
+        <div class="controls" style="margin-top:14px">
+          <button class="main big" onclick="showPage('converter')">Einheiten umrechnen</button>
+          <button class="secondary big" onclick="showPage('formulas')">Formel lösen</button>
+          <button class="secondary big" onclick="showPage('geometry')">Flächen / Volumen</button>
+          <button class="secondary big" onclick="showPage('physics')">Schnellrechner Physik</button>
         </div>
-
-        <div class="card" style="margin-top:14px">
-          <h3>Kinderfreundliche Schnellrechner</h3>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button data-preset="Length|meter (m)|kilometer (km)|1000" class="big">1000 m → km</button>
-            <button data-preset="Mass|gram (g)|kilogram (kg)|1000" class="big">1000 g → kg</button>
-            <button data-preset="Volume|liter (L)|cubic meter (m³)|1" class="big">1 L → m³</button>
-            <button data-preset="Data|megabyte (MB)|gigabyte (GB)|1024" class="big">MB → GB</button>
-          </div>
-        </div>
-      </section>
-
-      <aside class="aside">
-        <div class="card">
-          <h3>Kurzhilfe</h3>
-          <div class="small-muted">Domain: Passe den &lt;link rel=\"canonical\"&gt; an. Datei als <code>index.html</code> in dein Hosting root. Für SEO: sitemap.xml & Google Search Console.</div>
-          <div style="margin-top:10px;display:flex;gap:8px">
-            <button id="copyCanonical" class="big">Canonical kopieren</button>
-            <button id="downloadHTML" class="big">Download HTML</button>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:12px">
-          <h3>Design & Werbung</h3>
-          <div class="small-muted">Kein Werbe-Code integriert. Platz für Banner in Einstellungen vorhanden.</div>
-        </div>
-      </aside>
-    </main>
-
-    <!-- Formulas page -->
-    <section id="page-formulas" class="page card" style="display:none;margin-top:14px">
-      <h2>Formel-Bibliothek</h2>
-      <div class="small">Wähle Formel aus oder tippe eine kurze Anfrage (z. B. "m=10 a=2 berechne Kraft").</div>
-      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        <input id="formulaSearch" class="search" placeholder="Formel suchen (z. B. Ohm, Fläche, Idealgas)" style="flex:1" />
-        <button class="big" onclick="renderFormulas && renderFormulas(document.getElementById('formulaSearch').value)">Suchen</button>
-      </div>
-
-      <div style="margin-top:12px;display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">
-        <div style="flex:1;min-width:360px">
-          <div id="formulaList" class="formula-list"></div>
-        </div>
-        <div style="width:320px">
-          <div class="card">
-            <h4>Schnell-Eingabe (natürlich)</h4>
-            <div class="small">Kurze Sätze oder "m=10 a=2 force"</div>
-            <textarea id="nlInput" rows="4" style="width:100%;margin-top:8px"></textarea>
-            <button id="nlBtn" class="big" style="margin-top:8px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:none">Analysieren & Finden</button>
-          </div>
-          <div class="card" style="margin-top:12px">
-            <h4>Beliebte Formeln</h4>
-            <div class="small">Ohm, Dichte, Kinetische Energie, Kreisfläche, Volumen Kugel, Idealgas...</div>
-          </div>
+        <div class="tag-row">
+          <span class="tag">Länge</span>
+          <span class="tag">Masse</span>
+          <span class="tag">Daten (Bit/Byte)</span>
+          <span class="tag">Energie</span>
+          <span class="tag">Druck</span>
+          <span class="tag">Mathe</span>
+          <span class="tag">Physik</span>
+          <span class="tag">Chemie</span>
         </div>
       </div>
     </section>
 
-    <!-- Geometry page -->
-    <section id="page-geometry" class="page card" style="display:none;margin-top:14px">
-      <h2>Geometrie-Rechner</h2>
-      <div class="small">Berechne Flächen & Volumen aus Seiten / Radien.</div>
-      <div style="display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap">
-        <select id="geoShape" class="big">
-          <option value="rectangle">Rechteck (A,U)</option>
-          <option value="triangle">Dreieck (A)</option>
-          <option value="circle">Kreis (A,U)</option>
-          <option value="cylinder">Zylinder (V, A)</option>
-        </select>
-        <input id="geo_a" placeholder="a (m)" class="big" style="width:120px" />
-        <input id="geo_b" placeholder="b (m) / Höhe" class="big" style="width:120px" />
-        <input id="geo_r" placeholder="r (m)" class="big" style="width:120px" />
-        <button id="geoCalc" class="big" style="background:var(--accent);color:white;border:none">Berechnen</button>
+    <!-- UMRRECHNER -->
+    <section id="page-converter" class="page">
+      <div class="card">
+        <h2>Einheiten-Umrechner</h2>
+        <div class="small">1. Kategorie, 2. Einheiten, 3. Wert – fertig.</div>
+        <div class="controls">
+          <select id="convCategory"></select>
+          <select id="convFrom" style="min-width:220px"></select>
+          <input id="convValue" placeholder="Wert" style="width:120px">
+          <select id="convTo" style="min-width:220px"></select>
+        </div>
+        <div class="controls">
+          <button id="convSwap" class="secondary">Einheiten tauschen</button>
+          <button id="convBtn" class="main">Umrechnen</button>
+        </div>
+        <div class="result" id="convResult">—</div>
+
+        <hr style="margin:14px 0;border:none;border-top:1px solid #e5e7eb">
+
+        <h3>Schnell-Auswahl</h3>
+        <div class="controls">
+          <button data-preset="Länge|Meter (m)|Kilometer (km)|1000" class="secondary">1000 m → km</button>
+          <button data-preset="Masse|Gramm (g)|Kilogramm (kg)|1000" class="secondary">1000 g → kg</button>
+          <button data-preset="Daten|Megabyte (MB, 10⁶)|Gigabyte (GB)|1024" class="secondary">1024 MB → GB</button>
+          <button data-preset="Temperatur|Grad Celsius (°C)|Grad Fahrenheit (°F)|20" class="secondary">20 °C → °F</button>
+        </div>
       </div>
-      <div style="margin-top:12px" class="small">Ergebnis: <span id="geoResult" class="result">—</span></div>
     </section>
 
-    <!-- Physics page -->
-    <section id="page-physics" class="page card" style="display:none;margin-top:14px">
-      <h2>Physik-Schnellrechner</h2>
-      <div class="small">Einige praktische Quick-Tools.</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-        <div style="flex:1;min-width:280px">
-          <div class="card">
-            <h4>Kraft aus m und a</h4>
-            <div style="display:flex;gap:8px;align-items:center">
-              <input id="phys_m" placeholder="m (kg)" />
-              <input id="phys_a" placeholder="a (m/s²)" />
-              <button class="big" onclick="document.getElementById('physRes').textContent = (Number(document.getElementById('phys_m').value)*Number(document.getElementById('phys_a').value)) + ' N'">Berech.</button>
-            </div>
-            <div class="small">Ergebnis: <span id="physRes" class="result">—</span></div>
+    <!-- FORMELN -->
+    <section id="page-formulas" class="page">
+      <div class="card">
+        <h2>Formel-Bibliothek</h2>
+        <div class="small">Suche nach Namen oder wähle eine Kategorie. Dann Werte eingeben und „Berechnen“ drücken.</div>
+        <div class="controls">
+          <input id="formulaSearch" class="search-box" placeholder="z. B. „Ohm“, „Fläche“, „Geschwindigkeit“…">
+          <select id="formulaCategory">
+            <option value="alle">Alle Kategorien</option>
+          </select>
+        </div>
+        <div id="formulaList" class="formula-list" style="margin-top:10px"></div>
+      </div>
+    </section>
+
+    <!-- GEOMETRIE -->
+    <section id="page-geometry" class="page">
+      <div class="card">
+        <h2>Geometrie-Rechner</h2>
+        <div class="small">Wähle die Form und gib die Seiten / Radien ein.</div>
+        <div class="controls">
+          <select id="geoShape">
+            <option value="rechteck">Rechteck – Fläche</option>
+            <option value="dreieck">Dreieck – Fläche</option>
+            <option value="kreis">Kreis – Fläche & Umfang</option>
+            <option value="zylinder">Zylinder – Volumen</option>
+          </select>
+        </div>
+        <div class="controls">
+          <input id="geo_a" placeholder="a (m)">
+          <input id="geo_b" placeholder="b (m)">
+          <input id="geo_h" placeholder="h (m)">
+          <input id="geo_r" placeholder="r (m)">
+        </div>
+        <button id="geoCalc" class="main" style="margin-top:8px">Berechnen</button>
+        <div class="result" id="geoResult">—</div>
+      </div>
+    </section>
+
+    <!-- PHYSIK -->
+    <section id="page-physics" class="page">
+      <div class="card">
+        <h2>Physik – Schnellrechner</h2>
+        <div class="small">Einige der wichtigsten Formeln als Mini-Rechner.</div>
+
+        <div class="card" style="margin-top:10px">
+          <h3>Kraft F = m · a</h3>
+          <div class="controls">
+            <input id="phys_m" placeholder="Masse m (kg)">
+            <input id="phys_a" placeholder="Beschleunigung a (m/s²)">
+            <button id="physForceBtn" class="main">Berechnen</button>
           </div>
+          <div class="small">F = <span class="result" id="physForceOut">—</span></div>
         </div>
 
-        <div style="flex:1;min-width:280px">
-          <div class="card">
-            <h4>Kinetische Energie</h4>
-            <div style="display:flex;gap:8px;align-items:center">
-              <input id="phys_m2" placeholder="m (kg)" />
-              <input id="phys_v2" placeholder="v (m/s)" />
-              <button class="big" onclick="document.getElementById('physRes2').textContent = (0.5*Number(document.getElementById('phys_m2').value)*Math.pow(Number(document.getElementById('phys_v2').value),2)) + ' J'">Berech.</button>
-            </div>
-            <div class="small">Ergebnis: <span id="physRes2" class="result">—</span></div>
+        <div class="card" style="margin-top:10px">
+          <h3>Geschwindigkeit v = s / t</h3>
+          <div class="controls">
+            <input id="phys_s" placeholder="Strecke s (m)">
+            <input id="phys_t" placeholder="Zeit t (s)">
+            <button id="physSpeedBtn" class="main">Berechnen</button>
           </div>
+          <div class="small">v = <span class="result" id="physSpeedOut">—</span></div>
         </div>
-
       </div>
     </section>
 
-    <!-- Settings page -->
-    <section id="page-settings" class="page card" style="display:none;margin-top:14px">
-      <h2>Einstellungen & SEO</h2>
-      <div class="small">Passe hier Titel/Meta an, füge Werbeplätze (Platzhalter) oder Datenschutzhinweise ein.</div>
-      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-        <button id="toggleHints" class="big">SEO Tipps anzeigen/verbergen</button>
-        <button id="downloadHTML" class="big">HTML herunterladen</button>
-        <button id="copyCanonical" class="big">Canonical kopieren</button>
-      </div>
-      <div id="seoHints" style="margin-top:12px" class="card small-muted">
-        <strong>SEO Quicklist:</strong>
-        <ul>
-          <li>index.html im Root des Hostings</li>
-          <li>Meta title/description anpassen</li>
-          <li>Sitemap.xml generieren und in Google Search Console einreichen</li>
-          <li>Für bessere Platzierung: unique Content (Texte), schnelle Ladezeiten, mobile-first</li>
-        </ul>
-      </div>
-      <div style="margin-top:12px" class="card">
-        <h4>Werbeplatz (Platzhalter)</h4>
-        <div class="small-muted">Hier ist Platz für Banner; Werbung ist aktuell nicht integriert.</div>
-      </div>
-    </section>
-
-    <footer style="margin-top:18px;text-align:center" class="small-muted">
-      © Universal Converter — Speichere als <code>index.html</code>. Passe Canonical & Open Graph an deine Domain für besseres Ranking.
+    <footer style="margin-top:22px;font-size:12px;color:#6b7280;text-align:center">
+      Universal Umrechner & Formel-Löser – speichere diese Datei als <code>index.html</code> und lade sie auf dein Hosting oder GitHub Pages hoch.
     </footer>
   </div>
 </body>
