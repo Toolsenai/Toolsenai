@@ -3,19 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>toolsenAI Money Assistant – Finanzrechner & Sparplan</title>
-  <meta name="description" content="toolsenAI Money Assistant: kostenlose Finanzrechner für Zinseszins, Sparplan, ETF-Sparen, Kredite, Inflation, Rente und Budget. Einfach, übersichtlich, ohne Anmeldung.">
-  <meta name="keywords" content="Zinseszinsrechner, Sparplan, ETF Rechner, Kreditrechner, Inflationsrechner, Rentenrechner, Budget Rechner, Finanzrechner, Geld, Finanzen">
+  <title>toolsenAI Money Assistant – Finanzrechner, Sparplan & Lohnsteuerrechner</title>
+
+  <meta name="description" content="toolsenAI Money Assistant: kostenlose Finanzrechner für Zinseszins, Sparplan, ETF-Sparen, Kredite, Lohnsteuer, Inflation, Rente und Budget. Einfach, übersichtlich, ohne Anmeldung.">
+  <meta name="keywords" content="Lohnsteuerrechner, Steuerrechner, Netto Brutto Rechner, Zinseszinsrechner, Sparplan, ETF Rechner, Kreditrechner, Inflationsrechner, Rentenrechner, Budget Rechner, Finanzrechner, Geld, Finanzen">
   <link rel="canonical" href="https://toolsenai.com/">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#0f766e">
 
-  <!-- Open Graph für Vorschau (WhatsApp, etc.) -->
-  <meta property="og:title" content="toolsenAI Money Assistant – Finanzrechner">
-  <meta property="og:description" content="Zinseszins, ETF, Kredit, Inflation, Budget und Rente bequem berechnen.">
+  <!-- Favicon / Tab-Icon -->
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+
+  <!-- Open Graph für Vorschau (WhatsApp, Google, etc.) -->
+  <meta property="og:title" content="toolsenAI Money Assistant – Finanzrechner & Lohnsteuerrechner">
+  <meta property="og:description" content="Zinseszins, ETF, Kredit, Lohnsteuer, Inflation, Budget und Rente bequem berechnen.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://toolsenai.com/">
-  <meta property="og:image" content="logo.png">
+  <meta property="og:image" content="https://toolsenai.com/logo.png">
 
   <style>
     :root{
@@ -192,7 +197,7 @@
       font-size:12px;
       color:#4b5563;
     }
-    input[type="number"]{
+    input[type="number"], select{
       padding:8px 10px;
       border-radius:10px;
       border:1px solid #d1d5db;
@@ -201,7 +206,7 @@
       outline:none;
       width:100%;
     }
-    input[type="number"]:focus{
+    input[type="number"]:focus, select:focus{
       border-color:var(--accent);
       box-shadow:0 0 0 2px rgba(16,185,129,0.5);
       background:#ffffff;
@@ -327,7 +332,7 @@
         <div class="brand-name">toolsenAI · Money Assistant</div>
         <h1>Finanzrechner &amp; Sparplan</h1>
         <div class="brand-sub">
-          Zinseszins, ETF-Sparen, Kredit, Rente, Inflation &amp; Budget – alles in einer Seite. Keine Anmeldung, keine Werbung (noch).
+          Zinseszins, ETF-Sparen, Kredit, Lohnsteuer, Rente, Inflation &amp; Budget – alles in einer Seite. Keine Anmeldung, keine Werbung (noch).
         </div>
       </div>
     </header>
@@ -336,6 +341,7 @@
       <button data-page="home" class="active"><span class="icon">🏠</span>Start</button>
       <button data-page="sparen"><span class="icon">📈</span>Sparen &amp; Zinseszins</button>
       <button data-page="kredit"><span class="icon">💳</span>Kreditrechner</button>
+      <button data-page="steuer"><span class="icon">💶</span>Steuerrechner</button>
       <button data-page="immobilie"><span class="icon">🏡</span>Immobilie</button>
       <button data-page="auto"><span class="icon">🚗</span>Auto &amp; Leasing</button>
       <button data-page="etf"><span class="icon">📊</span>ETF-Sparen</button>
@@ -356,6 +362,7 @@
               <div class="controls" style="margin-top:14px">
                 <button class="main" data-go="sparen">Vermögen aufbauen</button>
                 <button class="ghost" data-go="kredit">Kredit durchrechnen</button>
+                <button class="ghost" data-go="steuer">Lohnsteuer &amp; Netto berechnen</button>
                 <button class="ghost" data-go="immobilie">Immobilien-Finanzierung</button>
                 <button class="ghost" data-go="auto">Auto &amp; Leasing checken</button>
                 <button class="ghost" data-go="etf">ETF-Sparplan planen</button>
@@ -367,6 +374,7 @@
                 <span class="tag">ETF</span>
                 <span class="tag">Sparplan</span>
                 <span class="tag">Kredit</span>
+                <span class="tag">Steuern</span>
                 <span class="tag">Immobilie</span>
                 <span class="tag">Auto</span>
                 <span class="tag">Rente</span>
@@ -374,7 +382,7 @@
                 <span class="tag">Budget</span>
               </div>
               <div class="hint">
-                Hinweis: Dies ist keine Anlageberatung. Die Rechner helfen beim Verständnis von Zahlen und Szenarien.
+                Hinweis: Dies ist keine Anlage- oder Steuerberatung. Die Rechner helfen beim Verständnis von Zahlen und Szenarien.
               </div>
             </div>
           </div>
@@ -389,9 +397,10 @@
                 <li>„Wie viel bleibt mir im Monat übrig, nachdem ich Miete &amp; Fixkosten bezahlt habe?“</li>
                 <li>„Was kostet mich eine <strong>Immobilie</strong> mit Zinsbindung &amp; Restschuld?“</li>
                 <li>„Wie teuer ist mein <strong>Auto</strong> im Jahr inklusive Versicherung, Steuer &amp; Sprit?“</li>
+                <li>„Wie viel <strong>Netto</strong> bleibt von meinem Brutto-Gehalt in Steuerklasse I?“</li>
               </ul>
               <div class="pill-info">
-                ℹ️ Alle Ergebnisse sind Näherungen – Banken &amp; Staat rechnen manchmal leicht anders.
+                ℹ️ Alle Ergebnisse sind Näherungen – Banken &amp; Staat rechnen teilweise anders.
               </div>
             </div>
           </div>
@@ -513,6 +522,74 @@
         </div>
 
         <div class="ad-slot" id="ad-kredit"></div>
+      </section>
+
+      <!-- STEUER -->
+      <section id="page-steuer" class="page">
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h2>Lohnsteuer- &amp; Netto-Rechner (vereinfachte Schätzung)</h2>
+              <div class="small">
+                Schätze deine monatliche Lohnsteuer, Sozialabgaben und dein Netto-Einkommen auf Basis deines Bruttogehalts.
+              </div>
+
+              <div class="controls">
+                <div class="field">
+                  <label for="st_brutto">Brutto-Monatsgehalt (€)</label>
+                  <input id="st_brutto" type="number" step="0.01" placeholder="z. B. 3.500">
+                </div>
+                <div class="field">
+                  <label for="st_class">Steuerklasse</label>
+                  <select id="st_class">
+                    <option value="1">Klasse I (ledig)</option>
+                    <option value="2">Klasse II (alleinerziehend)</option>
+                    <option value="3">Klasse III (verheiratet, Hauptverdiener)</option>
+                    <option value="4">Klasse IV (verheiratet, ähnlich Klasse I)</option>
+                    <option value="5">Klasse V (verheiratet, Zweitverdiener)</option>
+                    <option value="6">Klasse VI (zweiter Job)</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="st_church">Kirchensteuer</label>
+                  <select id="st_church">
+                    <option value="0">keine</option>
+                    <option value="8">8 %</option>
+                    <option value="9">9 %</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="st_children">Kinderfreibeträge (Anzahl, optional)</label>
+                  <input id="st_children" type="number" step="0.5" placeholder="z. B. 0,5">
+                </div>
+                <button class="main" id="st_btn">Netto berechnen</button>
+              </div>
+
+              <div class="result" id="st_result">—</div>
+              <div class="hint">
+                Achtung: Dies ist nur eine vereinfachte Schätzung auf Basis typischer Sätze und des Einkommensteuertarifs.
+                Für exakte Berechnungen nutze bitte einen offiziellen Brutto-Netto-Rechner oder den Rechner des Bundesfinanzministeriums.
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>Steuerbegriffe kurz erklärt</h3>
+              <ul class="small">
+                <li><strong>Steuerklasse:</strong> bestimmt, wie viel Lohnsteuer monatlich einbehalten wird (z. B. ledig, verheiratet, Zweitjob).</li>
+                <li><strong>Lohnsteuer:</strong> die Einkommensteuer auf deinen Arbeitslohn, direkt vom Arbeitgeber ans Finanzamt abgeführt.</li>
+                <li><strong>Sozialabgaben:</strong> Beiträge für Renten-, Kranken-, Pflege- und Arbeitslosenversicherung.</li>
+                <li><strong>Solidaritätszuschlag:</strong> Zuschlag auf die Lohnsteuer; bei vielen Einkommen inzwischen 0 €.</li>
+                <li><strong>Kirchensteuer:</strong> wird erhoben, wenn du Mitglied einer Kirche bist, meist 8&nbsp;% oder 9&nbsp;% der Lohnsteuer.</li>
+              </ul>
+              <div class="pill-info">
+                📌 Diese Seite ersetzt keine individuelle Steuerberatung. Die Werte sind Näherungen, um ein Gefühl für Größenordnungen zu bekommen.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ad-slot" id="ad-steuer"></div>
       </section>
 
       <!-- IMMOBILIE -->
@@ -864,6 +941,24 @@
       return v.toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €";
     }
 
+    // Einkommensteuer nach Grundtarif 2024 (vereinfachte Formeln nach §32a EStG)
+    function einkommensteuer2024(zve){
+      const x = Math.floor(Math.max(0,zve)); // zu versteuerndes Einkommen, gerundet
+      if(x <= 11784){
+        return 0;
+      }else if(x <= 17005){
+        const y = (x - 11784) / 10000;
+        return (954.80 * y + 1400) * y;
+      }else if(x <= 66760){
+        const z = (x - 17005) / 10000;
+        return (181.19 * z + 2397) * z + 991.21;
+      }else if(x <= 277825){
+        return 0.42 * x - 10636.31;
+      }else{
+        return 0.45 * x - 18971.06;
+      }
+    }
+
     document.addEventListener("DOMContentLoaded",function(){
       // Nav Buttons
       document.querySelectorAll("nav button").forEach(btn=>{
@@ -948,6 +1043,64 @@
           "<span class=\"small-line\">Gesamtzahlung: "+formatMoney(gesamt)+" · Zinsen: "+formatMoney(zinsen)+"</span>";
       });
 
+      // Steuer / Netto – vereinfachte Schätzung
+      document.getElementById("st_btn").addEventListener("click",function(){
+        const brutto = parseFloat(document.getElementById("st_brutto").value);
+        const stClass = parseInt(document.getElementById("st_class").value,10);
+        const churchRate = parseFloat(document.getElementById("st_church").value)||0;
+        const children = parseFloat(document.getElementById("st_children").value)||0;
+        const out = document.getElementById("st_result");
+
+        if(!isFinite(brutto) || brutto <= 0){
+          out.textContent = "Bitte ein gültiges Brutto-Monatsgehalt eingeben.";
+          out.classList.add("error");
+          return;
+        }
+        out.classList.remove("error");
+
+        // grobe Sozialabgaben-Schätzung (Arbeitnehmeranteil)
+        const rv = brutto * 0.093; // Rentenversicherung
+        const av = brutto * 0.013; // Arbeitslosenversicherung
+        const kv = brutto * 0.08;  // Krankenversicherung (inkl. Zusatz, ca.)
+        let pv = brutto * 0.015;   // Pflegeversicherung, grob
+        if(children === 0){
+          pv = brutto * 0.017; // etwas höher für Kinderlose
+        }
+        const sozial = rv + av + kv + pv;
+
+        const jahresBrutto = brutto * 12;
+
+        // einfacher Pauschal-Abzug für Werbungskosten, Vorsorgepauschale etc.
+        let zve = jahresBrutto - 1000;
+        if(zve < 0) zve = 0;
+
+        // grobe Anpassung nach Steuerklasse
+        let faktor = 1;
+        if(stClass === 3) faktor = 0.8;
+        else if(stClass === 5 || stClass === 6) faktor = 1.2;
+
+        const estJahr = einkommensteuer2024(zve * faktor);
+
+        // Solidaritätszuschlag: sehr vereinfachtes Modell
+        let soliJahr = 0;
+        if(estJahr > 16956){
+          soliJahr = estJahr * 0.055;
+        }
+
+        const kircheJahr = estJahr * (churchRate/100);
+
+        const lohnsteuerMonat = estJahr / 12;
+        const soliMonat = soliJahr / 12;
+        const kircheMonat = kircheJahr / 12;
+
+        const netto = brutto - lohnsteuerMonat - soliMonat - kircheMonat - sozial;
+
+        out.innerHTML =
+          "geschätztes Netto-Monatsgehalt: "+formatMoney(netto)+
+          "<span class=\"small-line\">Lohnsteuer (Monat, ca.): "+formatMoney(lohnsteuerMonat)+" · Solidaritätszuschlag (ca.): "+formatMoney(soliMonat)+" · Kirchensteuer (ca.): "+formatMoney(kircheMonat)+"</span>"+
+          "<span class=\"small-line\">Sozialabgaben (Rente, Kranken-, Pflege-, Arbeitslosenversicherung, ca.): "+formatMoney(sozial)+"</span>";
+      });
+
       // Immobilie
       document.getElementById("immo_btn").addEventListener("click",function(){
         const price  = parseFloat(document.getElementById("immo_price").value);
@@ -976,14 +1129,11 @@
 
         let rateMonat;
         if(i === 0){
-          // reine Tilgung ohne Zins (theoretisch)
           rateMonat = n>0 ? darlehen/n : 0;
         }else{
-          // vereinfachte Annuität: Zins + Tilgung auf Jahresbasis
           rateMonat = darlehen * (i + t);
         }
 
-        // Restschuldberechnung mit klassischer Annuitätenformel
         let rest = darlehen;
         if(i > 0){
           const faktor = Math.pow(1+i,n);
